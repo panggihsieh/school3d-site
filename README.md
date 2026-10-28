@@ -1,8 +1,8 @@
 # 大南國小 3D 生態導覽
 
-完整 3D 導覽：https://panggihsieh.github.io/treeco2-site/
+完整 3D 導覽：https://panggihsieh.github.io/school3d-site/
 
-植物吸碳／維護排碳計算：https://panggihsieh.github.io/treeco2-site/tree/
+植物吸碳／維護排碳計算：https://panggihsieh.github.io/school3d-site/tree/
 
 計算網站是獨立前端，位於此發布庫的 `dist/tree/`。維護活動排碳採使用者提供的活動量與係數，不預填係數，不將平台累積儲碳當作一年吸碳。計算資料可匯出 JSON，不會自動同步到 3D 網站。
 
