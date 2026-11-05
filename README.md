@@ -1,5 +1,7 @@
 # 大南國小 3D 生態導覽
 
+新增 `dist/photos.html` 公開相簿與 Google 登入照片後台，管理員為 teacher.hsieh@gmail.com。首頁側邊欄提供 Firebase 啟用入口；尚需建立 Firebase 專案、填入公開設定並發布服務規則才能使用。完整設定見 [firebase/SETUP.md](firebase/SETUP.md)。下方原有瀏覽器資料編輯功能仍獨立運作。
+
 完整 3D 導覽：https://panggihsieh.github.io/school3d-site/
 
 植物吸碳／維護排碳計算：https://panggihsieh.github.io/school3d-site/tree/

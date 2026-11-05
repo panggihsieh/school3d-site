@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function admin() {
+      return request.auth != null
+        && request.auth.token.email == 'teacher.hsieh@gmail.com'
+        && request.auth.token.email_verified == true
+        && request.auth.token.firebase.sign_in_provider == 'google.com';
+    }
+    match /photos/{id} {
+      allow read: if true;
+      allow delete: if admin();
+      allow create, update: if admin()
+        && request.resource.data.keys().hasAll(['title','description','category','target','path','url','createdAt'])
+        && request.resource.data.keys().hasOnly(['title','description','category','target','path','url','createdAt'])
+        && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 100
+        && request.resource.data.description is string && request.resource.data.description.size() <= 1000
+        && request.resource.data.category in ['campus','plant','panorama']
+        && request.resource.data.target is string && request.resource.data.target.size() > 0 && request.resource.data.target.size() <= 100
+        && request.resource.data.path == 'photos/' + id + '/original'
+        && request.resource.data.url is string && request.resource.data.url.matches('https://firebasestorage.googleapis.com/.*')
+        && request.resource.data.createdAt is timestamp;
+    }
+  }
+}
