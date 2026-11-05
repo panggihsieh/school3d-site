@@ -7,10 +7,13 @@ export async function verifyTeacher(token,env,keySet=keys){
  return payload;
 }
 export function validatePhoto(body){
- if(!body || !/^[a-f0-9-]{36}$/.test(body.id) || !/^MOE\d+$/.test(body.target) || !['whole','bark','leaf-front','leaf-back','label','flower-fruit'].includes(body.kind))throw Error('照片欄位不正確');
+ if(!body || !/^[a-f0-9-]{36}$/.test(body.id))throw Error('照片欄位不正確');
+ const station=/^P(0[1-9]|1[0-8])$/.test(body.target);
+ if(!(station?['north','east','south','west','entrance','path','panorama'].includes(body.kind):/^MOE\d+$/.test(body.target)&&['whole','bark','leaf-front','leaf-back','label','flower-fruit'].includes(body.kind)))throw Error('照片欄位不正確');
+ const maximum=body.kind==='panorama'?2600000:MAX_IMAGE;
  if(typeof body.title!=='string'||!body.title.trim()||body.title.length>120||typeof body.description!=='string'||body.description.length>1000)throw Error('名稱或說明不正確');
- if(typeof body.image!=='string'||body.image.length>Math.ceil(MAX_IMAGE/3)*4||!/^[A-Za-z0-9+/]+={0,2}$/.test(body.image)||body.image.length%4)throw Error('照片過大或格式不正確');
- const bytes=atob(body.image);if(bytes.length>MAX_IMAGE||bytes.length<4||bytes.charCodeAt(0)!==255||bytes.charCodeAt(1)!==216||bytes.charCodeAt(2)!==255)throw Error('只接受壓縮後 JPEG');
+ if(typeof body.image!=='string'||body.image.length>Math.ceil(maximum/3)*4||!/^[A-Za-z0-9+/]+={0,2}$/.test(body.image)||body.image.length%4)throw Error('照片過大或格式不正確');
+ const bytes=atob(body.image);if(bytes.length>maximum||bytes.length<4||bytes.charCodeAt(0)!==255||bytes.charCodeAt(1)!==216||bytes.charCodeAt(2)!==255)throw Error('只接受壓縮後 JPEG');
  return {id:body.id,target:body.target,kind:body.kind,title:body.title.trim(),description:body.description,image:body.image};
 }
 async function github(env,path,method='GET',body){
@@ -29,7 +32,7 @@ export async function publishPhoto(env,photo){
  // 確認目標來自倉庫中的官方植物清單；不接受任意寫入路徑。
  const data=await github(env,`contents/dist/data.json?ref=${head.object.sha}`);
  const trees=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0)))).points;
- if(!trees.some(t=>t.id===photo.target&&t.topic==='carbon'))throw Error('樹木編號不存在');
+ if(!/^P(0[1-9]|1[0-8])$/.test(photo.target)&&!trees.some(t=>t.id===photo.target&&t.topic==='carbon'))throw Error('樹木編號不存在');
  const record={id:photo.id,target:photo.target,kind:photo.kind,title:photo.title,description:photo.description,url:`./assets/uploads/${photo.id}.jpg`,publishedAt:new Date().toISOString()};
  const image=await github(env,'git/blobs','POST',{content:photo.image,encoding:'base64'});
  const index=await github(env,'git/blobs','POST',{content:utf8base64(JSON.stringify([...manifest,record],null,2)),encoding:'base64'});
@@ -52,7 +55,7 @@ export default {async fetch(request,env){
  try{
   // 不信任 Content-Length；逐段限制實際請求大小。
   const reader=request.body?.getReader();if(!reader)throw Error('缺少照片');let size=0;const chunks=[];
-  while(true){const {value,done}=await reader.read();if(done)break;size+=value.length;if(size>950000){await reader.cancel();throw Error('照片過大');}chunks.push(value);}
+  while(true){const {value,done}=await reader.read();if(done)break;size+=value.length;if(size>3500000){await reader.cancel();throw Error('照片過大');}chunks.push(value);}
   const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
   photo=validatePhoto(JSON.parse(new TextDecoder().decode(bytes)));
  }catch(e){return reply({error:e.message},400);}

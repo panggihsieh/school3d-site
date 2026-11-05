@@ -115,7 +115,7 @@ async function start() {
   else {
     const response=await fetch('./public-photos.json',{cache:'no-store'});
     if(!response.ok)throw Error('公開相簿載入失敗');
-    photos=(await response.json()).map(p=>({...p,category:'plant',github:true})).reverse();render();
+    photos=(await response.json()).map(p=>({...p,category:p.kind==='panorama'?'panorama':p.target.startsWith('P')?'campus':'plant',github:true})).reverse();render();
   }
 }
 start().catch(e => { message(`雲端連線失敗：${e.code || e.message}`); $('#gallery-status').textContent = '相簿暫時無法載入，請稍後重試。'; });

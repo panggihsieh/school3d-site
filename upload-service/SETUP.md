@@ -12,7 +12,7 @@ Firebase Spark 登入 + Cloudflare Workers Free 驗證 + GitHub 公開照片。�
 4. 開啟 `field.html`，以 teacher.hsieh@gmail.com 登入，選樹、確認編號、拍照後上傳。
 5. 驗收真實管理員可以寫入、其他帳號被拒絕、重試不重複、GitHub 部署完成後前台照片出現。現地 GPS、Safari 相機與朗讀需要使用者的 iPhone 實測。
 
-程式在 Worker 端以 Google 公開金鑰驗證 Firebase JWT 的簽章、來源專案、期限、已驗證管理員信箱與 Google 登入方式。不信任前端自報帳號。GitHub 只寫固定的 `dist/assets/uploads/<UUID>.jpg` 與 `dist/public-photos.json`，一次 commit，同時上傳衝突不覆寫。每張 JPEG 最多 650000 bytes；相簿上限 1500 張，需另保留儲存空間給網站本身。
+程式在 Worker 端以 Google 公開金鑰驗證 Firebase JWT 的簽章、來源專案、期限、已驗證管理員信箱與 Google 登入方式。不信任前端自報帳號。GitHub 只寫固定的 `dist/assets/uploads/<UUID>.jpg` 與 `dist/public-photos.json`，一次 commit，同時上傳衝突不覆寫。普通 JPEG 最多 650000 bytes、環景最多 2600000 bytes。相簿上限 1500 張只是筆數保護，實際仍須遵守 GitHub Pages 1 GB 發布限制並留空間給網站；環景多時需更早整理。
 
 前端 GPS 精確位置不會送到 Worker。Canvas 重新編碼移除原圖 EXIF；公開檔只含照片、樹木編號、種類、說明與發布時間。原圖請另行備份。照片使用 IndexedDB 保留草稿，不能當作永久備份。後台沒有自動 AI 辨識；以官方樹木座標列候選並由管理員確認。
 

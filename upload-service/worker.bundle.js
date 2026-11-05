@@ -731,11 +731,14 @@ async function verifyTeacher(token, env, keySet = keys) {
   return payload;
 }
 function validatePhoto(body) {
-  if (!body || !/^[a-f0-9-]{36}$/.test(body.id) || !/^MOE\d+$/.test(body.target) || !["whole", "bark", "leaf-front", "leaf-back", "label", "flower-fruit"].includes(body.kind)) throw Error("\u7167\u7247\u6B04\u4F4D\u4E0D\u6B63\u78BA");
+  if (!body || !/^[a-f0-9-]{36}$/.test(body.id)) throw Error("\u7167\u7247\u6B04\u4F4D\u4E0D\u6B63\u78BA");
+  const station = /^P(0[1-9]|1[0-8])$/.test(body.target);
+  if (!(station ? ["north", "east", "south", "west", "entrance", "path", "panorama"].includes(body.kind) : /^MOE\d+$/.test(body.target) && ["whole", "bark", "leaf-front", "leaf-back", "label", "flower-fruit"].includes(body.kind))) throw Error("\u7167\u7247\u6B04\u4F4D\u4E0D\u6B63\u78BA");
+  const maximum = body.kind === "panorama" ? 26e5 : MAX_IMAGE;
   if (typeof body.title !== "string" || !body.title.trim() || body.title.length > 120 || typeof body.description !== "string" || body.description.length > 1e3) throw Error("\u540D\u7A31\u6216\u8AAA\u660E\u4E0D\u6B63\u78BA");
-  if (typeof body.image !== "string" || body.image.length > Math.ceil(MAX_IMAGE / 3) * 4 || !/^[A-Za-z0-9+/]+={0,2}$/.test(body.image) || body.image.length % 4) throw Error("\u7167\u7247\u904E\u5927\u6216\u683C\u5F0F\u4E0D\u6B63\u78BA");
+  if (typeof body.image !== "string" || body.image.length > Math.ceil(maximum / 3) * 4 || !/^[A-Za-z0-9+/]+={0,2}$/.test(body.image) || body.image.length % 4) throw Error("\u7167\u7247\u904E\u5927\u6216\u683C\u5F0F\u4E0D\u6B63\u78BA");
   const bytes = atob(body.image);
-  if (bytes.length > MAX_IMAGE || bytes.length < 4 || bytes.charCodeAt(0) !== 255 || bytes.charCodeAt(1) !== 216 || bytes.charCodeAt(2) !== 255) throw Error("\u53EA\u63A5\u53D7\u58D3\u7E2E\u5F8C JPEG");
+  if (bytes.length > maximum || bytes.length < 4 || bytes.charCodeAt(0) !== 255 || bytes.charCodeAt(1) !== 216 || bytes.charCodeAt(2) !== 255) throw Error("\u53EA\u63A5\u53D7\u58D3\u7E2E\u5F8C JPEG");
   return { id: body.id, target: body.target, kind: body.kind, title: body.title.trim(), description: body.description, image: body.image };
 }
 async function github(env, path, method = "GET", body) {
@@ -769,7 +772,7 @@ async function publishPhoto(env, photo) {
   if (manifest.length >= 1500) throw Error("\u76F8\u7C3F\u5DF2\u9054 1500 \u5F35\u4E0A\u9650\uFF0C\u8ACB\u5148\u6574\u7406\u7167\u7247");
   const data = await github(env, `contents/dist/data.json?ref=${head.object.sha}`);
   const trees = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g, "")), (c) => c.charCodeAt(0)))).points;
-  if (!trees.some((t) => t.id === photo.target && t.topic === "carbon")) throw Error("\u6A39\u6728\u7DE8\u865F\u4E0D\u5B58\u5728");
+  if (!/^P(0[1-9]|1[0-8])$/.test(photo.target) && !trees.some((t) => t.id === photo.target && t.topic === "carbon")) throw Error("\u6A39\u6728\u7DE8\u865F\u4E0D\u5B58\u5728");
   const record = { id: photo.id, target: photo.target, kind: photo.kind, title: photo.title, description: photo.description, url: `./assets/uploads/${photo.id}.jpg`, publishedAt: (/* @__PURE__ */ new Date()).toISOString() };
   const image = await github(env, "git/blobs", "POST", { content: photo.image, encoding: "base64" });
   const index = await github(env, "git/blobs", "POST", { content: utf8base64(JSON.stringify([...manifest, record], null, 2)), encoding: "base64" });
@@ -802,7 +805,7 @@ var worker_default = { async fetch(request, env) {
       const { value, done } = await reader.read();
       if (done) break;
       size += value.length;
-      if (size > 95e4) {
+      if (size > 35e5) {
         await reader.cancel();
         throw Error("\u7167\u7247\u904E\u5927");
       }

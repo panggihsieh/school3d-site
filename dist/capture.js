@@ -20,7 +20,7 @@ const stations=[
  ['特色植物區',19,61,'西側樹帶作為暫定候選，請選實際特色植物群並記錄樹木編號。']
 ].map(([name,x,y,note],i)=>({id:`P${String(i+1).padStart(2,'0')}`,name,x,y,note}));
 const $=s=>document.querySelector(s);
-let mode='phone',selected='P01',completed={};
+let mode='phone',selected='P01',completed={},published=[];
 try{completed=JSON.parse(localStorage.getItem('danan-capture-v1')||'{}')||{};}catch{}
 const count=()=>mode==='phone'?6:1;
 function select(id){selected=id;render();}
@@ -35,15 +35,17 @@ function render(){
   const row=document.createElement('div');row.className='check-row';
   const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=checked;checkbox.setAttribute('aria-label',`${s.id} ${s.name} 已拍妥`);
   checkbox.onchange=()=>{completed[`${mode}:${s.id}`]=checkbox.checked;try{localStorage.setItem('danan-capture-v1',JSON.stringify(completed));}catch{alert('無法保存勾選紀錄，請自行記下已拍站點。');}render();};
-  const button=document.createElement('button');button.textContent=`${s.id} ${s.name} ×${count()}`;button.onclick=()=>select(s.id);row.append(checkbox,button);$('#checklist').append(row);
+  const kinds=mode==='sphere'?['panorama']:['north','east','south','west','entrance','path'];const publishedCount=new Set(published.filter(p=>p.target===s.id&&kinds.includes(p.kind)).map(p=>p.kind)).size;
+  const button=document.createElement('button');button.textContent=`${s.id} ${s.name} ×${count()}（已發布 ${publishedCount}/${count()}）`;button.onclick=()=>select(s.id);row.append(checkbox,button);$('#checklist').append(row);
  }
  const s=stations.find(s=>s.id===selected);
  const heading=document.createElement('h2');heading.textContent=`${s.id}｜${s.name} ×${count()} 張`;
  const note=document.createElement('p');note.textContent=s.note;
  const instructions=document.createElement('p');instructions.textContent=mode==='phone'?'站在同一安全位置，依序拍北、東、南、西方向各 1 張，再補入口或主體近照 1 張、路徑或編號牌細節 1 張，共 6 張。這批用於照片展示與建模參考，不保證可拼接環景。':'使用 360 相機拍 1 張完整球面環景，輸出 2:1 原圖（建議 6000×3000 以上），相機高約 1.5–1.7 公尺。';
  const file=document.createElement('p');file.textContent=`建議檔名：${s.id}_${s.name}_${mode==='phone'?'01 至 06':'360'}.jpg。保留原圖並記錄拍攝日期、實際位置與朝向。`;
- const upload=document.createElement('a');upload.className='capture-link';upload.href=`./photos.html?station=${s.id}`;upload.textContent=`前往後台：${s.id} 拍照／上傳 →`;
+ const upload=document.createElement('a');upload.className='capture-link';upload.href=`./field.html?station=${s.id}`;upload.textContent=`前往後台：${s.id} 拍照／上傳 →`;
  $('#selected').replaceChildren(heading,note,instructions,file,upload);
 }
 $('#route').innerHTML=`<polyline points="${stations.map(s=>`${s.x},${s.y}`).join(' ')}"/>`;
 $('#mode').onchange=e=>{mode=e.target.value;render();};$('#print').onclick=()=>window.print();render();
+fetch('./public-photos.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}).then(items=>{published=items;render();}).catch(()=>{});
