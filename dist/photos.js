@@ -1,4 +1,4 @@
-import { firebaseConfig, adminEmail } from './firebase-config.js';
+import { firebaseConfig, adminEmail, photoUploadsEnabled } from './firebase-config.js';
 const $ = selector => document.querySelector(selector);
 const labels = { campus: '校園照片', plant: '植物照片', panorama: '360° 環景素材' };
 let sdk, user, photos = [], previewURL, selectedFile;
@@ -62,7 +62,7 @@ async function start() {
   if (!['apiKey','authDomain','projectId','storageBucket','appId'].every(k => firebaseConfig[k])) {
     $('#setup-state').textContent = '尚未啟用：請依序完成以下設定。'; return;
   }
-  $('#setup-state').textContent = `已填入專案：${firebaseConfig.projectId}。若登入失敗，請檢查授權網域及服務規則。`;
+  $('#setup-state').textContent = photoUploadsEnabled ? `已填入專案：${firebaseConfig.projectId}。若登入失敗，請檢查授權網域及服務規則。` : `免費模式：${firebaseConfig.projectId} 已設定 Google 登入；未開通需綁定付款的 Storage。照片請先保存手機原檔。`;
   const base = 'https://www.gstatic.com/firebasejs/13.2.0/';
   const [app, auth, db, storage] = await Promise.all(['app','auth','firestore','storage'].map(name => import(`${base}firebase-${name}.js`)));
   const instance = app.initializeApp(firebaseConfig);
@@ -81,11 +81,12 @@ async function start() {
   };
   $('#logout').onclick = () => auth.signOut(sdk.auth).catch(e => message(`登出失敗：${e.code}`));
   auth.onAuthStateChanged(sdk.auth, current => {
-    user = current; $('#editor').hidden = !isAdmin(); $('#logout').hidden = !user; $('#login').hidden = !!user;
-    message(isAdmin() ? '已登入，可以上傳與管理公開照片。' : user ? '此帳號沒有管理權限，請登出後使用指定帳號。' : '訪客模式，可瀏覽公開照片。'); render();
+    user = current; $('#editor').hidden = !isAdmin() || !photoUploadsEnabled; $('#logout').hidden = !user; $('#login').hidden = !!user;
+    message(isAdmin() ? (photoUploadsEnabled ? '已登入，可以上傳與管理公開照片。' : '管理員已登入。為維持免費，目前未啟用雲端照片上傳；請先依補拍地圖拍照，保存手機原檔。') : user ? '此帳號沒有管理權限，請登出後使用指定帳號。' : '請使用指定的 Google 帳號登入。');
+    if(photoUploadsEnabled)render();
   });
   $('#upload-form').onsubmit = async event => {
-    event.preventDefault(); if (!isAdmin()) return;
+    event.preventDefault(); if (!isAdmin() || !photoUploadsEnabled) return;
     const form = event.currentTarget; const file = selectedFile;
     if (!file || !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 20*1024*1024 || !file.size) { message('請選擇 20 MB 以下的 JPG、PNG 或 WebP。'); return; }
     if (form.elements.category.value === 'panorama') {
@@ -110,6 +111,7 @@ async function start() {
       message(`上傳或相簿更新失敗：${e.code || e.message}。請重新整理確認結果後再試。`);
     } finally { $('#upload-fields').disabled = false; }
   };
-  await load();
+  if(photoUploadsEnabled)await load();
+  else $('#gallery-status').textContent='免費模式尚未啟用雲端相簿。請先將照片保存在手機，之後再安排發布。';
 }
 start().catch(e => { message(`雲端連線失敗：${e.code || e.message}`); $('#gallery-status').textContent = '相簿暫時無法載入，請稍後重試。'; });
