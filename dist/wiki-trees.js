@@ -7,7 +7,7 @@ export function wikiPhotos(data){
  return Object.values(data?.query?.pages||{}).sort((a,b)=>(a.index??0)-(b.index??0)).flatMap(page=>{
   const info=page.imageinfo?.[0],meta=info?.extmetadata||{};
   if(/botanical magazine|illustration|drawing|painting|engraving|herbarium|diagram/i.test(page.title||''))return [];
-  const thumbnail=trustedURL(info?.thumburl,'upload.wikimedia.org'),source=trustedURL(info?.descriptionurl,'commons.wikimedia.org');
+  const thumbnail=trustedURL(info?.thumburl,'upload.wikimedia.org')||trustedURL(info?.thumburl,'thumb.wikimedia.org'),source=trustedURL(info?.descriptionurl,'commons.wikimedia.org');
   if(!thumbnail||!source||!meta.LicenseShortName?.value||!['image/jpeg','image/png','image/webp'].includes(info?.mime))return [];
   return [{title:page.title.replace(/^File:/,''),thumbnail,source,artist:meta.Artist?.value||'作者請見來源頁',license:meta.LicenseShortName.value}];
  }).slice(0,3);

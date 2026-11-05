@@ -1,0 +1,1151 @@
+{
+  "version": 1,
+  "referenceOnly": true,
+  "species": {
+    "0102": {
+      "code": "0102",
+      "species": "芒果/芒果樹",
+      "scientificName": "Mangifera indica L.",
+      "query": "Mangifera indica",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Mangifera indica 2013 004.JPG",
+          "url": "./assets/species-reference/0102-bd9f0650989e.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Mangifera_indica_2013_004.JPG",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Mangifera_indica_2013_004.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Mangifera_indica_2013_004.JPG/960px-Mangifera_indica_2013_004.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Veronidae",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "bd9f0650989e1563028ec985f12a3aa680698ccbbb1f92c3e9f3f4e182aa0cd3",
+          "bytes": 269592,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0268": {
+      "code": "0268",
+      "species": "榕樹",
+      "scientificName": "Ficus microcarpa  L. f.  ",
+      "query": "Ficus microcarpa",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Ficus microcarpa - La Gomera 01.jpg",
+          "url": "./assets/species-reference/0268-79d39b0dc701.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Ficus_microcarpa_-_La_Gomera_01.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/24/Ficus_microcarpa_-_La_Gomera_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Ficus_microcarpa_-_La_Gomera_01.jpg/960px-Ficus_microcarpa_-_La_Gomera_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "H. Zell",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "79d39b0dc70184dccc13885544840bc77fc4bb86cdbe59f2b4ecfe1d0bfe8319",
+          "bytes": 208371,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0200": {
+      "code": "0200",
+      "species": "側柏",
+      "scientificName": "Platycladus orientalis (L.) Franco",
+      "query": "Platycladus orientalis",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Platycladus orientalis Simatai.jpg",
+          "url": "./assets/species-reference/0200-28bb68efe7cb.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Platycladus_orientalis_Simatai.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Platycladus_orientalis_Simatai.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Platycladus_orientalis_Simatai.jpg/960px-Platycladus_orientalis_Simatai.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "yeowatzup at Flickr",
+          "license": "CC BY 2.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+          "credit": "Flickr",
+          "retrievedAt": "2026-11-05",
+          "sha256": "28bb68efe7cba36a24c27d757e8b0c7f87286ec79837e568c1ef926a11a338e2",
+          "bytes": 458468,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0328": {
+      "code": "0328",
+      "species": "龍柏",
+      "scientificName": "Juniperus chinensis L. cv. Kaizuka ",
+      "query": "Juniperus chinensis Kaizuka",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Juniperus chinensis 'Kaizuka' at Akola.jpg",
+          "url": "./assets/species-reference/0328-de19df64c800.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Juniperus_chinensis_%27Kaizuka%27_at_Akola.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/13/Juniperus_chinensis_%27Kaizuka%27_at_Akola.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Juniperus_chinensis_%27Kaizuka%27_at_Akola.jpg/960px-Juniperus_chinensis_%27Kaizuka%27_at_Akola.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Yogdes",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "de19df64c800551ae48576d236ddf60dc5fc1b40ff2216b948a1184c8b1e67ac",
+          "bytes": 541073,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available",
+      "matchNote": "龍柏栽培品種參考，單株修剪造型仍以現場為準。",
+      "taxonomySource": ""
+    },
+    "0584": {
+      "code": "0584",
+      "species": "桂葉黃梅/鼠眼木",
+      "scientificName": "Ochna thomasiana Engl. & Gilg  ",
+      "query": "Ochna thomasiana",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Ochna species 2D5260046.jpg",
+          "url": "./assets/species-reference/0584-9d9f13729608.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Ochna_species_2D5260046.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/03/Ochna_species_2D5260046.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/0/03/Ochna_species_2D5260046.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Teng Feng-Chou",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "鄧豐洲的作品",
+          "retrievedAt": "2026-11-05",
+          "sha256": "9d9f13729608a240ca8614bd04dc8b8a55dd7acd75fc0fede5478e1f0a291ee5",
+          "bytes": 30719,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0606": {
+      "code": "0606",
+      "species": "細葉變葉木",
+      "scientificName": "Codiaeum variegatum  (L.) A. Juss. var. pictum forma taeniosum Muell.-Arg.",
+      "query": "Codiaeum variegatum",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Colpfl05.jpg",
+          "url": "./assets/species-reference/0606-8401e3903d01.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Colpfl05.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Colpfl05.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Colpfl05.jpg/960px-Colpfl05.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Louise Wolff --darina 23:22, 6 May 2005 (UTC)",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "8401e3903d018f805ebbd29a46aa99c4a90f9352fe4e8a6436e88ddeaeb85e87",
+          "bytes": 517305,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available",
+      "matchNote": "此為變葉木種層級參考，尚未確認為清冊指定的細葉型。",
+      "taxonomySource": ""
+    },
+    "0763": {
+      "code": "0763",
+      "species": "象腳王蘭",
+      "scientificName": "Yucca gigantea  Lem.  ",
+      "query": "Yucca gigantea",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Yucca elephantipes HRM2.JPG",
+          "url": "./assets/species-reference/0763-f962a61047dc.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Yucca_elephantipes_HRM2.JPG",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Yucca_elephantipes_HRM2.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Yucca_elephantipes_HRM2.JPG/960px-Yucca_elephantipes_HRM2.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Cillas",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "f962a61047dc88ee1a5a336012670d90571db23b46f0249ee0a0d0e402f4a23c",
+          "bytes": 322685,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0070": {
+      "code": "0070",
+      "species": "可可椰子",
+      "scientificName": "Cocos nucifera L.",
+      "query": "Cocos nucifera",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Cocos nucifera8.jpg",
+          "url": "./assets/species-reference/0070-35b8d81ad75d.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Cocos_nucifera8.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cocos_nucifera8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cocos_nucifera8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Kurt Stüber [1]",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "caliban.mpiz-koeln.mpg.de/mavica/index.html part of www.biolib.de",
+          "retrievedAt": "2026-11-05",
+          "sha256": "35b8d81ad75d685ba0e2c83e1c6aad94d039128408c29f4577de62f2f757d5ef",
+          "bytes": 56219,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0312": {
+      "code": "0312",
+      "species": "樟樹",
+      "scientificName": "Camphora officinarum Nees  ",
+      "query": "Camphora officinarum",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Epiphytes-SF24281-01.jpg",
+          "url": "./assets/species-reference/0312-fef72ce03ff7.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Epiphytes-SF24281-01.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Epiphytes-SF24281-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Epiphytes-SF24281-01.jpg/960px-Epiphytes-SF24281-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Steve Fitzgerald",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "fef72ce03ff720b7ccaa86acee409889d7385b523124f805de8e22407fbed332",
+          "bytes": 737212,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0348": {
+      "code": "0348",
+      "species": "羅比親王海棗",
+      "scientificName": "Phoenix roebelenii Royle   ",
+      "query": "Phoenix roebelenii",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Phoenix roebelenii in evening.jpg",
+          "url": "./assets/species-reference/0348-2e6865aeacb7.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Phoenix_roebelenii_in_evening.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/99/Phoenix_roebelenii_in_evening.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/9/99/Phoenix_roebelenii_in_evening.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Prahlad balaji",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "2e6865aeacb78148c23521b78b7a6c5bbd049286d8d8a26a1be4a0b7d9c16034",
+          "bytes": 89686,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0024": {
+      "code": "0024",
+      "species": "小葉南洋杉",
+      "scientificName": "Araucaria columnaris (G.Forst.) Hook.  ",
+      "query": "Araucaria columnaris",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "0 Araucaria columnaris New Caledonia.jpg",
+          "url": "./assets/species-reference/0024-1417a12f8633.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:0_Araucaria_columnaris_New_Caledonia.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/0f/0_Araucaria_columnaris_New_Caledonia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/0_Araucaria_columnaris_New_Caledonia.jpg/960px-0_Araucaria_columnaris_New_Caledonia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "my LifeShow from Paris, France",
+          "license": "CC BY 2.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+          "credit": "NC21",
+          "retrievedAt": "2026-11-05",
+          "sha256": "1417a12f86337ed43a39d69194da82c7ca69a80ce104cc7f65a170b7c0faa00b",
+          "bytes": 184757,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0075": {
+      "code": "0075",
+      "species": "白玉蘭/玉蘭花",
+      "scientificName": "Magnolia × alba (DC.) Figlar  ",
+      "query": "Magnolia × alba",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Michelia alba (Campii).jpg",
+          "url": "./assets/species-reference/0075-e29b214abebf.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Michelia_alba_(Campii).jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Michelia_alba_%28Campii%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Michelia_alba_%28Campii%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Loma at Thai Wikipedia",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "Transferred from th.wikipedia to Commons.",
+          "retrievedAt": "2026-11-05",
+          "sha256": "e29b214abebf7967298b891cb3009520276f111c8939cf30275727c4a3306534",
+          "bytes": 17058,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0081": {
+      "code": "0081",
+      "species": "光蠟樹/白蠟樹/白雞油",
+      "scientificName": "Fraxinus griffithii C.B. Clarke",
+      "query": "Fraxinus griffithii",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Fraxinus griffithii3.jpg",
+          "url": "./assets/species-reference/0081-b55a67d65f04.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Fraxinus_griffithii3.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fraxinus_griffithii3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Fraxinus_griffithii3.jpg/960px-Fraxinus_griffithii3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "KENPEI",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "KENPEI's photo",
+          "retrievedAt": "2026-11-05",
+          "sha256": "b55a67d65f04e09bba4838f5b02dee8bb42f2411e79d9b2357cf09285f3d69c9",
+          "bytes": 169809,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0161": {
+      "code": "0161",
+      "species": "茄冬/重陽木",
+      "scientificName": "Bischofia javanica  Blume  ",
+      "query": "Bischofia javanica",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Bischofia javanica.jpg",
+          "url": "./assets/species-reference/0161-2688c2686492.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Bischofia_javanica.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Bischofia_javanica.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Bischofia_javanica.jpg/960px-Bischofia_javanica.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Geographer",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "2688c268649295d22f33fc7bf5de2d65abd0ea0dc7676416604654c9cdebb377",
+          "bytes": 673398,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0060": {
+      "code": "0060",
+      "species": "水黃皮",
+      "scientificName": "Pongamia pinnata (L.) Pierre  ",
+      "query": "Pongamia pinnata",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Pongamia Pinnata 01.jpg",
+          "url": "./assets/species-reference/0060-0dedecd1aa53.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Pongamia_Pinnata_01.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pongamia_Pinnata_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Pongamia_Pinnata_01.jpg/960px-Pongamia_Pinnata_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Ganesh Mohan T",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "0dedecd1aa531329782a49f37941228d42774cf41fe75b9aa5fc22eee125c22c",
+          "bytes": 588277,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0279": {
+      "code": "0279",
+      "species": "臺灣五葉松",
+      "scientificName": "Pinus morrisonicola Hayata",
+      "query": "Pinus morrisonicola",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "南投縣信義鄉 東埔山登山步道 - panoramio (9).jpg",
+          "url": "./assets/species-reference/0279-6bc2f2f29528.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:%E5%8D%97%E6%8A%95%E7%B8%A3%E4%BF%A1%E7%BE%A9%E9%84%89_%E6%9D%B1%E5%9F%94%E5%B1%B1%E7%99%BB%E5%B1%B1%E6%AD%A5%E9%81%93_-_panoramio_(9).jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f0/%E5%8D%97%E6%8A%95%E7%B8%A3%E4%BF%A1%E7%BE%A9%E9%84%89_%E6%9D%B1%E5%9F%94%E5%B1%B1%E7%99%BB%E5%B1%B1%E6%AD%A5%E9%81%93_-_panoramio_%289%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/%E5%8D%97%E6%8A%95%E7%B8%A3%E4%BF%A1%E7%BE%A9%E9%84%89_%E6%9D%B1%E5%9F%94%E5%B1%B1%E7%99%BB%E5%B1%B1%E6%AD%A5%E9%81%93_-_panoramio_%289%29.jpg/960px-%E5%8D%97%E6%8A%95%E7%B8%A3%E4%BF%A1%E7%BE%A9%E9%84%89_%E6%9D%B1%E5%9F%94%E5%B1%B1%E7%99%BB%E5%B1%B1%E6%AD%A5%E9%81%93_-_panoramio_%289%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Chi-Hung Lin",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "https://web.archive.org/web/20161023032202/http://www.panoramio.com/photo/67366642",
+          "retrievedAt": "2026-11-05",
+          "sha256": "6bc2f2f295289b6d0e5062a02a2f810d5e6729ba237fc311bada0bf008352010",
+          "bytes": 148953,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0284": {
+      "code": "0284",
+      "species": "臺灣肖楠",
+      "scientificName": "Calocedrus macrolepis Kurz. var. formosana (Florin) W.C. Cheng & L.K. Fu",
+      "query": "Calocedrus macrolepis var. formosana",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Calocedrus macrolepis var formosana4.jpg",
+          "url": "./assets/species-reference/0284-d4a1d8b1708e.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Calocedrus_macrolepis_var_formosana4.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/3/31/Calocedrus_macrolepis_var_formosana4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Calocedrus_macrolepis_var_formosana4.jpg/960px-Calocedrus_macrolepis_var_formosana4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "KENPEI",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "KENPEI's photo",
+          "retrievedAt": "2026-11-05",
+          "sha256": "d4a1d8b1708e5867337346efce19b3a2d4a8d33aa14a82b330d38ed5bdb13255",
+          "bytes": 320013,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0083": {
+      "code": "0083",
+      "species": "印度紫檀",
+      "scientificName": "Pterocarpus indicus Willd.  ",
+      "query": "Pterocarpus indicus",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Perjalanan Sidrap.jpg",
+          "url": "./assets/species-reference/0083-1dd6ee24daee.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Perjalanan_Sidrap.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Perjalanan_Sidrap.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Perjalanan_Sidrap.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Imingphotography",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "1dd6ee24daeeac8bec94bede4fddada959fe995606228abd7390ae16ec6e4c4b",
+          "bytes": 51097,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0063": {
+      "code": "0063",
+      "species": "火筒樹",
+      "scientificName": "Leea guineensis G. Don",
+      "query": "Leea guineensis",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Starr 980529-4261 Leea guineensis.jpg",
+          "url": "./assets/species-reference/0063-dfca0015c7b9.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Starr_980529-4261_Leea_guineensis.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Starr_980529-4261_Leea_guineensis.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Starr_980529-4261_Leea_guineensis.jpg/960px-Starr_980529-4261_Leea_guineensis.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Forest & Kim Starr",
+          "license": "CC BY 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+          "credit": "Plants of Hawaii, Image 980529-4261 from http://www.hear.org/starr/plants/images/image/?q=980529-4261",
+          "retrievedAt": "2026-11-05",
+          "sha256": "dfca0015c7b92c766243e0ec2eedcf18dbad9727a77b17b323e91436adf2602d",
+          "bytes": 319199,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0250": {
+      "code": "0250",
+      "species": "黃金風鈴木",
+      "scientificName": "Handroanthus chrysanthus (Jacq.) S.O.Grose  ",
+      "query": "Handroanthus chrysanthus",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Araguaney.jpg",
+          "url": "./assets/species-reference/0250-36f46ed33586.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Araguaney.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/74/Araguaney.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/7/74/Araguaney.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "No machine-readable author provided. Fev assumed (based on copyright claims).",
+          "license": "Public domain",
+          "licenseURL": "https://commons.wikimedia.org/wiki/File:Araguaney.jpg",
+          "credit": "No machine-readable source provided. Own work assumed (based on copyright claims).",
+          "retrievedAt": "2026-11-05",
+          "sha256": "36f46ed335864d282d83d07cb631d44af7feca0dac0f623707d03c2a4498ed01",
+          "bytes": 1080275,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0306": {
+      "code": "0306",
+      "species": "鳳凰木",
+      "scientificName": "Delonix regia (Boj. ex Hook) Raf.",
+      "query": "Delonix regia",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "RoyalPoinciana.jpg",
+          "url": "./assets/species-reference/0306-a63094d7ff35.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:RoyalPoinciana.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/ed/RoyalPoinciana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/e/ed/RoyalPoinciana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Stephen Lea",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "first upload en.wikipedia 06:25, 12 June 2004 by Seglea as en:Image:RoyalPoinciana.jpg (150563 bytes) (Royal Poinciana in the courtyard of Santo Domingo, Oaxaca)",
+          "retrievedAt": "2026-11-05",
+          "sha256": "a63094d7ff35f4ce67ad4f9a8bd9a6d611fcfb131b31cb84fad95f85531d924b",
+          "bytes": 150563,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0116": {
+      "code": "0116",
+      "species": "波羅蜜",
+      "scientificName": "Artocarpus heterophyllus Lam.",
+      "query": "Artocarpus heterophyllus",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Artocarpus heterophyllus 3.jpg",
+          "url": "./assets/species-reference/0116-05e3696363e8.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Artocarpus_heterophyllus_3.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Artocarpus_heterophyllus_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Artocarpus_heterophyllus_3.jpg/960px-Artocarpus_heterophyllus_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Franz Xaver",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "05e3696363e81f86a0daa5df8b6303e81f1a861ec9ed827c4cf140c59e87bdfc",
+          "bytes": 270488,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0004": {
+      "code": "0004",
+      "species": "人心果",
+      "scientificName": "Manilkara zapota (L.) Van Royen",
+      "query": "Manilkara zapota",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "ManilZapot 060416 4939 rwg.jpg",
+          "url": "./assets/species-reference/0004-9d49b8704973.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:ManilZapot_060416_4939_rwg.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/e6/ManilZapot_060416_4939_rwg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/e/e6/ManilZapot_060416_4939_rwg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "W.A. Djatmiko (Wie146)",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "9d49b870497352dd57627d77bacbaaf1734ce9589694d41c9d153651e8a5a10e",
+          "bytes": 182325,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0346": {
+      "code": "0346",
+      "species": "瓊崖海棠/胡桐",
+      "scientificName": "Calophyllum inophyllum L.",
+      "query": "Calophyllum inophyllum",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Starr 010309-0546 Calophyllum inophyllum.jpg",
+          "url": "./assets/species-reference/0346-30de835c691d.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Starr_010309-0546_Calophyllum_inophyllum.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Starr_010309-0546_Calophyllum_inophyllum.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Starr_010309-0546_Calophyllum_inophyllum.jpg/960px-Starr_010309-0546_Calophyllum_inophyllum.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Forest & Kim Starr",
+          "license": "CC BY 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+          "credit": "Plants of Hawaii, Image 010309-0546 from http://www.starrenvironmental.com/plants/images/image/?q=010309-0546",
+          "retrievedAt": "2026-11-05",
+          "sha256": "30de835c691df9ddac49df3a6787c895fb8b00d189080cfc07bfaa60aedce0a3",
+          "bytes": 122869,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0124": {
+      "code": "0124",
+      "species": "阿勒勃/波斯皂莢",
+      "scientificName": "Cassia fistula  L.  ",
+      "query": "Cassia fistula",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Konnamaram.JPG",
+          "url": "./assets/species-reference/0124-ebf6c3ac62c1.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Konnamaram.JPG",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Konnamaram.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Konnamaram.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Original uploader was Suniltg at en.wikipedia",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "Transferred from en.wikipedia",
+          "retrievedAt": "2026-11-05",
+          "sha256": "ebf6c3ac62c16fdcfb142a75b7b9e8ae2fd006f7cc9d1a6e0c5f2ebb558259f8",
+          "bytes": 241795,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0016": {
+      "code": "0016",
+      "species": "大葉桃花心木",
+      "scientificName": "Swietenia macrophylla King  ",
+      "query": "Swietenia macrophylla",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Leaves I IMG 8668.jpg",
+          "url": "./assets/species-reference/0016-79fe697a8a0b.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Leaves_I_IMG_8668.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Leaves_I_IMG_8668.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Leaves_I_IMG_8668.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "J.M.Garg",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "79fe697a8a0bbf72b736caec754381d066d2e8f04db6cc35027ede9b168a58a6",
+          "bytes": 499145,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0358": {
+      "code": "0358",
+      "species": "蘭嶼肉桂",
+      "scientificName": "Cinnamomum kotoense Kanehira & Sasaki",
+      "query": "Cinnamomum kotoense",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "蘭嶼肉桂 Cinnamomum kotoense 20210205100207 02.jpg",
+          "url": "./assets/species-reference/0358-58e34c06eb0f.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:%E8%98%AD%E5%B6%BC%E8%82%89%E6%A1%82_Cinnamomum_kotoense_20210205100207_02.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/1/14/%E8%98%AD%E5%B6%BC%E8%82%89%E6%A1%82_Cinnamomum_kotoense_20210205100207_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/%E8%98%AD%E5%B6%BC%E8%82%89%E6%A1%82_Cinnamomum_kotoense_20210205100207_02.jpg/960px-%E8%98%AD%E5%B6%BC%E8%82%89%E6%A1%82_Cinnamomum_kotoense_20210205100207_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Ping an Chang",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "58e34c06eb0f6856a5daf35e1393851eb85e266fd465d1c6b90a4809889e81ac",
+          "bytes": 193825,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0365": {
+      "code": "0365",
+      "species": "鐵刀木",
+      "scientificName": "Senna siamea (Lam.) Irwin & Barneby",
+      "query": "Senna siamea",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Kassod (Senna siamea) flowers W IMG 0540.jpg",
+          "url": "./assets/species-reference/0365-6141bd698b95.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Kassod_(Senna_siamea)_flowers_W_IMG_0540.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/84/Kassod_%28Senna_siamea%29_flowers_W_IMG_0540.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/8/84/Kassod_%28Senna_siamea%29_flowers_W_IMG_0540.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "J.M.Garg",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "6141bd698b95bc3484a705fba3a5d023bf5c9dbe3e754bcc52f8dbf86c33318c",
+          "bytes": 141599,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0261": {
+      "code": "0261",
+      "species": "楓香",
+      "scientificName": "Liquidambar formosana Hance",
+      "query": "Liquidambar formosana",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Liquidambar formosana 01.jpg",
+          "url": "./assets/species-reference/0261-ed57807ddbad.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Liquidambar_formosana_01.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Liquidambar_formosana_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Liquidambar_formosana_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Yoiyoi_kancho",
+          "license": "Public domain",
+          "licenseURL": "https://commons.wikimedia.org/wiki/File:Liquidambar_formosana_01.jpg",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "ed57807ddbad7f530a9c80f90c4812d3e1f39f524d3da905753344dc388a8f25",
+          "bytes": 148679,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0028": {
+      "code": "0028",
+      "species": "小葉欖仁",
+      "scientificName": "Terminalia mantaly H.Perrier  ",
+      "query": "Terminalia mantaly",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Terminlia mantaly 003.jpg",
+          "url": "./assets/species-reference/0028-d6156fa8ba15.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Terminlia_mantaly_003.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/81/Terminlia_mantaly_003.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Terminlia_mantaly_003.jpg/960px-Terminlia_mantaly_003.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Paulo Araujo Prado",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "d6156fa8ba1555e0a00ddc8b8203cfb7f88f506eedb46e86ac0e16fdb88f598d",
+          "bytes": 257778,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0013": {
+      "code": "0013",
+      "species": "大葉山欖",
+      "scientificName": "Palaquium formosanum  Hayata　  ",
+      "query": "Palaquium formosanum",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "大葉山欖 Palaquium formosanum -高雄原生植物園 Kaohsiung Original Botanical Garden, Taiwan- (26111914507).jpg",
+          "url": "./assets/species-reference/0013-889d8841f5e7.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E8%91%89%E5%B1%B1%E6%AC%96_Palaquium_formosanum_-%E9%AB%98%E9%9B%84%E5%8E%9F%E7%94%9F%E6%A4%8D%E7%89%A9%E5%9C%92_Kaohsiung_Original_Botanical_Garden,_Taiwan-_(26111914507).jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/be/%E5%A4%A7%E8%91%89%E5%B1%B1%E6%AC%96_Palaquium_formosanum_-%E9%AB%98%E9%9B%84%E5%8E%9F%E7%94%9F%E6%A4%8D%E7%89%A9%E5%9C%92_Kaohsiung_Original_Botanical_Garden%2C_Taiwan-_%2826111914507%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/%E5%A4%A7%E8%91%89%E5%B1%B1%E6%AC%96_Palaquium_formosanum_-%E9%AB%98%E9%9B%84%E5%8E%9F%E7%94%9F%E6%A4%8D%E7%89%A9%E5%9C%92_Kaohsiung_Original_Botanical_Garden%2C_Taiwan-_%2826111914507%29.jpg/960px-%E5%A4%A7%E8%91%89%E5%B1%B1%E6%AC%96_Palaquium_formosanum_-%E9%AB%98%E9%9B%84%E5%8E%9F%E7%94%9F%E6%A4%8D%E7%89%A9%E5%9C%92_Kaohsiung_Original_Botanical_Garden%2C_Taiwan-_%2826111914507%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "阿橋 HQ",
+          "license": "CC BY-SA 2.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+          "credit": "大葉山欖 Palaquium formosanum   [高雄原生植物園 Kaohsiung Original Botanical Garden, Taiwan]",
+          "retrievedAt": "2026-11-05",
+          "sha256": "889d8841f5e76755d011fa6a24c0380cfb5a575cdd4f4f02bab160c7ea9b09c1",
+          "bytes": 273547,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0356": {
+      "code": "0356",
+      "species": "麵包樹",
+      "scientificName": "Artocarpus treculianus Elmer  ",
+      "query": "Artocarpus treculianus",
+      "referenceOnly": true,
+      "photos": [],
+      "status": "pending",
+      "reason": "未找到可確認學名且具完整可重用授權的實拍照片，待人工補充。"
+    },
+    "0444": {
+      "code": "0444",
+      "species": "臭娘子",
+      "scientificName": "Premna serratifolia  L.  ",
+      "query": "Premna serratifolia",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Premna serratifolia.jpg",
+          "url": "./assets/species-reference/0444-adfd930fb71b.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Premna_serratifolia.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/71/Premna_serratifolia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Premna_serratifolia.jpg/960px-Premna_serratifolia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Tauʻolunga",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "adfd930fb71b3618574706f9c482d590c43014090bb97031c741401e149ddb14",
+          "bytes": 286774,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0190": {
+      "code": "0190",
+      "species": "臭辣樹/賊仔樹",
+      "scientificName": "Tetradium glabrifolium (Champ. ex Benth.) T. Hartley",
+      "query": "Tetradium glabrifolium",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Tetradium glabrifolium.jpg",
+          "url": "./assets/species-reference/0190-362c7da2485c.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Tetradium_glabrifolium.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Tetradium_glabrifolium.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Tetradium_glabrifolium.jpg/960px-Tetradium_glabrifolium.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "wlcutler",
+          "license": "CC BY 2.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+          "credit": "https://www.flickr.com/photos/wlcutler/8149644234/",
+          "retrievedAt": "2026-11-05",
+          "sha256": "362c7da2485c3bbe6d723bd65b366b58984fe49b85f809e463e28c2b31a9e459",
+          "bytes": 139958,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0202": {
+      "code": "0202",
+      "species": "梅花",
+      "scientificName": "Prunus mume (Siebold) Siebold & Zucc.",
+      "query": "Prunus mume",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Plum flower 1.JPG",
+          "url": "./assets/species-reference/0202-947873db5e35.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Plum_flower_1.JPG",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Plum_flower_1.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Plum_flower_1.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Original uploader was 用心阁 at zh.wikipedia",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "Transferred from zh.wikipedia; transferred to Commons by Shizhao using CommonsHelper.",
+          "retrievedAt": "2026-11-05",
+          "sha256": "947873db5e357de4bca51c4a5b90fe67ada0bc587cc5354306cdeae7e56ddf96",
+          "bytes": 26680,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0216": {
+      "code": "0216",
+      "species": "魚木",
+      "scientificName": "Crateva adansonii subsp. formosensis Jacobs",
+      "query": "Crateva formosensis",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Crateva formosensis (魚木).jpg",
+          "url": "./assets/species-reference/0216-ab0506133c37.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Crateva_formosensis_(%E9%AD%9A%E6%9C%A8).jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Crateva_formosensis_%28%E9%AD%9A%E6%9C%A8%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Crateva_formosensis_%28%E9%AD%9A%E6%9C%A8%29.jpg/960px-Crateva_formosensis_%28%E9%AD%9A%E6%9C%A8%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Pc1878",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "ab0506133c37f1f3dbdbced3a93aac2a203fa2e53b59de46e7e57a58b9442407",
+          "bytes": 513095,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available",
+      "matchNote": "使用魚木的現行分類名稱搜尋，保留清冊原學名。",
+      "taxonomySource": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A2742338-4"
+    },
+    "0164": {
+      "code": "0164",
+      "species": "食茱萸/刺楤/紅刺楤",
+      "scientificName": "Zanthoxylum ailanthoides Siebold & Zucc.  ",
+      "query": "Zanthoxylum ailanthoides",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "食茱萸.jpg",
+          "url": "./assets/species-reference/0164-97e7d16fb446.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:%E9%A3%9F%E8%8C%B1%E8%90%B8.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/8/8f/%E9%A3%9F%E8%8C%B1%E8%90%B8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/%E9%A3%9F%E8%8C%B1%E8%90%B8.jpg/960px-%E9%A3%9F%E8%8C%B1%E8%90%B8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Shih-Shiuan Kao",
+          "license": "CC BY-SA 2.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+          "credit": "originally posted to Flickr as 食茱萸",
+          "retrievedAt": "2026-11-05",
+          "sha256": "97e7d16fb44680e105cbb7cca6116e489df955055c3169e4923f2ecdd2d402a3",
+          "bytes": 555021,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0298": {
+      "code": "0298",
+      "species": "蒲桃/香果",
+      "scientificName": "Syzygium jambos (L.) Alston",
+      "query": "Syzygium jambos",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Syzygium jambos Fruit and seeds IMG 4906.JPG",
+          "url": "./assets/species-reference/0298-d10df909b156.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Syzygium_jambos_Fruit_and_seeds_IMG_4906.JPG",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Syzygium_jambos_Fruit_and_seeds_IMG_4906.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Syzygium_jambos_Fruit_and_seeds_IMG_4906.JPG/960px-Syzygium_jambos_Fruit_and_seeds_IMG_4906.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "JonRichfield",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "d10df909b1560dfe48e7bbb7e72c22085669ebb2796922b0961eb953e4b7cb5a",
+          "bytes": 173146,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0014": {
+      "code": "0014",
+      "species": "大葉合歡",
+      "scientificName": "Albizia lebbeck (L.) Benth.",
+      "query": "Albizia lebbeck",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Albizia lebbeck (Siris) in Hyderabad W IMG 7116.jpg",
+          "url": "./assets/species-reference/0014-603444dad83a.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Albizia_lebbeck_(Siris)_in_Hyderabad_W_IMG_7116.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/7/76/Albizia_lebbeck_%28Siris%29_in_Hyderabad_W_IMG_7116.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/7/76/Albizia_lebbeck_%28Siris%29_in_Hyderabad_W_IMG_7116.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "J.M.Garg",
+          "license": "CC BY 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "603444dad83a5348d4a5b7e29d3ae686186efdf59cea2eaddb34ed9e6af98d2e",
+          "bytes": 164862,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0241": {
+      "code": "0241",
+      "species": "菲律賓饅頭果",
+      "scientificName": "Glochidion philippicum (Cav.) C.B. Rob.  ",
+      "query": "Glochidion philippicum",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Glochidion-philippicum-SF23006-01.jpg",
+          "url": "./assets/species-reference/0241-dd7db4da8abe.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Glochidion-philippicum-SF23006-01.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/2/20/Glochidion-philippicum-SF23006-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Glochidion-philippicum-SF23006-01.jpg/960px-Glochidion-philippicum-SF23006-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Steve Fitzgerald",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "dd7db4da8abe2c272c3f3552f4a2926dd67aa724c993e67b7649f3685d0cb4ef",
+          "bytes": 299112,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0542": {
+      "code": "0542",
+      "species": "咖哩葉/可因氏月橘",
+      "scientificName": "Murraya koenigii  (L.) Spreng.  ",
+      "query": "Murraya koenigii",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Curry Trees.jpg",
+          "url": "./assets/species-reference/0542-49ad211fd5d4.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Curry_Trees.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Curry_Trees.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/Curry_Trees.jpg/960px-Curry_Trees.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Rantingsteve at English Wikipedia",
+          "license": "Public domain",
+          "licenseURL": "https://commons.wikimedia.org/wiki/File:Curry_Trees.jpg",
+          "credit": "Transferred from en.wikipedia to Commons.",
+          "retrievedAt": "2026-11-05",
+          "sha256": "49ad211fd5d4f6a1a21b9edebf674fce9390ce1d2f1d646cf130d4fdf657999d",
+          "bytes": 318558,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0079": {
+      "code": "0079",
+      "species": "石栗",
+      "scientificName": "Aleurites moluccanus (L.) Willd.  ",
+      "query": "Aleurites moluccanus",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Starr 020803-0119 Aleurites moluccana.jpg",
+          "url": "./assets/species-reference/0079-8598331fca59.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Starr_020803-0119_Aleurites_moluccana.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/5/58/Starr_020803-0119_Aleurites_moluccana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Starr_020803-0119_Aleurites_moluccana.jpg/960px-Starr_020803-0119_Aleurites_moluccana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Forest & Kim Starr",
+          "license": "CC BY 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+          "credit": "Plants of Hawaii, Image 020803-0119 from http://www.starrenvironmental.com/plants/images/image/?q=020803-0119",
+          "retrievedAt": "2026-11-05",
+          "sha256": "8598331fca597a1a03e3e1fd1b1bdce1ae7d6ea7174bf75cafe65074c0072cb0",
+          "bytes": 238392,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0394": {
+      "code": "0394",
+      "species": "孔雀豆",
+      "scientificName": "Adenanthera pavonina L.  ",
+      "query": "Adenanthera pavonina",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Adenanthera pavonina.jpg",
+          "url": "./assets/species-reference/0394-288e30a2dfd5.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Adenanthera_pavonina.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Adenanthera_pavonina.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Adenanthera_pavonina.jpg/960px-Adenanthera_pavonina.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Tauʻolunga",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "288e30a2dfd5b5a46663946809e0d35af54a76d84169920bfe92beedbfea48ef",
+          "bytes": 184801,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0363": {
+      "code": "0363",
+      "species": "蘭嶼羅漢松",
+      "scientificName": "Podocarpus costalis Presl",
+      "query": "Podocarpus costalis",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "蘭嶼羅漢松(Podocarpus costalis)-1.jpg",
+          "url": "./assets/species-reference/0363-2443771652ee.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:%E8%98%AD%E5%B6%BC%E7%BE%85%E6%BC%A2%E6%9D%BE(Podocarpus_costalis)-1.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/b/bc/%E8%98%AD%E5%B6%BC%E7%BE%85%E6%BC%A2%E6%9D%BE%28Podocarpus_costalis%29-1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/%E8%98%AD%E5%B6%BC%E7%BE%85%E6%BC%A2%E6%9D%BE%28Podocarpus_costalis%29-1.jpg/960px-%E8%98%AD%E5%B6%BC%E7%BE%85%E6%BC%A2%E6%9D%BE%28Podocarpus_costalis%29-1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Pc1878",
+          "license": "CC BY-SA 3.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "2443771652ee84312271601d52b09fff410faba0c7d6c482875ba71ae2f95e8d",
+          "bytes": 264033,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available"
+    },
+    "0297": {
+      "code": "0297",
+      "species": "臺灣欒樹",
+      "scientificName": "Koelreuteria henryi Dummer",
+      "query": "Koelreuteria elegans subsp. formosana",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "Chinese Rain Tree ( Koelreuteria ) - flowers and fruits.jpg",
+          "url": "./assets/species-reference/0297-7a300a6fc873.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:Chinese_Rain_Tree_(_Koelreuteria_)_-_flowers_and_fruits.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/4/41/Chinese_Rain_Tree_%28_Koelreuteria_%29_-_flowers_and_fruits.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://upload.wikimedia.org/wikipedia/commons/4/41/Chinese_Rain_Tree_%28_Koelreuteria_%29_-_flowers_and_fruits.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "artist": "Tatiana Gerus",
+          "license": "CC BY 2.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+          "credit": "originally posted to Flickr as Chinese Rain Tree ( Koelreuteria ) - flowers and fruits",
+          "retrievedAt": "2026-11-05",
+          "sha256": "7a300a6fc873f7a8f9a08909c18b40896223d460821b89fb29a5fa33a5289322",
+          "bytes": 186843,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available",
+      "matchNote": "依 Kew 與林試所異名對照搜尋，保留清冊原學名。",
+      "taxonomySource": "https://www.tfri.gov.tw/News_Content.aspx?n=7658&s=217"
+    },
+    "0213": {
+      "code": "0213",
+      "species": "陰香/印尼肉桂/假肉桂",
+      "scientificName": "Cinnamomum burmannii (Nees & T. Nees) Blume",
+      "query": "Cinnamomum burmanni",
+      "referenceOnly": true,
+      "photos": [
+        {
+          "title": "陰香 Cinnamomum burmanni 20210627102154 27.jpg",
+          "url": "./assets/species-reference/0213-4ea94ac8a933.jpg",
+          "source": "https://commons.wikimedia.org/wiki/File:%E9%99%B0%E9%A6%99_Cinnamomum_burmanni_20210627102154_27.jpg",
+          "originalURL": "https://upload.wikimedia.org/wikipedia/commons/d/d9/%E9%99%B0%E9%A6%99_Cinnamomum_burmanni_20210627102154_27.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "downloadURL": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/%E9%99%B0%E9%A6%99_Cinnamomum_burmanni_20210627102154_27.jpg/960px-%E9%99%B0%E9%A6%99_Cinnamomum_burmanni_20210627102154_27.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "artist": "Ping an Chang",
+          "license": "CC BY-SA 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+          "credit": "Own work",
+          "retrievedAt": "2026-11-05",
+          "sha256": "4ea94ac8a9336f1f6d06e0109aa36a4902a7e6704fc2510cc6d507c24bae35fe",
+          "bytes": 341569,
+          "changes": "Wikimedia-provided thumbnail; no further edits"
+        }
+      ],
+      "status": "available",
+      "matchNote": "使用清冊學名的另一拼寫搜尋，保留原始資料。",
+      "taxonomySource": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=119261"
+    }
+  }
+}
