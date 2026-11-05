@@ -1,5 +1,5 @@
 let manifest;
-export function loadSpeciesLibrary(){return manifest??=fetch('./species-photos.json').then(r=>{if(!r.ok)throw Error('參考照片清單載入失敗');return r.json();}).catch(e=>{manifest=null;throw e;});}
+export function loadSpeciesLibrary(){return manifest??=fetch('./species-photos.json?v=2',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('參考照片清單載入失敗');return r.json();}).catch(e=>{manifest=null;throw e;});}
 export function referenceForPlant(data,plant){return data?.species?.[plant.sourceSpeciesCode]||null;}
 export function referenceFigure(photo,name){
  const figure=document.createElement('figure');
