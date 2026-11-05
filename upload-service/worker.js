@@ -1,4 +1,5 @@
 import {createRemoteJWKSet, jwtVerify} from 'jose';
+import {handleAI} from './ai.js';
 const keys=createRemoteJWKSet(new URL('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'));
 const MAX_IMAGE=650000;
 export async function verifyTeacher(token,env,keySet=keys){
@@ -48,6 +49,10 @@ export default {async fetch(request,env){
  const reply=(value,status=200)=>new Response(JSON.stringify(value),{status,headers});
  if(origin!==env.ALLOWED_ORIGIN)return reply({error:'來源網域不允許'},403);
  if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Authorization, Content-Type','Access-Control-Max-Age':'3600'}});
+ if(new URL(request.url).pathname==='/ai/chat'&&request.method==='POST'){
+  try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'僅限已驗證的管理員登入。'},401);}
+  return handleAI(request,env,headers);
+ }
  if(new URL(request.url).pathname!=='/upload'||request.method!=='POST')return reply({error:'找不到端點'},404);
  if(!env.GITHUB_TOKEN)return reply({error:'管理員尚未設定 GitHub 寫入授權，照片仍保留本機'},503);
  try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'登入已失效或非管理員，請重新登入'},401);}

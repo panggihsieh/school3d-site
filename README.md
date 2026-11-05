@@ -51,3 +51,7 @@ Third-party software: Three.js 0.180.0 (MIT), see `dist/vendor/THREE-LICENSE.txt
 左上角「大南・生態校園」標誌連點 5 次（每次間隔不超過 3 秒），彈出教師拍照／GPS 採集後台 QR Code；也可點視窗內連結在目前裝置開啟。鍵盤可聚焦標誌連按 Enter。首頁不常駐顯示管理後台連結與 QR Code。
 
 後台僅接受已驗證的 teacher.hsieh@gmail.com Google 帳號，其他帳號隱藏工作區並自動登出。隱藏入口只是操作入口，實際上傳仍由 Worker 驗證 Firebase JWT、指定管理員信箱及 Google 登入方式；直接知道後台網址也不會取得上傳權限。雲端上傳授權設定仍依 upload-service/SETUP.md 完成。
+
+## 教師 GPT-6.1 Sol 對話
+
+field.html 登入管理員後可使用文字／照片串流問答，搭配瀏覽器語音輸入、回答朗讀及逐輪連續語音。切換植物會重設對話並帶入新單株資料；不轉送目前 GPS。OpenAI API Key 僅放在既有 Cloudflare Worker 的 Secret。需由帳號擁有人部署新版 Worker 並設定 OPENAI_API_KEY 後才能真正呼叫，詳見 [OpenAI 啟用步驟](upload-service/OPENAI-SETUP.md)。
