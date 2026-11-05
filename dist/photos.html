@@ -22,7 +22,9 @@
 <label>分類<select name="category"><option value="campus">校園照片</option><option value="plant">植物照片</option><option value="panorama">360° 環景素材</option></select></label>
 <label>對應地點或植物<select name="target" required><option value="">請選擇</option></select></label>
 <label>說明<textarea name="description" maxlength="1000" rows="3"></textarea></label>
-<label>照片（JPG／PNG／WebP，最多 20 MB）<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+<p>先選擇地點，再拍攝或從相簿挑選照片。一般手機拍照適用校園與植物照片，完整 360° 環景請使用專用素材。</p>
+<label>開啟相機拍照<input name="camera" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label>
+<label>或從相簿選擇（JPG／PNG／WebP，最多 20 MB）<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
 <img id="preview" alt="待上傳照片預覽" hidden><p>環景素材先保存於相簿；目前尚未串接可移動的環景導覽。</p><button type="submit">上傳並公開</button>
 </fieldset></form></section>
 <section><h2>公開相簿</h2><label>篩選分類<select id="filter"><option value="all">全部</option><option value="campus">校園照片</option><option value="plant">植物照片</option><option value="panorama">360° 環景素材</option></select></label><p id="gallery-status" role="status">雲端啟用後顯示照片。</p><div id="gallery" class="gallery"></div></section>

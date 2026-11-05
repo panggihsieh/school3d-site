@@ -1,7 +1,7 @@
 import { firebaseConfig, adminEmail } from './firebase-config.js';
 const $ = selector => document.querySelector(selector);
 const labels = { campus: '校園照片', plant: '植物照片', panorama: '360° 環景素材' };
-let sdk, user, photos = [], previewURL;
+let sdk, user, photos = [], previewURL, selectedFile;
 const message = text => { $('#status').textContent = text; };
 const isAdmin = () => user?.email === adminEmail && user.emailVerified;
 function render() {
@@ -46,11 +46,18 @@ async function load() {
 }
 $('#filter').onchange = render;
 const fileInput = document.querySelector('[name=photo]');
-fileInput.onchange = () => {
+const cameraInput = document.querySelector('[name=camera]');
+function previewFile(input, otherInput) {
+  const file = input.files[0];
+  if (!file) return;
+  otherInput.value = '';
+  selectedFile = file;
   if (previewURL) URL.revokeObjectURL(previewURL);
-  const file = fileInput.files[0]; $('#preview').hidden = !file;
+  $('#preview').hidden = !file;
   if (file) { previewURL = URL.createObjectURL(file); $('#preview').src = previewURL; }
-};
+}
+fileInput.onchange = () => previewFile(fileInput, cameraInput);
+cameraInput.onchange = () => previewFile(cameraInput, fileInput);
 async function start() {
   if (!['apiKey','authDomain','projectId','storageBucket','appId'].every(k => firebaseConfig[k])) {
     $('#setup-state').textContent = '尚未啟用：請依序完成以下設定。'; return;
@@ -77,10 +84,11 @@ async function start() {
   });
   $('#upload-form').onsubmit = async event => {
     event.preventDefault(); if (!isAdmin()) return;
-    const form = event.currentTarget; const file = fileInput.files[0];
+    const form = event.currentTarget; const file = selectedFile;
     if (!file || !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 20*1024*1024 || !file.size) { message('請選擇 20 MB 以下的 JPG、PNG 或 WebP。'); return; }
     if (form.elements.category.value === 'panorama') {
-      const img = new Image(); img.src = previewURL; await img.decode();
+      const img = new Image(); img.src = previewURL;
+      try { await img.decode(); } catch { message('圖片無法讀取，請重新選擇 JPG、PNG 或 WebP。'); return; }
       if (Math.abs(img.width / img.height - 2) > .02) { message('環景照片應為 2:1 完整球面圖片，請確認檔案。'); return; }
     }
     $('#upload-fields').disabled = true; message('正在上傳，請勿關閉頁面…');
@@ -91,7 +99,7 @@ async function start() {
       const ref = storage.ref(sdk.storage, path); await storage.uploadBytes(ref, file, { contentType: file.type }); uploaded = true;
       const url = await storage.getDownloadURL(ref);
       await db.setDoc(record, { title: form.elements.title.value.trim(), description: form.elements.description.value, category: form.elements.category.value, target: form.elements.target.value, path, url, createdAt: db.serverTimestamp() });
-      form.reset(); $('#preview').hidden = true; if (previewURL) URL.revokeObjectURL(previewURL); await load(); message('上傳完成，照片已公開。');
+      form.reset(); selectedFile = undefined; $('#preview').hidden = true; if (previewURL) URL.revokeObjectURL(previewURL); await load(); message('上傳完成，照片已公開。');
     } catch (e) {
       // 若紀錄已建立但重新整理相簿失敗，不移除已發布的圖片。
       if (uploaded) {
