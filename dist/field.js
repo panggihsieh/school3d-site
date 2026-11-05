@@ -1,0 +1,67 @@
+import {firebaseConfig,adminEmail} from './firebase-config.js';
+import {uploadServiceURL} from './field-config.js';
+import {photoKinds,nearbyTrees,arrivalEligible} from './field-domain.js';
+const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,arrivalFor='',draftDB,drafts=[],objectURLs=[];
+const admin=()=>user?.email===adminEmail&&user.emailVerified;
+function say(text){if(!$('#voice').checked||!('speechSynthesis' in window))return;speechSynthesis.cancel();const speech=new SpeechSynthesisUtterance(text);speech.lang='zh-TW';speech.rate=.9;speechSynthesis.speak(speech);}
+function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(watch);watch=undefined;$('#locate').disabled=false;$('#stop').disabled=true;}
+function setTarget(id){selected=trees.find(t=>t.id===id);$('#tree').value=id;$('#confirmed').checked=false;$('#camera').disabled=$('#album').disabled=true;arrivalFor='';renderTarget();drawMap();}
+function renderTarget(){if(!selected)return;$('#target').replaceChildren();const h=document.createElement('h3');h.textContent=selected.name;const p=document.createElement('p');p.textContent=`平台編號 ${selected.sourceTreeId}；${selected.latitude}, ${selected.longitude}。${position?`距離約 ${Math.round(nearbyTrees([selected],position)[0].distance)} 公尺。`:''}平台位置待現場核對。`;$('#target').append(h,p);}
+function options(){const search=$('#tree-search').value.trim().toLowerCase();const list=trees.filter(t=>`${t.name} ${t.label} ${t.sourceTreeId}`.toLowerCase().includes(search));$('#tree').replaceChildren();for(const t of list){const o=document.createElement('option');o.value=t.id;o.textContent=t.name;$('#tree').append(o);}if(list.some(t=>t.id===selected?.id))$('#tree').value=selected.id;else if(list[0])setTarget(list[0].id);}
+function drawMap(){
+ const svg=$('#field-map');svg.replaceChildren();if(!trees.length)return;
+ const lat=trees.reduce((s,t)=>s+t.latitude,0)/trees.length,lon=trees.reduce((s,t)=>s+t.longitude,0)/trees.length;
+ const xy=p=>[(p.longitude-lon)*111320*Math.cos(lat*Math.PI/180),(p.latitude-lat)*111320];
+ const coords=trees.map(xy);const xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]);const minX=Math.min(...xs)-15,maxX=Math.max(...xs)+15,minY=Math.min(...ys)-15,maxY=Math.max(...ys)+15;
+ const scale=Math.min(550/(maxX-minX),350/(maxY-minY));const project=p=>{const [x,y]=xy(p);return [25+(x-minX)*scale,375-(y-minY)*scale];};
+ const node=(tag,attrs,text)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);if(text)el.textContent=text;svg.append(el);return el;};
+ node('text',{x:550,y:25,fill:'#193d30'},'北 ↑');
+ for(const t of trees){const [cx,cy]=project(t);const pin=node('circle',{cx,cy,r:t.id===selected?.id?8:3.5,fill:t.id===selected?.id?'#d06c0b':'#37814c'});const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=t.name;pin.append(title);}
+ if(position){const [cx,cy]=project(position);if(cx>=0&&cx<=600&&cy>=0&&cy<=400){node('circle',{cx,cy,r:position.accuracy*scale,fill:'#2187cf22',stroke:'#2187cf'});node('circle',{cx,cy,r:6,fill:'#0876ca',stroke:'white','stroke-width':2});}else node('text',{x:20,y:25,fill:'#8d3d20'},'你目前在校園座標圖範圍外');}
+}
+function locate(){
+ if(!admin())return;if(!navigator.geolocation){$('#gps-status').textContent='此瀏覽器不支援定位。';return;}
+ stopLocation();$('#locate').disabled=true;$('#stop').disabled=false;$('#gps-status').textContent='定位中，請允許 Safari 使用位置…';
+ watch=navigator.geolocation.watchPosition(p=>{
+  position={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy,time:p.timestamp};
+  $('#gps-status').textContent=`定位精度約 ±${Math.round(position.accuracy)} 公尺，更新於 ${new Date(p.timestamp).toLocaleTimeString('zh-TW')}。${position.accuracy>25?'目前誤差較大，暫不觸發到達提醒。':''}`;
+  const nearby=nearbyTrees(trees,position);$('#nearby').replaceChildren();for(const t of nearby.slice(0,5)){const b=document.createElement('button');b.textContent=`${t.label} ${t.species} · 約 ${Math.round(t.distance)} 公尺`;b.onclick=()=>setTarget(t.id);$('#nearby').append(b);}
+  renderTarget();drawMap();if(selected){const target=nearby.find(t=>t.id===selected.id);if(arrivalEligible(target.distance,position.accuracy)&&arrivalFor!==selected.id){arrivalFor=selected.id;say(`已接近${selected.label}，${selected.species}。請確認樹木編號，再拍照。`);}}
+ },e=>{$('#gps-status').textContent=e.code===1?'定位權限未開啟，請在 Safari 網站設定允許位置；仍可手動選樹拍照。':e.code===3?'定位逾時，請移到空曠處重試。':'無法取得位置，請檢查定位服務。';stopLocation();},{enableHighAccuracy:true,maximumAge:5000,timeout:20000});
+}
+async function openDrafts(){return new Promise((resolve,reject)=>{const r=indexedDB.open('danan-field-photos',1);r.onupgradeneeded=()=>r.result.createObjectStore('photos',{keyPath:'id'});r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+function store(method,value){return new Promise((resolve,reject)=>{const tx=draftDB.transaction('photos',method==='getAll'?'readonly':'readwrite');const r=tx.objectStore('photos')[method](...(value===undefined?[]:[value]));let result;r.onsuccess=()=>result=r.result;tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error('保存失敗'));});}
+async function compress(file){
+ const url=URL.createObjectURL(file);try{const image=new Image();image.src=url;await image.decode();let size=1600;
+  for(let attempt=0;attempt<4;attempt++){const scale=Math.min(1,size/Math.max(image.naturalWidth,image.naturalHeight));const canvas=document.createElement('canvas');canvas.width=Math.round(image.naturalWidth*scale);canvas.height=Math.round(image.naturalHeight*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',.78));if(blob&&blob.size<=650000)return blob;size=Math.round(size*.75);}throw Error('照片壓縮後仍太大');
+ }finally{URL.revokeObjectURL(url);}
+}
+async function capture(input){const file=input.files[0];if(!file||!admin()||!$('#confirmed').checked||!selected)return;
+ const target={...selected},kind=$('#kind').value;$('#camera').disabled=$('#album').disabled=true;$('#photo-status').textContent='正在壓縮並保存照片，請稍候…';
+ try{const blob=await compress(file);await store('put',{id:crypto.randomUUID(),owner:user.uid,target:target.id,label:target.label,title:`${target.name} ${photoKinds.find(k=>k[0]===kind)[1]}`,description:'',kind,blob,createdAt:Date.now(),state:'draft'});$('#photo-status').textContent='已保存本機，尚未上傳。請在下方確認照片再按「上傳公開」。';say('照片已保存，請點選上傳公開。');await renderDrafts();}
+ catch(e){$('#photo-status').textContent=`保存失敗：${e.message}。請保留手機相簿原圖後重試。`;}
+ finally{input.value='';$('#camera').disabled=$('#album').disabled=!$('#confirmed').checked;}
+}
+function blobBase64(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.onerror=()=>reject(r.error);r.readAsDataURL(blob);});}
+async function upload(d,button){if(!admin()||d.owner!==user.uid)return;if(!uploadServiceURL){$('#queue-status').textContent='上傳服務尚待設定；照片已保留本機，可先匯出備份。';return;}if(!confirm('這張照片將公開到 GitHub 與校園網站，確定上傳？'))return;
+ button.disabled=true;$('#queue-status').textContent='正在上傳至 GitHub，請保持頁面開啟…';
+ try{const token=await user.getIdToken();const r=await fetch(`${uploadServiceURL.replace(/\/$/,'')}/upload`,{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({id:d.id,target:d.target,kind:d.kind,title:d.title,description:d.description,image:await blobBase64(d.blob)}),signal:AbortSignal.timeout(90000)});const result=await r.json();if(!r.ok)throw Error(result.error||`上傳失敗 ${r.status}`);await store('put',{...d,state:'published',commit:result.commit});$('#queue-status').textContent='GitHub 已接收，等待網站部署完成後前台顯示。';say('上傳成功，等待網站更新。');await renderDrafts();}
+ catch(e){$('#queue-status').textContent=`${e.message}。照片仍在本機，可重新按上傳；相同照片不會重複發布。`;say('上傳尚未完成，照片仍在手機瀏覽器。');}finally{button.disabled=false;}
+}
+async function renderDrafts(){drafts=(await store('getAll')).filter(d=>d.owner===user?.uid).sort((a,b)=>b.createdAt-a.createdAt);for(const url of objectURLs)URL.revokeObjectURL(url);objectURLs=[];$('#queue').replaceChildren();
+ for(const d of drafts){const card=document.createElement('article');card.className='photo-card';const img=document.createElement('img');img.src=URL.createObjectURL(d.blob);objectURLs.push(img.src);img.alt=d.title;const title=document.createElement('h3');title.textContent=d.title;const p=document.createElement('p');p.textContent=d.state==='published'?'GitHub 已接收，等待／已完成發布':'已存本機，待上傳';const actions=document.createElement('div');actions.className='queue-actions';if(d.state!=='published'){const b=document.createElement('button');b.textContent='上傳公開';b.onclick=()=>upload(d,b);actions.append(b);}const save=document.createElement('a');save.href=img.src;save.download=`${d.label}_${d.kind}_${d.id}.jpg`;save.textContent='下載備份';actions.append(save);card.append(img,title,p,actions);$('#queue').append(card);}
+ if(!drafts.length)$('#queue-status').textContent='尚無本機照片。';
+}
+async function publicGallery(){try{const r=await fetch('./public-photos.json',{cache:'no-store'});if(!r.ok)throw Error();const records=await r.json();$('#public-gallery').textContent=records.length?'':'尚無已發布照片。';for(const p of records.slice().reverse()){const card=document.createElement('article');card.className='photo-card';const img=document.createElement('img');img.src=p.url;img.alt=p.title;img.loading='lazy';const title=document.createElement('p');title.textContent=p.title;card.append(img,title);$('#public-gallery').append(card);}}catch{$('#public-gallery').textContent='相簿暫時無法載入。';}}
+async function start(){
+ for(const [value,label] of photoKinds){const o=document.createElement('option');o.value=value;o.textContent=label;$('#kind').append(o);}$('#kind').onchange=()=>$('#instructions').textContent=photoKinds.find(k=>k[0]===$('#kind').value)[2];$('#kind').onchange();
+ $('#locate').onclick=locate;$('#stop').onclick=()=>{stopLocation();$('#gps-status').textContent='已停止定位。';};$('#voice').onchange=()=>{if($('#voice').checked)say('語音提醒已啟動。');else window.speechSynthesis?.cancel();};$('#speak').onclick=()=>say(selected?`目前目標${selected.label}，${selected.species}。${$('#instructions').textContent}`:'請先選擇目標樹木。');$('#tree-search').oninput=options;$('#tree').onchange=e=>setTarget(e.target.value);$('#confirmed').onchange=()=>$('#camera').disabled=$('#album').disabled=!$('#confirmed').checked;$('#camera').onchange=()=>capture($('#camera'));$('#album').onchange=()=>capture($('#album'));
+ $('#export').onclick=async()=>{if(!drafts.length){$('#queue-status').textContent='尚無照片可匯出。';return;}const payload={version:1,photos:await Promise.all(drafts.map(async d=>({...d,blob:undefined,image:await blobBase64(d.blob)})))};const url=URL.createObjectURL(new Blob([JSON.stringify(payload)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='校園照片備份.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};
+ $('#service-status').textContent=uploadServiceURL?'照片將透過管理員上傳服務公開到 GitHub，不使用付費 Firebase Storage。':'照片採集可先保存本機；GitHub 上傳服務尚待部署及專用授權。';
+ const base='https://www.gstatic.com/firebasejs/13.2.0/';const [app,api,data]=await Promise.all([import(`${base}firebase-app.js`),import(`${base}firebase-auth.js`),fetch('./data.json').then(r=>{if(!r.ok)throw Error('樹木資料載入失敗');return r.json();})]);authAPI=api;auth=api.getAuth(app.initializeApp(firebaseConfig));trees=data.points.filter(t=>t.topic==='carbon'&&Number.isFinite(t.latitude)&&Number.isFinite(t.longitude));options();setTarget(trees[0].id);draftDB=await openDrafts();
+ $('#login').disabled=false;$('#login').onclick=async()=>{try{const provider=new api.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await api.signInWithPopup(auth,provider);}catch(e){$('#auth-status').textContent=`登入失敗：${e.code||e.message}。請在 Safari 開啟並允許彈出視窗。`;}};$('#logout').onclick=()=>api.signOut(auth).catch(e=>$('#auth-status').textContent=e.message);
+ api.onAuthStateChanged(auth,async current=>{user=current;$('#login').hidden=!!user;$('#logout').hidden=!user;$('#workspace').hidden=!admin();$('#auth-status').textContent=admin()?'管理員已登入，可開始定位與拍照。':user?'此帳號不是管理員，請登出並切換指定帳號。':'請使用 teacher.hsieh@gmail.com 登入。';if(!admin()){stopLocation();window.speechSynthesis?.cancel();for(const url of objectURLs)URL.revokeObjectURL(url);objectURLs=[];$('#queue').replaceChildren();drafts=[];}else try{await renderDrafts();}catch(e){$('#queue-status').textContent=`無法讀取本機照片：${e.message}`;}});
+}
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopLocation();window.speechSynthesis?.cancel();$('#gps-status').textContent='頁面進入背景，定位已停止；回來後請重新按開始定位。';}});
+window.addEventListener('pagehide',()=>{stopLocation();window.speechSynthesis?.cancel();});
+publicGallery();start().catch(e=>$('#auth-status').textContent=`初始化失敗：${e.message}。請確認網路並重新整理。`);

@@ -1,0 +1,5 @@
+upload-service/node_modules/
+upload-service/.wrangler/
+upload-service/.dev.vars
+firebase-created.png
+*-proof.png

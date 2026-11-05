@@ -15,7 +15,7 @@ function render() {
     const title = document.createElement('h3'); title.textContent = p.title;
     const detail = document.createElement('p'); detail.textContent = `${labels[p.category]} · ${p.target}\n${p.description}`;
     card.append(link, title, detail);
-    if (isAdmin()) {
+    if (isAdmin() && !p.github) {
       const edit = document.createElement('button'); edit.textContent = '編輯說明';
       edit.onclick = async () => {
         const title = prompt('照片名稱', p.title); if (title === null) return;
@@ -112,6 +112,10 @@ async function start() {
     } finally { $('#upload-fields').disabled = false; }
   };
   if(photoUploadsEnabled)await load();
-  else $('#gallery-status').textContent='免費模式尚未啟用雲端相簿。請先將照片保存在手機，之後再安排發布。';
+  else {
+    const response=await fetch('./public-photos.json',{cache:'no-store'});
+    if(!response.ok)throw Error('公開相簿載入失敗');
+    photos=(await response.json()).map(p=>({...p,category:'plant',github:true})).reverse();render();
+  }
 }
 start().catch(e => { message(`雲端連線失敗：${e.code || e.message}`); $('#gallery-status').textContent = '相簿暫時無法載入，請稍後重試。'; });

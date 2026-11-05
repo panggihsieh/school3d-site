@@ -1,0 +1,11 @@
+name = "school3d-upload"
+main = "worker.js"
+compatibility_date = "2026-11-05"
+workers_dev = true
+[vars]
+FIREBASE_PROJECT = "school3d-site"
+ADMIN_EMAIL = "teacher.hsieh@gmail.com"
+ALLOWED_ORIGIN = "https://panggihsieh.github.io"
+GITHUB_REPO = "panggihsieh/school3d-site"
+GITHUB_BRANCH = "main"
+# GITHUB_TOKEN 必須透過 Cloudflare Secret 設定，不能放在此檔。

@@ -1,5 +1,7 @@
 # 大南國小 3D 生態導覽
 
+`dist/field.html` 提供管理員樹木現場採集：Firebase Google 登入、GPS 候選樹木、北向上座標示意圖、TTS 接近提醒、確認編號、壓縮拍照、IndexedDB 本機草稿、備份匯出及 Cloudflare Worker 上傳 GitHub。公開照片清單為 `dist/public-photos.json`。Worker 已部署，仍需帳號擁有人設定 GitHub 專用 Secret 才能真正寫入，見 [upload-service/SETUP.md](upload-service/SETUP.md)。Firestore 仍維持預設拒絕存取；此上傳流程不使用 Firestore 或 Storage。
+
 新增 `dist/photos.html` 公開相簿與 Google 登入照片後台，管理員為 teacher.hsieh@gmail.com。首頁側邊欄提供 Firebase 啟用入口；尚需建立 Firebase 專案、填入公開設定並發布服務規則才能使用。完整設定見 [firebase/SETUP.md](firebase/SETUP.md)。下方原有瀏覽器資料編輯功能仍獨立運作。
 
 完整 3D 導覽：https://panggihsieh.github.io/school3d-site/

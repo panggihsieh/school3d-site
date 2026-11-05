@@ -1,0 +1,1 @@
+{"private":true,"type":"module","scripts":{"build":"esbuild worker.js --bundle --format=esm --platform=browser --outfile=worker.bundle.js","test":"node --test worker.test.js"},"dependencies":{"jose":"^6.1.0"},"devDependencies":{"esbuild":"^0.25.0"}}
