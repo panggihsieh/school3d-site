@@ -9,7 +9,7 @@
 3. 將本專案新版 `worker.bundle.js` 部署到同一 Worker；或在登入 Cloudflare 的終端於 upload-service/ 執行 `npx wrangler deploy`。保留既有 GITHUB_TOKEN 等 Secret、網域與設定，不建立替代 Worker。
 4. 以 teacher.hsieh@gmail.com 登入 field.html，確認看到「教師 AI 對話 · GPT-6.1 Sol」。先測文字，再測附圖，最後在支援語音辨識的瀏覽器測麥克風與連續語音。
 
-此環境的 Wrangler 未登入，無法代替帳號擁有人部署 Worker 或設定 Secret。GitHub Pages 發布前端並不會更新 Cloudflare Worker。
+2026-11-05 已透過 Cloudflare 編輯器部署新版至既有 school3d-upload，Active 版本 1f6aa3d1；OPENAI_API_KEY 已確認為 Secret，並以管理員頁面完成一次正式 Sol 連線測試。未登入的 /ai/chat 請求回傳 401。Wrangler CLI 仍未登入；之後 GitHub Pages 發布前端不會自動更新 Cloudflare Worker。
 
 ## 行為與資料
 
