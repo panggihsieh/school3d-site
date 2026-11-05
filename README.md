@@ -36,4 +36,4 @@ Third-party software: Three.js 0.180.0 (MIT), see `dist/vendor/THREE-LICENSE.txt
 - 家燕：https://kmweb.moa.gov.tw/theme_data.php?id=50&theme=bird_illustration
 - 紅尾伯勞：https://kmweb.moa.gov.tw/theme_data.php?id=142&theme=bird_illustration
 
-驗證：`node --test tests/learning.test.mjs`，另由 GitHub Actions 檢查所有主要 JS 模組語法。
+驗證：`node --test tests/learning.test.mjs`，既有 GitHub Actions 檢查原入口模組語法；新增互動模組與任務測試在本機執行。
