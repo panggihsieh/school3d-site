@@ -6,6 +6,7 @@ function trustedURL(value,host){try{const url=new URL(value);return url.protocol
 export function wikiPhotos(data){
  return Object.values(data?.query?.pages||{}).sort((a,b)=>(a.index??0)-(b.index??0)).flatMap(page=>{
   const info=page.imageinfo?.[0],meta=info?.extmetadata||{};
+  if(/botanical magazine|illustration|drawing|painting|engraving|herbarium|diagram/i.test(page.title||''))return [];
   const thumbnail=trustedURL(info?.thumburl,'upload.wikimedia.org'),source=trustedURL(info?.descriptionurl,'commons.wikimedia.org');
   if(!thumbnail||!source||!meta.LicenseShortName?.value||!['image/jpeg','image/png','image/webp'].includes(info?.mime))return [];
   return [{title:page.title.replace(/^File:/,''),thumbnail,source,artist:meta.Artist?.value||'作者請見來源頁',license:meta.LicenseShortName.value}];
@@ -29,7 +30,7 @@ export function createWikiReference(target){
    try{
     let photos=cache.get(name);
     if(!photos){
-     const url=new URL('https://commons.wikimedia.org/w/api.php');url.search=new URLSearchParams({action:'query',format:'json',origin:'*',generator:'search',gsrnamespace:'6',gsrsearch:`filetype:bitmap "${name.replace(/"/g,'')}"`,gsrlimit:'5',prop:'imageinfo',iiprop:'url|mime|extmetadata',iiurlwidth:'640',iiextmetadatafilter:'Artist|LicenseShortName'}).toString();
+     const url=new URL('https://commons.wikimedia.org/w/api.php');url.search=new URLSearchParams({action:'query',format:'json',origin:'*',generator:'search',gsrnamespace:'6',gsrsearch:`filetype:bitmap "${name.replace(/"/g,'')}" -intitle:illustration -intitle:drawing -intitle:painting -intitle:"Botanical Magazine"`,gsrlimit:'5',prop:'imageinfo',iiprop:'url|mime|extmetadata',iiurlwidth:'640',iiextmetadatafilter:'Artist|LicenseShortName'}).toString();
      const timeout=setTimeout(()=>controller?.abort(),15000);let response;
      try{response=await fetch(url,{signal,credentials:'omit',referrerPolicy:'no-referrer'});}finally{clearTimeout(timeout);}
      if(!response.ok)throw Error('維基服務暫時無法連線');const data=await response.json();if(data.error)throw Error('維基搜尋暫不可用');photos=wikiPhotos(data);cache.set(name,photos);
