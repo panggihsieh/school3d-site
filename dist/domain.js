@@ -25,6 +25,8 @@ export function validateData(raw){
   if(obj.sourceUrl&&!/^https:\/\/edutreemap\.moe\.edu\.tw\/trees\/#\/Map\?campusCode=104721&no=\d+$/.test(obj.sourceUrl))throw Error('原始資料連結不符。');
   if(p.audioData&&(!/^data:audio\/(mpeg|mp3|wav|x-wav|ogg);base64,[A-Za-z0-9+/=]+$/.test(p.audioData)||p.audioData.length>2800000))throw Error('音檔格式不符或超過 2 MB。');
   obj.audioData=p.audioData||'';
+  if(p.photoData&&(!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(p.photoData)||p.photoData.length>2800000))throw Error('照片格式不符或超過 2 MB。');
+  obj.photoData=p.photoData||'';
   if(p.topic==='carbon'&&(obj.uptake!==null||obj.emissions!==null)&&(!obj.year||!obj.method.trim()||!obj.boundary.trim()))throw Error('年度碳數據必須附年度、方法來源及排碳範圍。');
   return obj;
  });

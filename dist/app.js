@@ -2,13 +2,15 @@ import * as THREE from 'three';
 import {validateData,summarizeCarbon,mergeOfficialData} from './domain.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
+import {makeTree,showTreeCard,closeTreePreview,disposeTreeInstances} from './tree-visuals.js';
+import {showPlantExperience,closePlantExperience} from './plant-experience.js';
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const STORE='danan-ecology-v1';
 const topics={campus:['校園空間','CAMPUS GUIDE','從校園，開始探索。','選擇地圖標記，認識每一處校園空間。'],carbon:['植物碳資訊','PLANTS & CARBON','看見樹木，也看見碳。','植物吸碳與維護排碳分開記錄，依年度比較。'],birds:['鳥類觀察','BIRD OBSERVATION','停下來，聽見自然。','認識觀察點、記錄鳥類，聆聽已匯入的鳥鳴。'],ecology:['生態景點','ECOLOGY SPOTS','每一處綠意，都有發現。','選擇景點，帶著一個小任務開始觀察。']};
 let state,topic='campus',selected=null,query='',speciesFilter='',year=2026,placing=false,editingId=null,newPoint=false;
-let scene,camera,renderer,controls,model,frame,markers=[],pointerStart=null,groundRay=new THREE.Raycaster();
+let scene,camera,renderer,controls,model,frame,treeGroup,markers=[],pointerStart=null,groundRay=new THREE.Raycaster();
 const timer={};
 function toast(message){$('#toast').textContent=message;$('#toast').style.display='block';clearTimeout(timer.toast);timer.toast=setTimeout(()=>$('#toast').style.display='none',4500);}
 
@@ -38,6 +40,8 @@ function renderList(){
  $('#point-list').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>select(b.dataset.id,true));
 }
 function renderDetail(){
+ closePlantExperience();
+ closeTreePreview();
  const p=current();
  if(!p||p.topic!==topic){$('#detail').innerHTML='<p class="empty">選擇一個地點，查看或編輯導覽資料。</p>';return;}
  let html=`<div class="detail-top"><h3>${esc(p.name)}</h3><button class="text-button" id="edit-selected">編輯</button></div><span class="status-pill">${p.confirmed?'位置已確認':p.sourceTreeId?'教育部平台登錄・點位待現勘':'候選位置・待確認'}</span><p class="detail-description">${esc(p.description||'介紹待補，可按「編輯」新增。')}</p>`;
@@ -50,6 +54,8 @@ function renderDetail(){
  }else if(topic==='ecology')html+=`<p class="eyebrow" style="margin-top:20px">TRY A LITTLE MISSION</p><p class="detail-description">${esc(p.mission||'任務待補')}</p>`;
  html+=row('地圖座標',`東向 ${p.x.toFixed(1)} m・南向 ${p.z.toFixed(1)} m`)+`<button class="move-button" id="move-point">在地圖上調整位置</button><button class="delete-button" id="delete-point">移除此地點</button>`;
  $('#detail').innerHTML=html;
+ if(topic==='carbon')showTreeCard(p,$('#detail'),(id,photoData)=>{if(save({...state,points:state.points.map(v=>v.id===id?{...v,photoData}:v)})){renderDetail();toast(photoData?'實拍照片已加入，可匯出 JSON 備份。':'實拍照片已移除。');}});
+ if(topic==='carbon')showPlantExperience(p,$('#detail'));
  $('#edit-selected').onclick=()=>openEditor(p);
  $('#move-point').onclick=()=>{placing=true;document.body.classList.add('placing');$('#placing-hint').textContent='點一下地圖地面，或按 Esc 取消';$('#viewport').scrollIntoView({behavior:'smooth',block:'center'});toast('請點選地圖上的新位置。');};
  $('#delete-point').onclick=()=>{if(!window.confirm(`移除「${p.name}」？請先匯出保留備份。`))return;if(save({version:1,points:state.points.filter(v=>v.id!==p.id)})){selected=null;refresh();toast('地點已移除。');}};
@@ -66,7 +72,7 @@ function renderDetail(){
 function cancelPlacing(){placing=false;document.body.classList.remove('placing');$('#placing-hint').textContent='拖曳旋轉 · 滾輪縮放';}
 function select(id,focus=false){cancelPlacing();selected=id;renderList();renderDetail();updateMarkerElements();if(matchMedia('(min-width:721px)').matches){const aside=$('.sidebar');aside.scrollTo({top:aside.scrollTop+$('#detail').getBoundingClientRect().top-aside.getBoundingClientRect().top-10,behavior:'smooth'});}else $('#detail').scrollIntoView({behavior:'smooth',block:'nearest'});if(focus&&camera){const p=current();const delta=new THREE.Vector3(p.x,0,p.z).sub(controls.target);controls.target.add(delta);camera.position.add(delta);controls.update();}}
 function renderSpeciesFilter(){const wrap=$('#species-filter-wrap');wrap.hidden=topic!=='carbon';const counts=new Map();for(const p of state.points.filter(p=>p.topic==='carbon'))counts.set(p.species||'未鑑定',(counts.get(p.species||'未鑑定')||0)+1);$('#species-filter').innerHTML='<option value="">全部樹種</option>'+[...counts].sort((a,b)=>a[0].localeCompare(b[0],'zh-TW')).map(([name,count])=>`<option value="${esc(name)}">${esc(name)}（${count} 株）</option>`).join('');$('#species-filter').value=speciesFilter;}
-function refresh(){drawSummary();renderSpeciesFilter();renderList();renderDetail();updateMarkerElements();}
+function refresh(){rebuildTrees();drawSummary();renderSpeciesFilter();renderList();renderDetail();updateMarkerElements();}
 function switchTopic(next){cancelPlacing();topic=next;query='';speciesFilter='';$('#search').value='';selected=state.points.find(p=>p.topic===topic)?.id||null;document.querySelectorAll('.topic').forEach(b=>{b.classList.toggle('active',b.dataset.topic===topic);if(b.dataset.topic===topic)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});const [title,kicker,heading,subtitle]=topics[topic];$('#section-title').textContent=title;$('#section-kicker').textContent=kicker;$('#map-title').textContent=heading;$('#map-subtitle').textContent=subtitle;refresh();}
 
 function field(name,label,value='',type='text',extra=''){return `<label class="field">${esc(label)}<input name="${name}" type="${type}" value="${esc(value??'')}" ${extra}></label>`;}
@@ -92,6 +98,12 @@ function updateMarkerElements(){
   const el=document.createElement('button');el.className=`marker ${topic} ${p.sourceTreeId?'tree-marker':''} ${p.id===selected?'selected':''}`;el.textContent=p.sourceTreeId?(p.id===selected?p.label:''):(p.label||p.id);el.setAttribute('aria-label',p.name);el.title=p.name;el.onclick=()=>select(p.id);$('#markers').append(el);markers.push({el,p});
  }
 }
+function rebuildTrees(){
+ if(!model)return;
+ disposeTreeInstances(treeGroup);treeGroup?.removeFromParent();treeGroup=new THREE.Group();treeGroup.name='plant-models';
+ for(const p of state.points.filter(p=>p.topic==='carbon')){const tree=makeTree(p);tree.position.set(p.x,0,p.z);treeGroup.add(tree);}
+ model.add(treeGroup);
+}
 function fitView(top=false){if(!camera||!model)return;const box=new THREE.Box3().setFromObject(model),center=box.getCenter(new THREE.Vector3());center.y=0;controls.target.copy(center);const d=155;camera.position.copy(center.clone().add(top?new THREE.Vector3(0,d,.01):new THREE.Vector3(100,105,135)));camera.zoom=Math.min(1,$('#viewport').clientWidth/$('#viewport').clientHeight/1.25);camera.updateProjectionMatrix();controls.update();}
 function resize(){if(!renderer)return;const v=$('#viewport'),w=v.clientWidth,h=v.clientHeight;renderer.setSize(w,h,false);camera.left=-110*w/h;camera.right=110*w/h;camera.top=110;camera.bottom=-110;camera.updateProjectionMatrix();if(model)fitView();}
 function mapClick(event){if(!camera||!pointerStart||Math.hypot(event.clientX-pointerStart.x,event.clientY-pointerStart.y)>5)return;const r=$('#scene').getBoundingClientRect(),v=new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-(event.clientY-r.top)/r.height*2+1);groundRay.setFromCamera(v,camera);if(!placing){const hit=groundRay.intersectObject(model,true)[0];if(hit?.object.userData.treeId){const id=hit.object.userData.treeId;if(topic!=='carbon')switchTopic('carbon');speciesFilter='';query='';$('#search').value='';renderSpeciesFilter();select(id);}return;}const hit=new THREE.Vector3();if(groundRay.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),0),hit)){const p=current();if(save({...state,points:state.points.map(v=>v.id===p.id?{...v,x:Math.round(hit.x*10)/10,z:Math.round(hit.z*10)/10,confirmed:false}:v)})){cancelPlacing();refresh();toast('位置已更新，請現地確認。');}}}
@@ -102,7 +114,7 @@ async function setupScene(){
   scene.add(new THREE.HemisphereLight(0xfffce8,0x849175,2.7));const sun=new THREE.DirectionalLight(0xffffff,3);sun.position.set(-50,100,80);scene.add(sun);
   controls=new OrbitControls(camera,$('#scene'));controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2-.05;controls.minZoom=.5;controls.maxZoom=5;controls.enablePan=true;
   resize();new ResizeObserver(resize).observe($('#viewport'));
-  const loader=new GLTFLoader();const gltf=await loader.loadAsync('./assets/campus.glb');model=gltf.scene;model.traverse(o=>{const match=o.name.match(/MOE\d+/);if(match)o.userData.treeId=match[0];});scene.add(model);fitView();$('#loading').hidden=true;
+  const loader=new GLTFLoader();const gltf=await loader.loadAsync('./assets/campus.glb');model=gltf.scene;model.traverse(o=>{const match=o.name.match(/MOE\d+/);if(match)o.userData.treeId=match[0];});const oldTrees=[];model.traverse(o=>{if(/^MOE\d+_/.test(o.name))oldTrees.push(o);});oldTrees.forEach(o=>o.removeFromParent());scene.add(model);rebuildTrees();fitView();$('#loading').hidden=true;
   $('#scene').addEventListener('pointerdown',e=>pointerStart={x:e.clientX,y:e.clientY});$('#scene').addEventListener('click',mapClick);
   const projected=new THREE.Vector3(),north=new THREE.Vector3(),origin=new THREE.Vector3();
   const animate=()=>{frame=requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);const vw=$('#viewport').clientWidth,vh=$('#viewport').clientHeight;origin.copy(controls.target).project(camera);north.copy(controls.target).add(new THREE.Vector3(0,0,-10)).project(camera);$('#north-arrow').style.transform=`rotate(${Math.atan2((north.x-origin.x)*vw,(north.y-origin.y)*vh)}rad)`;for(const {el,p}of markers){projected.set(p.x,4,p.z).project(camera);el.style.left=`${(projected.x*.5+.5)*vw}px`;el.style.top=`${(-projected.y*.5+.5)*vh}px`;el.hidden=projected.z>1||projected.z<-1||Math.abs(projected.x)>1||Math.abs(projected.y)>1;}};animate();
@@ -121,4 +133,4 @@ $('#import-button').onclick=()=>$('#import-file').click();
 $('#import-file').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>12000000)throw Error('資料檔超過 12 MB。');const next=validateData(JSON.parse(await f.text()));if(window.confirm('匯入會取代目前導覽資料，確定已保留備份並繼續？')&&save({...next,dataset:state.dataset})){selected=state.points.find(p=>p.topic===topic)?.id||null;refresh();toast('導覽資料已匯入。');}}catch(error){toast(error instanceof SyntaxError?'JSON 格式錯誤，請檢查檔案。':error.message);}finally{e.target.value='';}};
 $('#fallback-map').onclick=()=>window.open('./assets/campus-map.png','_blank','noopener');
 try{const response=await fetch('./data.json');if(!response.ok)throw Error('無法載入地點資料');const defaults=validateData(await response.json());state=defaults;try{const saved=localStorage.getItem(STORE);if(saved){const old=validateData(JSON.parse(saved));if(old.dataset!==defaults.dataset){const legacyResponse=await fetch('./legacy-data.json');if(!legacyResponse.ok)throw Error('舊版資料範本載入失敗');const legacy=validateData(await legacyResponse.json());state=mergeOfficialData(defaults,old,legacy);save(state);toast('已加入教育部樹木資料，保留原有自訂編輯。');}else state=old;}}catch{toast('無法讀取本機資料，先使用原始配置。');}selected=state.points.find(p=>p.topic==='campus')?.id;const requested=new URLSearchParams(location.search).get('topic');if(Object.hasOwn(topics,requested))switchTopic(requested);else refresh();setupScene();}catch(e){$('#loading').textContent='導覽資料載入失敗，請重新整理頁面。';$('#detail').textContent=e.message;}
-window.addEventListener('pagehide',()=>{cancelAnimationFrame(frame);renderer?.dispose();});
+window.addEventListener('pagehide',()=>{closePlantExperience();closeTreePreview();cancelAnimationFrame(frame);renderer?.dispose();});
