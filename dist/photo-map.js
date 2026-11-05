@@ -19,9 +19,12 @@ toolbar.prepend(viewButton);
 const photo=document.createElement('div');photo.id='photo-map';photo.hidden=true;
 const image=document.createElement('img');image.src='./assets/campus-overview.png';image.alt='大南國小校園俯視圖，北向上，台 3 線位於下方。';
 const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);photo.append(stage);panel.append(photo);
-const adminEntry=document.createElement('button');adminEntry.className='compass-admin-entry';adminEntry.setAttribute('aria-label','北向指標');adminEntry.title='北向指標';stage.append(adminEntry);
-let compassClicks=0,lastCompassClick=0;
-adminEntry.onclick=()=>{const now=Date.now();compassClicks=now-lastCompassClick<=1200?compassClicks+1:1;lastCompassClick=now;if(compassClicks===5){compassClicks=0;location.assign('./field.html');}};
+const adminEntry=document.querySelector('.brand');
+const adminDialog=document.createElement('dialog');adminDialog.setAttribute('aria-labelledby','teacher-entry-title');
+adminDialog.innerHTML='<div class="dialog-heading"><h2 id="teacher-entry-title">教師後台</h2><button type="button" aria-label="關閉教師入口">✕</button></div><p>手機掃描 QR Code，開啟定位與拍照採集。</p><a href="./field.html"><img src="./assets/photo-admin-qr.png" width="220" height="220" alt="教師拍照後台 QR Code" style="display:block;margin:16px auto;max-width:100%;height:auto"></a><p style="text-align:center"><a href="./field.html">在此裝置開啟教師後台 →</a></p><p class="coverage">僅限指定管理員 Google 帳號登入。</p>';
+document.body.append(adminDialog);adminDialog.querySelector('button').onclick=()=>adminDialog.close();
+let logoClicks=0,lastLogoClick=0;
+adminEntry.addEventListener('click',event=>{event.preventDefault();const now=Date.now();logoClicks=now-lastLogoClick<=1200?logoClicks+1:1;lastLogoClick=now;if(logoClicks===5){logoClicks=0;adminDialog.showModal();}});
 function fitPhoto(){const width=Math.min(photo.clientWidth,photo.clientHeight*1586/992);stage.style.width=`${width}px`;stage.style.height=`${width*992/1586}px`;}
 new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
