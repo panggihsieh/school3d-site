@@ -1,6 +1,6 @@
 import {createFieldSpeaker} from './field-speech.js?v=1';
 import {createWikiReference} from './wiki-trees.js?v=3';
-import {createSpeciesReference} from './species-library.js?v=1';
+import {createSpeciesReference} from './species-library.js?v=2';
 import {mountTeacherAI} from './teacher-ai.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
 import {isAuthorizedAdmin} from './admin-auth.js';

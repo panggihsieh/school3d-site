@@ -14,7 +14,7 @@ test('every campus tree maps to an explicit species reference or pending record'
 test('downloaded reference photos have verifiable bytes, author, license and source',()=>{
  for(const record of Object.values(manifest.species))for(const photo of record.photos){
   assert.match(photo.url,/^\.\/assets\/species-reference\/[a-zA-Z0-9-]+\.(jpg|png|webp)$/);
-  assert.equal(new URL(photo.source).hostname,'commons.wikimedia.org');assert.equal(new URL(photo.source).protocol,'https:');
+  assert.ok(['commons.wikimedia.org','journals.plos.org'].includes(new URL(photo.source).hostname));assert.equal(new URL(photo.source).protocol,'https:');
   assert.ok(photo.artist);assert.match(photo.license,/^(CC BY|CC0|Public domain)/i);assert.ok(photo.licenseURL);
   assert.doesNotMatch(photo.title,/illustration|drawing|painting|diagram|\brange\b|\bmaps?\b/i);
   const bytes=readFileSync(new URL('../dist/'+photo.url.slice(2),import.meta.url));assert.equal(bytes.length,photo.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),photo.sha256);

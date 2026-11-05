@@ -6,9 +6,9 @@ export function referenceFigure(photo,name){
  if(!/^\.\/assets\/species-reference\/[a-zA-Z0-9-]+\.(jpg|png|webp)$/.test(photo.url))return figure;
  const image=document.createElement('img');image.src=photo.url;image.alt=`${name}同樹種參考：${photo.title}`;image.loading='lazy';
  const caption=document.createElement('figcaption'),source=document.createElement('a');
- source.textContent=photo.title;try{const url=new URL(photo.source);if(url.protocol==='https:'&&url.hostname==='commons.wikimedia.org')source.href=url.href;}catch{}
+ source.textContent=photo.title;try{const url=new URL(photo.source);if(url.protocol==='https:'&&['commons.wikimedia.org','journals.plos.org'].includes(url.hostname))source.href=url.href;}catch{}
  source.target='_blank';source.rel='noopener noreferrer';
- const credit=document.createElement('p');credit.textContent=`作者：${photo.artist} · ${photo.license}。圖片為 Wikimedia 縮圖；完整來源、授權及原圖見連結。`;
+ const credit=document.createElement('p');credit.textContent=`作者：${photo.artist} · ${photo.license}。圖片使用來源提供的縮圖或組圖，未另修改；完整來源、授權及原圖見連結。`;
  caption.append(source,credit);figure.append(image,caption);return figure;
 }
 export function createSpeciesReference(target){

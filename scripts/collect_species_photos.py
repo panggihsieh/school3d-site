@@ -47,6 +47,17 @@ def collect(item):
         query,search_term,note,source=ALIASES[code]
         record.update(query=query,matchNote=note,taxonomySource=source)
     try:
+        if code=='0356':
+            # Verified species-specific photographs and CC BY 4.0 notice in this paper.
+            source='https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0272680'
+            url='https://journals.plos.org/plosone/article/figure/image?id=10.1371%2Fjournal.pone.0272680.g004&size=inline'
+            raw=get(url)
+            if not raw.startswith(b'\x89PNG\r\n\x1a\n'): raise ValueError('Expected the published PNG figure')
+            digest=hashlib.sha256(raw).hexdigest();filename=code+'-'+digest[:12]+'.png';(OUT/filename).write_bytes(raw)
+            record.update(status='available',matchNote='使用學名相符的學術論文實拍組圖；A 為整株，其他格呈現花、果實及葉片。非本校單株。',taxonomySource=source)
+            record['photos']=[{'title':'Artocarpus treculianus：整株、花、果實與葉片（Chuang et al. 2022, Fig. 4）','url':'./assets/species-reference/'+filename,'source':source+'#pone-0272680-g004','originalURL':url,'downloadURL':url,'artist':'K.-F. Chung; C.-L. Hsieh; D. N. Tandang (Chuang et al., 2022)','license':'CC BY 4.0','licenseURL':'https://creativecommons.org/licenses/by/4.0/','credit':'Chuang et al. (2022), PLOS ONE 17(9): e0272680, Fig. 4. DOI: 10.1371/journal.pone.0272680','retrievedAt':datetime.date.today().isoformat(),'sha256':digest,'bytes':len(raw),'changes':'Publisher-provided inline figure; no further edits'}]
+            print(code,query,record['status'],flush=True)
+            return code,record
         params={'action':'query','format':'json','generator':'search','gsrnamespace':6,'gsrsearch':f'filetype:bitmap {search_term} -intitle:illustration -intitle:drawing -intitle:painting -intitle:"Botanical Magazine"','gsrlimit':8,'prop':'imageinfo','iiprop':'url|mime|extmetadata','iiurlwidth':640,'iiextmetadatafilter':'Artist|LicenseShortName|LicenseUrl|ImageDescription|Categories|Credit'}
         data=json.loads(get('https://commons.wikimedia.org/w/api.php?'+urllib.parse.urlencode(params)))
         pages=sorted(data.get('query',{}).get('pages',{}).values(),key=lambda p:p.get('index',100))
@@ -95,7 +106,7 @@ if __name__=='__main__':
     available=sum(bool(r['photos']) for r in records.values())
     result={'version':1,'referenceOnly':True,'species':records}
     MANIFEST.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    lines=['# 樹種參考照片與授權','','這些是 Wikimedia Commons 同樹種參考照片，不是校內單株實拍。原始清冊學名不會因搜尋異名而改寫。','','重新收集：`python scripts/collect_species_photos.py`。已存在的照片會保留；待補項目會重試。','','每張圖片採 Wikimedia 提供的縮圖，未另作修改。授權與作者逐檔保留如下。','']
+    lines=['# 樹種參考照片與授權','','這些是 Wikimedia Commons 與 PLOS ONE 的同樹種參考照片，不是校內單株實拍。原始清冊學名不會因搜尋異名而改寫。','','重新收集：`python scripts/collect_species_photos.py`。已存在的照片會保留；待補項目會重試。','','圖片採來源提供的縮圖或論文組圖，未另作修改。授權與作者逐檔保留如下。','']
     for code,record in sorted(records.items()):
         lines += [f"## {code} {record['species']}",'',record['scientificName'],'']
         if record.get('matchNote'): lines += [record['matchNote'],'']

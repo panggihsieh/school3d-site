@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {showSpeciesReference} from './species-library.js?v=1';
+import {showSpeciesReference} from './species-library.js?v=2';
 import {validateData,summarizeCarbon,mergeOfficialData} from './domain.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';

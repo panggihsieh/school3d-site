@@ -1,10 +1,10 @@
 # 樹種參考照片與授權
 
-這些是 Wikimedia Commons 同樹種參考照片，不是校內單株實拍。原始清冊學名不會因搜尋異名而改寫。
+這些是 Wikimedia Commons 與 PLOS ONE 的同樹種參考照片，不是校內單株實拍。原始清冊學名不會因搜尋異名而改寫。
 
 重新收集：`python scripts/collect_species_photos.py`。已存在的照片會保留；待補項目會重試。
 
-每張圖片採 Wikimedia 提供的縮圖，未另作修改。授權與作者逐檔保留如下。
+圖片採來源提供的縮圖或論文組圖，未另作修改。授權與作者逐檔保留如下。
 
 ## 0004 人心果
 
@@ -384,7 +384,15 @@ Phoenix roebelenii Royle
 
 Artocarpus treculianus Elmer  
 
-待確認及補充；不以近似種替代。
+使用學名相符的學術論文實拍組圖；A 為整株，其他格呈現花、果實及葉片。非本校單株。
+
+分類對照：https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0272680
+
+- 檔案：`dist/assets/species-reference/0356-be370a043696.png`
+- [來源：Artocarpus treculianus：整株、花、果實與葉片（Chuang et al. 2022, Fig. 4）](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0272680#pone-0272680-g004)
+- 作者：K.-F. Chung; C.-L. Hsieh; D. N. Tandang (Chuang et al., 2022)
+- [授權：CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- 取用日期：2026-11-05
 
 ## 0358 蘭嶼肉桂
 

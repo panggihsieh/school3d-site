@@ -787,9 +787,26 @@
       "scientificName": "Artocarpus treculianus Elmer  ",
       "query": "Artocarpus treculianus",
       "referenceOnly": true,
-      "photos": [],
-      "status": "pending",
-      "reason": "未找到可確認學名且具完整可重用授權的實拍照片，待人工補充。"
+      "photos": [
+        {
+          "title": "Artocarpus treculianus：整株、花、果實與葉片（Chuang et al. 2022, Fig. 4）",
+          "url": "./assets/species-reference/0356-be370a043696.png",
+          "source": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0272680#pone-0272680-g004",
+          "originalURL": "https://journals.plos.org/plosone/article/figure/image?id=10.1371%2Fjournal.pone.0272680.g004&size=inline",
+          "downloadURL": "https://journals.plos.org/plosone/article/figure/image?id=10.1371%2Fjournal.pone.0272680.g004&size=inline",
+          "artist": "K.-F. Chung; C.-L. Hsieh; D. N. Tandang (Chuang et al., 2022)",
+          "license": "CC BY 4.0",
+          "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+          "credit": "Chuang et al. (2022), PLOS ONE 17(9): e0272680, Fig. 4. DOI: 10.1371/journal.pone.0272680",
+          "retrievedAt": "2026-11-05",
+          "sha256": "be370a04369625411c94a0419aa9c13ad20fb886db3df3de38620bdd0892e04e",
+          "bytes": 290794,
+          "changes": "Publisher-provided inline figure; no further edits"
+        }
+      ],
+      "status": "available",
+      "matchNote": "使用學名相符的學術論文實拍組圖；A 為整株，其他格呈現花、果實及葉片。非本校單株。",
+      "taxonomySource": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0272680"
     },
     "0444": {
       "code": "0444",
