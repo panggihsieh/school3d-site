@@ -45,3 +45,9 @@ Third-party software: Three.js 0.180.0 (MIT), see `dist/vendor/THREE-LICENSE.txt
 - 紅尾伯勞：https://kmweb.moa.gov.tw/theme_data.php?id=142&theme=bird_illustration
 
 驗證：`node --test tests/learning.test.mjs`，既有 GitHub Actions 檢查原入口模組語法；新增互動模組與任務測試在本機執行。
+
+## 管理員隱藏入口
+
+校園俯視圖右上角的北向箭頭連點 5 次（每次間隔不超過 1.2 秒），開啟教師拍照／GPS 採集後台。鍵盤可聚焦「北向指標」，連按 Enter 或空白鍵啟動。首頁不再顯示公開的管理後台連結與 QR Code。
+
+後台僅接受已驗證的 teacher.hsieh@gmail.com Google 帳號，其他帳號隱藏工作區並自動登出。隱藏入口只是操作入口，實際上傳仍由 Worker 驗證 Firebase JWT、指定管理員信箱及 Google 登入方式；直接知道後台網址也不會取得上傳權限。雲端上傳授權設定仍依 upload-service/SETUP.md 完成。

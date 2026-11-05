@@ -1,9 +1,10 @@
 import { firebaseConfig, adminEmail, photoUploadsEnabled } from './firebase-config.js';
+import {isAuthorizedAdmin} from './admin-auth.js';
 const $ = selector => document.querySelector(selector);
 const labels = { campus: '校園照片', plant: '植物照片', panorama: '360° 環景素材' };
 let sdk, user, photos = [], previewURL, selectedFile;
 const message = text => { $('#status').textContent = text; };
-const isAdmin = () => user?.email === adminEmail && user.emailVerified;
+const isAdmin = () => isAuthorizedAdmin(user);
 function render() {
   $('#gallery').replaceChildren();
   const items = photos.filter(p => $('#filter').value === 'all' || p.category === $('#filter').value);
@@ -80,10 +81,12 @@ async function start() {
     finally { $('#login').disabled = false; }
   };
   $('#logout').onclick = () => auth.signOut(sdk.auth).catch(e => message(`登出失敗：${e.code}`));
-  auth.onAuthStateChanged(sdk.auth, current => {
-    user = current; $('#editor').hidden = !isAdmin() || !photoUploadsEnabled; $('#logout').hidden = !user; $('#login').hidden = !!user;
+  auth.onAuthStateChanged(sdk.auth, async current => {
+    const rejected=!!current&&!isAuthorizedAdmin(current);
+    user = rejected?null:current; $('#editor').hidden = !isAdmin() || !photoUploadsEnabled; $('#logout').hidden = !user; $('#login').hidden = !!user;
     message(isAdmin() ? (photoUploadsEnabled ? '已登入，可以上傳與管理公開照片。' : '管理員已登入。為維持免費，目前未啟用雲端照片上傳；請先依補拍地圖拍照，保存手機原檔。') : user ? '此帳號沒有管理權限，請登出後使用指定帳號。' : '請使用指定的 Google 帳號登入。');
     if(photoUploadsEnabled)render();
+    if(rejected){try{await auth.signOut(sdk.auth);message('此帳號沒有管理權限，已拒絕登入。請使用指定管理員 Google 帳號。');}catch{message('此帳號沒有管理權限，後台已鎖定；登出未完成，請重新整理後切換帳號。');}}
   });
   $('#upload-form').onsubmit = async event => {
     event.preventDefault(); if (!isAdmin() || !photoUploadsEnabled) return;

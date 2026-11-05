@@ -63,7 +63,7 @@ function renderDetail(){
  $('#detail').innerHTML=html;
  if(topic==='carbon')showTreeCard(p,$('#detail'),(id,photoData)=>{if(save({...state,points:state.points.map(v=>v.id===id?{...v,photoData}:v)})){renderDetail();toast(photoData?'實拍照片已加入，可匯出 JSON 備份。':'實拍照片已移除。');}});
  if(topic==='carbon')showPlantExperience(p,$('#detail'));
- if(topic==='carbon'){showPublishedPhotos(p.id,$('#detail'));const link=document.createElement('a');link.href=`./field.html?tree=${encodeURIComponent(p.id)}`;link.textContent='管理員：定位與拍攝這株樹木 →';$('#detail').append(link);}
+ if(topic==='carbon')showPublishedPhotos(p.id,$('#detail'));
  $('#edit-selected').onclick=()=>openEditor(p);
  $('#move-point').onclick=()=>{placing=true;document.body.classList.add('placing');$('#placing-hint').textContent='點一下地圖地面，或按 Esc 取消';$('#viewport').scrollIntoView({behavior:'smooth',block:'center'});toast('請點選地圖上的新位置。');};
  $('#delete-point').onclick=()=>{if(!window.confirm(`移除「${p.name}」？請先匯出保留備份。`))return;if(save({version:1,points:state.points.filter(v=>v.id!==p.id)})){selected=null;refresh();toast('地點已移除。');}};

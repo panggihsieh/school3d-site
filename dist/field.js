@@ -1,8 +1,9 @@
 import {firebaseConfig,adminEmail} from './firebase-config.js';
+import {isAuthorizedAdmin} from './admin-auth.js';
 import {uploadServiceURL} from './field-config.js';
 import {photoKinds,nearbyTrees,arrivalEligible} from './field-domain.js';
 const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,arrivalFor='',draftDB,drafts=[],objectURLs=[];
-const admin=()=>user?.email===adminEmail&&user.emailVerified;
+const admin=()=>isAuthorizedAdmin(user);
 function say(text){if(!$('#voice').checked||!('speechSynthesis' in window))return;speechSynthesis.cancel();const speech=new SpeechSynthesisUtterance(text);speech.lang='zh-TW';speech.rate=.9;speechSynthesis.speak(speech);}
 function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(watch);watch=undefined;$('#locate').disabled=false;$('#stop').disabled=true;}
 function setTarget(id){selected=trees.find(t=>t.id===id);$('#tree').value=id;$('#confirmed').checked=false;$('#camera').disabled=$('#album').disabled=true;arrivalFor='';renderTarget();drawMap();}
@@ -63,7 +64,7 @@ async function start(){
  $('#service-status').textContent=uploadServiceURL?'使用免費 GitHub 上傳服務；須先在 Cloudflare 設好 GITHUB_TOKEN Secret。設定完成前照片只會保存本機。':'照片採集可先保存本機；GitHub 上傳服務尚待部署及專用授權。';
  const base='https://www.gstatic.com/firebasejs/13.2.0/';const [app,api,data]=await Promise.all([import(`${base}firebase-app.js`),import(`${base}firebase-auth.js`),fetch('./data.json').then(r=>{if(!r.ok)throw Error('樹木資料載入失敗');return r.json();})]);authAPI=api;auth=api.getAuth(app.initializeApp(firebaseConfig));trees=data.points.filter(t=>t.topic==='carbon'&&Number.isFinite(t.latitude)&&Number.isFinite(t.longitude));options();setTarget(trees.find(t=>t.id===new URLSearchParams(location.search).get("tree"))?.id||trees[0].id);draftDB=await openDrafts();
  $('#login').disabled=false;$('#login').onclick=async()=>{try{const provider=new api.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await api.signInWithPopup(auth,provider);}catch(e){$('#auth-status').textContent=`登入失敗：${e.code||e.message}。請在 Safari 開啟並允許彈出視窗。`;}};$('#logout').onclick=()=>api.signOut(auth).catch(e=>$('#auth-status').textContent=e.message);
- api.onAuthStateChanged(auth,async current=>{user=current;$('#login').hidden=!!user;$('#logout').hidden=!user;$('#workspace').hidden=!admin();$('#auth-status').textContent=admin()?'管理員已登入，可開始定位與拍照。':user?'此帳號不是管理員，請登出並切換指定帳號。':'請使用 teacher.hsieh@gmail.com 登入。';if(!admin()){stopLocation();window.speechSynthesis?.cancel();for(const url of objectURLs)URL.revokeObjectURL(url);objectURLs=[];$('#queue').replaceChildren();drafts=[];}else try{await renderDrafts();}catch(e){$('#queue-status').textContent=`無法讀取本機照片：${e.message}`;}});
+ api.onAuthStateChanged(auth,async current=>{const rejected=!!current&&!isAuthorizedAdmin(current);user=rejected?null:current;$('#login').hidden=!!user;$('#logout').hidden=!user;$('#workspace').hidden=!admin();$('#auth-status').textContent=admin()?'管理員已登入，可開始定位與拍照。':user?'此帳號不是管理員，請登出並切換指定帳號。':'請使用 teacher.hsieh@gmail.com 登入。';if(!admin()){stopLocation();window.speechSynthesis?.cancel();for(const url of objectURLs)URL.revokeObjectURL(url);objectURLs=[];$('#queue').replaceChildren();drafts=[];}else try{await renderDrafts();}catch(e){$('#queue-status').textContent=`無法讀取本機照片：${e.message}`;}if(rejected){try{await api.signOut(auth);$('#auth-status').textContent='此帳號沒有管理權限，已拒絕登入。請使用指定管理員 Google 帳號。';}catch{$('#auth-status').textContent='此帳號沒有管理權限，後台已鎖定；登出未完成，請重新整理後切換帳號。';}}});
 }
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopLocation();window.speechSynthesis?.cancel();$('#gps-status').textContent='頁面進入背景，定位已停止；回來後請重新按開始定位。';}});
 window.addEventListener('pagehide',()=>{stopLocation();window.speechSynthesis?.cancel();});

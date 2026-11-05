@@ -19,13 +19,15 @@ toolbar.prepend(viewButton);
 const photo=document.createElement('div');photo.id='photo-map';photo.hidden=true;
 const image=document.createElement('img');image.src='./assets/campus-overview.png';image.alt='大南國小校園俯視圖，北向上，台 3 線位於下方。';
 const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);photo.append(stage);panel.append(photo);
+const adminEntry=document.createElement('button');adminEntry.className='compass-admin-entry';adminEntry.setAttribute('aria-label','北向指標');adminEntry.title='北向指標';stage.append(adminEntry);
+let compassClicks=0,lastCompassClick=0;
+adminEntry.onclick=()=>{const now=Date.now();compassClicks=now-lastCompassClick<=1200?compassClicks+1:1;lastCompassClick=now;if(compassClicks===5){compassClicks=0;location.assign('./field.html');}};
 function fitPhoto(){const width=Math.min(photo.clientWidth,photo.clientHeight*1586/992);stage.style.width=`${width}px`;stage.style.height=`${width*992/1586}px`;}
 new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
 guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">圖片相對位置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
 const list=document.createElement('div');guide.append(list);
 const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／360° 校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
-const captureLink=document.createElement('a');captureLink.href='./capture.html';captureLink.textContent='📍 開啟補拍俯視圖：P01–P18・標號 × 張數';captureLink.style.cssText='display:block;padding:14px;margin:12px 0;background:#edf4e6;border-radius:10px;color:#245b3e;font-weight:700';guide.prepend(captureLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);
 let active=true,currentTopic=new URLSearchParams(location.search).get('topic')||'campus';
 const plantLayer=document.createElement('div');plantLayer.className='photo-plants';stage.append(plantLayer);
@@ -51,7 +53,7 @@ stage.addEventListener('click',e=>{
 function selectPlace(index){
  const p=places[index];
  detail.innerHTML=`<div class="detail-top"><h3>${p.name}</h3></div><span class="status-pill">依校園圖片標示</span><p class="detail-description">${p.description}</p>`;
- stage.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
+ stage.querySelectorAll(':scope > .photo-pin').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
  list.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('active',i===index);b.setAttribute('aria-pressed',String(i===index));});
 }
 places.forEach((p,i)=>{
