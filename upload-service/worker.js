@@ -44,6 +44,7 @@ export default {async fetch(request,env){
  const origin=request.headers.get('Origin');const headers={'Content-Type':'application/json','Access-Control-Allow-Origin':env.ALLOWED_ORIGIN,'Vary':'Origin','Cache-Control':'no-store'};
  const reply=(value,status=200)=>new Response(JSON.stringify(value),{status,headers});
  if(origin!==env.ALLOWED_ORIGIN)return reply({error:'來源網域不允許'},403);
+ if(new URL(request.url).pathname==='/status'&&request.method==='GET')return reply({configured:!!env.GITHUB_TOKEN});
  if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Authorization, Content-Type','Access-Control-Max-Age':'3600'}});
  if(new URL(request.url).pathname!=='/upload'||request.method!=='POST')return reply({error:'找不到端點'},404);
  if(!env.GITHUB_TOKEN)return reply({error:'管理員尚未設定 GitHub 寫入授權，照片仍保留本機'},503);

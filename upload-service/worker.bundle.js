@@ -784,6 +784,7 @@ var worker_default = { async fetch(request, env) {
   const headers = { "Content-Type": "application/json", "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN, "Vary": "Origin", "Cache-Control": "no-store" };
   const reply = (value, status = 200) => new Response(JSON.stringify(value), { status, headers });
   if (origin !== env.ALLOWED_ORIGIN) return reply({ error: "\u4F86\u6E90\u7DB2\u57DF\u4E0D\u5141\u8A31" }, 403);
+  if (new URL(request.url).pathname === "/status" && request.method === "GET") return reply({ configured: !!env.GITHUB_TOKEN });
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: { ...headers, "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "Authorization, Content-Type", "Access-Control-Max-Age": "3600" } });
   if (new URL(request.url).pathname !== "/upload" || request.method !== "POST") return reply({ error: "\u627E\u4E0D\u5230\u7AEF\u9EDE" }, 404);
   if (!env.GITHUB_TOKEN) return reply({ error: "\u7BA1\u7406\u54E1\u5C1A\u672A\u8A2D\u5B9A GitHub \u5BEB\u5165\u6388\u6B0A\uFF0C\u7167\u7247\u4ECD\u4FDD\u7559\u672C\u6A5F" }, 503);
