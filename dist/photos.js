@@ -70,6 +70,8 @@ async function start() {
   const data = await fetch('./data.json').then(r => { if (!r.ok) throw new Error('地點資料載入失敗'); return r.json(); });
   for (const p of data.points) { const option = document.createElement('option'); option.value = p.id; option.textContent = `${p.id} ${p.name}`; document.querySelector('[name=target]').append(option); }
   for (let n=1;n<=18;n++) { const option = document.createElement('option'); option.value = `P${String(n).padStart(2,'0')}`; option.textContent = `${option.value} 環景站點`; document.querySelector('[name=target]').append(option); }
+  const station=new URLSearchParams(location.search).get('station');
+  if(/^P(0[1-9]|1[0-8])$/.test(station||''))document.querySelector('[name=target]').value=station;
   $('#login').disabled = false;
   $('#login').onclick = async () => {
     $('#login').disabled = true;

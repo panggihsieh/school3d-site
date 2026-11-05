@@ -24,6 +24,7 @@ new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
 guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">圖片相對位置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
 const list=document.createElement('div');guide.append(list);
+const captureLink=document.createElement('a');captureLink.href='./capture.html';captureLink.textContent='📍 開啟補拍俯視圖：P01–P18・標號 × 張數';captureLink.style.cssText='display:block;padding:14px;margin:12px 0;background:#edf4e6;border-radius:10px;color:#245b3e;font-weight:700';guide.prepend(captureLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);
 let active=true,currentTopic=new URLSearchParams(location.search).get('topic')||'campus';
 const plantLayer=document.createElement('div');plantLayer.className='photo-plants';stage.append(plantLayer);
