@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import {showSpeciesReference} from './species-library.js?v=3';
+import {showSpeciesReference} from './species-library.js?v=space-capture-1';
 import {validateData,summarizeCarbon,mergeOfficialData} from './domain.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
 import {makeTree,showTreeCard,closeTreePreview,disposeTreeInstances} from './tree-visuals.js';
 import {showPlantExperience,closePlantExperience} from './plant-experience.js';
-import {showPublishedPhotos} from './public-media.js';
+import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

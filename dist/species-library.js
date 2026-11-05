@@ -1,3 +1,4 @@
+import {loadPublishedPhotos,hasPublishedTreePhoto} from './published-photos.js?v=1';
 let manifest;
 export function loadSpeciesLibrary(){return manifest??=fetch('./species-photos.json?v=2',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('參考照片清單載入失敗');return r.json();}).catch(e=>{manifest=null;throw e;});}
 export function referenceForPlant(data,plant){return data?.species?.[plant.sourceSpeciesCode]||null;}
@@ -13,16 +14,17 @@ export function referenceFigure(photo,name){
 }
 export function createSpeciesReference(target){
  const panel=document.createElement('section');panel.className='wiki-reference species-library';target.after(panel);let last='',version=0;
- return async plant=>{
-  const key=plant.sourceSpeciesCode||plant.species;if(last===key)return;last=key;const request=++version;panel.replaceChildren();
+ return async (plant,{force=false}={})=>{
+  const key=plant.id||plant.sourceSpeciesCode||plant.species;if(last===key&&!force)return;last=key;const request=++version;panel.replaceChildren();panel.hidden=true;
   const h=document.createElement('h3');h.textContent='已收錄的樹種實拍參考';const note=document.createElement('p');note.textContent='網路同樹種參考圖，不是校內這株的現場照片。請核對葉片、樹皮與編號；品種、亞種或修剪形態可能不同。';panel.append(h,note);
   try{
-   const data=await loadSpeciesLibrary();if(request!==version||!panel.isConnected)return;
+   const [data,published]=await Promise.all([loadSpeciesLibrary(),loadPublishedPhotos().catch(()=>[])]);if(request!==version||!panel.isConnected)return;
+   if(hasPublishedTreePhoto(published,plant.id))return;panel.hidden=false;
    const record=referenceForPlant(data,plant),photos=record?.photos||[];
    if(!photos.length){const status=document.createElement('p');status.textContent='此樹種的可靠授權照片尚待補充，可使用下方維基搜尋。';panel.append(status);return;}
    const gallery=document.createElement('div');gallery.className='wiki-reference-gallery';for(const photo of photos)gallery.append(referenceFigure(photo,plant.species||plant.name));panel.append(gallery);
    if(record.matchNote){const note=document.createElement('p');note.textContent=record.matchNote;panel.append(note);}
-  }catch{if(request===version)panel.append(document.createTextNode('目前無法載入已收錄照片，仍可使用維基搜尋或拍攝現場照片。'));}
+  }catch{if(request===version){panel.hidden=false;panel.append(document.createTextNode('目前無法載入已收錄照片，仍可使用維基搜尋或拍攝現場照片。'));}}
  };
 }
 export function showSpeciesReference(plant,parent){const anchor=document.createElement('div');parent.append(anchor);const update=createSpeciesReference(anchor);update(plant);}

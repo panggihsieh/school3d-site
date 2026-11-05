@@ -1,3 +1,4 @@
+import {loadPublishedPhotos,hasPublishedTreePhoto} from './published-photos.js?v=1';
 export function treeSearchName(plant){
  const scientific=String(plant.scientificName||'').trim().split(/\s+/);
  return scientific.length>=2?scientific.slice(0,2).join(' '):String(plant.species||plant.name||'').split(/[／/｜]/)[0].trim();
@@ -17,8 +18,9 @@ export function createWikiReference(target){
  const cache=new Map();let key='',controller=null,generation=0;
  const text=html=>new DOMParser().parseFromString(html,'text/html').body.textContent.trim();
  const link=(label,url)=>{const a=document.createElement('a');a.textContent=label;a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;};
- return function update(plant){
-  const name=treeSearchName(plant);if(key===name)return;key=name;controller?.abort();const version=++generation;
+ return async function update(plant,{force=false}={}){
+  const name=treeSearchName(plant),nextKey=(plant.id||'')+':'+name;if(key===nextKey&&!force)return;key=nextKey;controller?.abort();const version=++generation;panel.hidden=true;
+  try{if(hasPublishedTreePhoto(await loadPublishedPhotos(),plant.id))return;}catch{}if(version!==generation)return;panel.hidden=false;
   panel.replaceChildren();const heading=document.createElement('h3');heading.textContent='維基樹木實拍對照';
   const note=document.createElement('p');note.textContent=`搜尋：${name}。以下為網路同樹種參考，不是校內這一株；搜尋可能包含近似種或其他主題，請配合葉片、樹皮及編號核對。`;
   const search=new URL('https://commons.wikimedia.org/w/index.php');search.search=new URLSearchParams({title:'Special:MediaSearch',type:'image',search:name}).toString();

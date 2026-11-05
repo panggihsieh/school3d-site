@@ -16,6 +16,7 @@ const toolbar=document.querySelector('.map-toolbar');
 const viewButton=document.createElement('button');
 viewButton.textContent='3D 視角';viewButton.id='photo-view-toggle';
 toolbar.prepend(viewButton);
+const spaceCaptureLink=document.createElement('a');spaceCaptureLink.href='./field.html?mode=space';spaceCaptureLink.textContent='空間定位拍照';spaceCaptureLink.className='space-capture-link';viewButton.after(spaceCaptureLink);
 const photo=document.createElement('div');photo.id='photo-map';photo.hidden=true;
 const image=document.createElement('img');image.src='./assets/campus-overview.png';image.alt='大南國小校園俯視圖，北向上，台 3 線位於下方。';
 const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);photo.append(stage);panel.append(photo);
@@ -24,7 +25,7 @@ new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
 guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">圖片相對位置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
 const list=document.createElement('div');guide.append(list);
-const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／360° 校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
+const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／四向實景校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);
 let active=true,currentTopic=new URLSearchParams(location.search).get('topic')||'campus';
 const plantLayer=document.createElement('div');plantLayer.className='photo-plants';stage.append(plantLayer);
@@ -58,7 +59,7 @@ places.forEach((p,i)=>{
  const item=document.createElement('button');item.className='point-row';item.innerHTML=`<span class="point-number">${String(i+1).padStart(2,'0')}</span><span class="point-label">${p.name}</span><span class="point-arrow">↗</span>`;item.onclick=()=>selectPlace(i);list.append(item);
 });
 function show(){
- const visible=active&&['campus','carbon'].includes(currentTopic);
+ const visible=active&&['campus','carbon'].includes(currentTopic);spaceCaptureLink.hidden=currentTopic!=='campus';
  photo.hidden=!visible;guide.hidden=!(visible&&currentTopic==='campus');panel.classList.toggle('photo-mode',visible);sidebar.classList.toggle('photo-mode',visible&&currentTopic==='campus');sidebar.classList.toggle('photo-carbon',visible&&currentTopic==='carbon');
  plantLayer.hidden=plantNote.hidden=placePlant.hidden=!(visible&&currentTopic==='carbon');
  positioning=false;placePlant.textContent='標示選取植物';

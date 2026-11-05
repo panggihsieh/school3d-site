@@ -15,7 +15,9 @@ export function validatePhoto(body){
  if(typeof body.title!=='string'||!body.title.trim()||body.title.length>120||typeof body.description!=='string'||body.description.length>1000)throw Error('名稱或說明不正確');
  if(typeof body.image!=='string'||body.image.length>Math.ceil(maximum/3)*4||!/^[A-Za-z0-9+/]+={0,2}$/.test(body.image)||body.image.length%4)throw Error('照片過大或格式不正確');
  const bytes=atob(body.image);if(bytes.length>maximum||bytes.length<4||bytes.charCodeAt(0)!==255||bytes.charCodeAt(1)!==216||bytes.charCodeAt(2)!==255)throw Error('只接受壓縮後 JPEG');
- return {id:body.id,target:body.target,kind:body.kind,title:body.title.trim(),description:body.description,image:body.image};
+ let location;
+ if(body.location!==undefined){const p=body.location;if(!station||!p||!Number.isFinite(p.latitude)||Math.abs(p.latitude)>90||!Number.isFinite(p.longitude)||Math.abs(p.longitude)>180||!Number.isFinite(p.accuracy)||p.accuracy<0||p.accuracy>25)throw Error('站點定位資料不正確或誤差大於 25 公尺');location={latitude:p.latitude,longitude:p.longitude,accuracy:p.accuracy};}
+ return {id:body.id,target:body.target,kind:body.kind,title:body.title.trim(),description:body.description,image:body.image,...(location?{location}:{})};
 }
 async function github(env,path,method='GET',body){
  const r=await fetch(`https://api.github.com/repos/${env.GITHUB_REPO}/${path}`,{method,headers:{Authorization:`Bearer ${env.GITHUB_TOKEN}`,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10','User-Agent':'school3d-upload','Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
@@ -34,7 +36,7 @@ export async function publishPhoto(env,photo){
  const data=await github(env,`contents/dist/data.json?ref=${head.object.sha}`);
  const trees=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0)))).points;
  if(!/^P(0[1-9]|1[0-8])$/.test(photo.target)&&!trees.some(t=>t.id===photo.target&&t.topic==='carbon'))throw Error('樹木編號不存在');
- const record={id:photo.id,target:photo.target,kind:photo.kind,title:photo.title,description:photo.description,url:`./assets/uploads/${photo.id}.jpg`,publishedAt:new Date().toISOString()};
+ const record={id:photo.id,target:photo.target,kind:photo.kind,title:photo.title,description:photo.description,url:`./assets/uploads/${photo.id}.jpg`,publishedAt:new Date().toISOString(),...(photo.location?{location:photo.location}:{})};
  const image=await github(env,'git/blobs','POST',{content:photo.image,encoding:'base64'});
  const index=await github(env,'git/blobs','POST',{content:utf8base64(JSON.stringify([...manifest,record],null,2)),encoding:'base64'});
  const tree=await github(env,'git/trees','POST',{base_tree:commit.tree.sha,tree:[{path:`dist/assets/uploads/${photo.id}.jpg`,mode:'100644',type:'blob',sha:image.sha},{path:'dist/public-photos.json',mode:'100644',type:'blob',sha:index.sha}]});

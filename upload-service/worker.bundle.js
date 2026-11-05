@@ -804,7 +804,13 @@ function validatePhoto(body) {
   if (typeof body.image !== "string" || body.image.length > Math.ceil(maximum / 3) * 4 || !/^[A-Za-z0-9+/]+={0,2}$/.test(body.image) || body.image.length % 4) throw Error("\u7167\u7247\u904E\u5927\u6216\u683C\u5F0F\u4E0D\u6B63\u78BA");
   const bytes = atob(body.image);
   if (bytes.length > maximum || bytes.length < 4 || bytes.charCodeAt(0) !== 255 || bytes.charCodeAt(1) !== 216 || bytes.charCodeAt(2) !== 255) throw Error("\u53EA\u63A5\u53D7\u58D3\u7E2E\u5F8C JPEG");
-  return { id: body.id, target: body.target, kind: body.kind, title: body.title.trim(), description: body.description, image: body.image };
+  let location;
+  if (body.location !== void 0) {
+    const p = body.location;
+    if (!station || !p || !Number.isFinite(p.latitude) || Math.abs(p.latitude) > 90 || !Number.isFinite(p.longitude) || Math.abs(p.longitude) > 180 || !Number.isFinite(p.accuracy) || p.accuracy < 0 || p.accuracy > 25) throw Error("\u7AD9\u9EDE\u5B9A\u4F4D\u8CC7\u6599\u4E0D\u6B63\u78BA\u6216\u8AA4\u5DEE\u5927\u65BC 25 \u516C\u5C3A");
+    location = { latitude: p.latitude, longitude: p.longitude, accuracy: p.accuracy };
+  }
+  return { id: body.id, target: body.target, kind: body.kind, title: body.title.trim(), description: body.description, image: body.image, ...location ? { location } : {} };
 }
 async function github(env, path, method = "GET", body) {
   const r = await fetch(`https://api.github.com/repos/${env.GITHUB_REPO}/${path}`, { method, headers: { Authorization: `Bearer ${env.GITHUB_TOKEN}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2026-03-10", "User-Agent": "school3d-upload", "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : void 0 });
@@ -838,7 +844,7 @@ async function publishPhoto(env, photo) {
   const data = await github(env, `contents/dist/data.json?ref=${head.object.sha}`);
   const trees = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g, "")), (c) => c.charCodeAt(0)))).points;
   if (!/^P(0[1-9]|1[0-8])$/.test(photo.target) && !trees.some((t) => t.id === photo.target && t.topic === "carbon")) throw Error("\u6A39\u6728\u7DE8\u865F\u4E0D\u5B58\u5728");
-  const record = { id: photo.id, target: photo.target, kind: photo.kind, title: photo.title, description: photo.description, url: `./assets/uploads/${photo.id}.jpg`, publishedAt: (/* @__PURE__ */ new Date()).toISOString() };
+  const record = { id: photo.id, target: photo.target, kind: photo.kind, title: photo.title, description: photo.description, url: `./assets/uploads/${photo.id}.jpg`, publishedAt: (/* @__PURE__ */ new Date()).toISOString(), ...photo.location ? { location: photo.location } : {} };
   const image = await github(env, "git/blobs", "POST", { content: photo.image, encoding: "base64" });
   const index = await github(env, "git/blobs", "POST", { content: utf8base64(JSON.stringify([...manifest, record], null, 2)), encoding: "base64" });
   const tree = await github(env, "git/trees", "POST", { base_tree: commit.tree.sha, tree: [{ path: `dist/assets/uploads/${photo.id}.jpg`, mode: "100644", type: "blob", sha: image.sha }, { path: "dist/public-photos.json", mode: "100644", type: "blob", sha: index.sha }] });
