@@ -1,4 +1,5 @@
 import {createFieldSpeaker} from './field-speech.js?v=1';
+import {createWikiReference} from './wiki-trees.js?v=1';
 import {mountTeacherAI} from './teacher-ai.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
 import {isAuthorizedAdmin} from './admin-auth.js';
@@ -6,11 +7,12 @@ import {uploadServiceURL} from './field-config.js';
 import {photoKinds,nearbyTrees,arrivalEligible} from './field-domain.js';
 const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,arrivalFor='',draftDB,drafts=[],objectURLs=[];
 const admin=()=>isAuthorizedAdmin(user);
+const showWikiReference=createWikiReference($('#target'));
 const speaker=createFieldSpeaker({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,enabled:()=>$('#voice').checked,status:text=>$('#speech-status').textContent=text});
 function say(text,manual=false){return speaker.speak(text,{manual});}
 function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(watch);watch=undefined;$('#locate').disabled=false;$('#stop').disabled=true;}
 function setTarget(id){selected=trees.find(t=>t.id===id);$('#tree').value=id;$('#confirmed').checked=false;$('#camera').disabled=$('#album').disabled=true;arrivalFor='';renderTarget();drawMap();document.dispatchEvent(new Event('teacher-context-change'));}
-function renderTarget(){if(!selected)return;$('#target').replaceChildren();const h=document.createElement('h3');h.textContent=selected.name;const p=document.createElement('p');p.textContent=`平台編號 ${selected.sourceTreeId}；${selected.latitude}, ${selected.longitude}。${position?`距離約 ${Math.round(nearbyTrees([selected],position)[0].distance)} 公尺。`:''}平台位置待現場核對。`;$('#target').append(h,p);}
+function renderTarget(){if(!selected)return;$('#target').replaceChildren();const h=document.createElement('h3');h.textContent=selected.name;const p=document.createElement('p');p.textContent=`平台編號 ${selected.sourceTreeId}；${selected.latitude}, ${selected.longitude}。${position?`距離約 ${Math.round(nearbyTrees([selected],position)[0].distance)} 公尺。`:''}平台位置待現場核對。`;$('#target').append(h,p);showWikiReference(selected);}
 function options(){const search=$('#tree-search').value.trim().toLowerCase();const list=trees.filter(t=>`${t.name} ${t.label} ${t.sourceTreeId}`.toLowerCase().includes(search));$('#tree').replaceChildren();for(const t of list){const o=document.createElement('option');o.value=t.id;o.textContent=t.name;$('#tree').append(o);}if(list.some(t=>t.id===selected?.id))$('#tree').value=selected.id;else if(list[0])setTarget(list[0].id);}
 function drawMap(){
  const svg=$('#field-map');svg.replaceChildren();if(!trees.length)return;

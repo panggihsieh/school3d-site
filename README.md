@@ -55,3 +55,7 @@ Third-party software: Three.js 0.180.0 (MIT), see `dist/vendor/THREE-LICENSE.txt
 ## 教師 GPT-6.1 Sol 對話
 
 field.html 登入管理員後可使用文字／照片串流問答，搭配瀏覽器語音輸入、回答朗讀及逐輪連續語音。切換植物會重設對話並帶入新單株資料；不轉送目前 GPS。OpenAI API Key 僅放在既有 Cloudflare Worker 的 Secret。需由帳號擁有人部署新版 Worker 並設定 OPENAI_API_KEY 後才能真正呼叫，詳見 [OpenAI 啟用步驟](upload-service/OPENAI-SETUP.md)。
+
+## 現場維基樹木照片對照
+
+教師後台「確認目標與拍照」提供 Wikimedia Commons 同樹種實拍對照。點「載入參考照片」後，優先用學名的屬名與種小名搜尋，最多顯示三張含作者／授權資訊的縮圖，連回各檔案來源。可另開共享資源搜尋頁查看更多。此為外部物種參考，不是校內單株照片；搜尋結果可能含近似種，現場仍需核對葉片、樹皮及編號。GPS 更新不重複搜尋，同樹種切換會保留參考；不傳送定位、不自動下載或公開這些照片。第三方服務連線失敗時提供重試及來源連結。
