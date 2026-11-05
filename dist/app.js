@@ -34,6 +34,12 @@ function drawSummary(){
   $('#reporting-year').addEventListener('change',e=>{const n=Number(e.target.value);if(Number.isInteger(n)&&n>=1900&&n<=2200){year=n;drawSummary();}else{e.target.value=year;toast('請輸入 1900–2200 年。');}});
  }else $('#summary').innerHTML=`<p class="intro">${topic==='birds'?'預留觀察點與鳥類介紹；匯入有授權的音檔後即可播放。':topic==='ecology'?'把觀察變成一個小任務，從校園的綠地開始。':'保留校舍、操場與樹帶的相對位置，逐步補齊校園故事。'}</p><span class="coverage">${points.length} 個${topic==='birds'?'觀察點':'地點'}・${points.filter(p=>p.confirmed).length} 個已確認</span>`;
 }
+function renderBirdLearning(){
+ if(topic!=='birds')return;
+ const section=document.createElement('section');section.className='annual-summary';
+ section.innerHTML='<h3>梅山大南鳥類・聽聲學習</h3><p class="intro">看看鳥類照片、聽鳥鳴，再用字卡與朗讀認識鳥名和特徵。可在學習網站選擇鳥種、隨機抽卡與進行挑戰。</p><p><a href="https://birdsound-panggihsieh.firebaseapp.com/learn?bank=ef49b00a-b28c-4226-abce-bf736bf91e78" target="_blank" rel="noopener">開啟鳥類字卡與鳥鳴練習 ↗</a></p><p class="coverage">另開「AI 鳥鳴小偵探」學習網站，保留指定題庫。題庫內容以該站為準；建議觀察地點不代表校園目擊紀錄。請在室內或使用耳機練習，現地不以鳥音引誘鳥類。</p>';
+ $('#summary').append(section);
+}
 function renderList(){
  const points=filtered();
  $('#point-list').innerHTML=points.length?points.map(p=>`<button class="point-row ${p.id===selected?'active':''}" data-id="${p.id}" aria-pressed="${p.id===selected}"><span class="point-number">${esc(p.label||p.id)}</span><span class="point-label">${esc(p.name)}<small>${esc(p.area||'區域待補')}</small></span><span class="point-arrow">↗</span></button>`).join(''):'<p class="empty">沒有符合的地點。可調整搜尋，或按 ＋ 新增。</p>';
@@ -72,7 +78,7 @@ function renderDetail(){
 function cancelPlacing(){placing=false;document.body.classList.remove('placing');$('#placing-hint').textContent='拖曳旋轉 · 滾輪縮放';}
 function select(id,focus=false){cancelPlacing();selected=id;renderList();renderDetail();updateMarkerElements();if(matchMedia('(min-width:721px)').matches){const aside=$('.sidebar');aside.scrollTo({top:aside.scrollTop+$('#detail').getBoundingClientRect().top-aside.getBoundingClientRect().top-10,behavior:'smooth'});}else $('#detail').scrollIntoView({behavior:'smooth',block:'nearest'});if(focus&&camera){const p=current();const delta=new THREE.Vector3(p.x,0,p.z).sub(controls.target);controls.target.add(delta);camera.position.add(delta);controls.update();}}
 function renderSpeciesFilter(){const wrap=$('#species-filter-wrap');wrap.hidden=topic!=='carbon';const counts=new Map();for(const p of state.points.filter(p=>p.topic==='carbon'))counts.set(p.species||'未鑑定',(counts.get(p.species||'未鑑定')||0)+1);$('#species-filter').innerHTML='<option value="">全部樹種</option>'+[...counts].sort((a,b)=>a[0].localeCompare(b[0],'zh-TW')).map(([name,count])=>`<option value="${esc(name)}">${esc(name)}（${count} 株）</option>`).join('');$('#species-filter').value=speciesFilter;}
-function refresh(){rebuildTrees();drawSummary();renderSpeciesFilter();renderList();renderDetail();updateMarkerElements();}
+function refresh(){rebuildTrees();drawSummary();renderBirdLearning();renderSpeciesFilter();renderList();renderDetail();updateMarkerElements();}
 function switchTopic(next){cancelPlacing();topic=next;query='';speciesFilter='';$('#search').value='';selected=state.points.find(p=>p.topic===topic)?.id||null;document.querySelectorAll('.topic').forEach(b=>{b.classList.toggle('active',b.dataset.topic===topic);if(b.dataset.topic===topic)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});const [title,kicker,heading,subtitle]=topics[topic];$('#section-title').textContent=title;$('#section-kicker').textContent=kicker;$('#map-title').textContent=heading;$('#map-subtitle').textContent=subtitle;refresh();}
 
 function field(name,label,value='',type='text',extra=''){return `<label class="field">${esc(label)}<input name="${name}" type="${type}" value="${esc(value??'')}" ${extra}></label>`;}
