@@ -125,8 +125,8 @@ async function setupScene(){
   resize();new ResizeObserver(resize).observe($('#viewport'));
   const loader=new GLTFLoader();const gltf=await loader.loadAsync('./assets/campus.glb');model=gltf.scene;model.traverse(o=>{const match=o.name.match(/MOE\d+/);if(match)o.userData.treeId=match[0];});const oldTrees=[];model.traverse(o=>{if(/^MOE\d+_/.test(o.name))oldTrees.push(o);});oldTrees.forEach(o=>o.removeFromParent());scene.add(model);rebuildTrees();fitView();$('#loading').hidden=true;
   $('#scene').addEventListener('pointerdown',e=>pointerStart={x:e.clientX,y:e.clientY});$('#scene').addEventListener('click',mapClick);
-  const projected=new THREE.Vector3(),north=new THREE.Vector3(),origin=new THREE.Vector3();
-  const animate=()=>{frame=requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);const vw=$('#viewport').clientWidth,vh=$('#viewport').clientHeight;origin.copy(controls.target).project(camera);north.copy(controls.target).add(new THREE.Vector3(0,0,-10)).project(camera);$('#north-arrow').style.transform=`rotate(${Math.atan2((north.x-origin.x)*vw,(north.y-origin.y)*vh)}rad)`;for(const {el,p}of markers){projected.set(p.x,4,p.z).project(camera);el.style.left=`${(projected.x*.5+.5)*vw}px`;el.style.top=`${(-projected.y*.5+.5)*vh}px`;el.hidden=projected.z>1||projected.z<-1||Math.abs(projected.x)>1||Math.abs(projected.y)>1;}};animate();
+  const projected=new THREE.Vector3();
+  const animate=()=>{frame=requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);const vw=$('#viewport').clientWidth,vh=$('#viewport').clientHeight;for(const {el,p}of markers){projected.set(p.x,4,p.z).project(camera);el.style.left=`${(projected.x*.5+.5)*vw}px`;el.style.top=`${(-projected.y*.5+.5)*vh}px`;el.hidden=projected.z>1||projected.z<-1||Math.abs(projected.x)>1||Math.abs(projected.y)>1;}};animate();
  }catch(e){console.error(e);$('#loading').textContent='此裝置暫時無法顯示 3D。仍可使用右側清單查看與編輯資料。';$('#fallback-map').hidden=false;$('#map-status').textContent='3D 顯示暫不可用';}
 }
 $('#reset-view').onclick=()=>fitView();$('#top-view').onclick=()=>fitView(true);

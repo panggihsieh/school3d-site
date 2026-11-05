@@ -1,14 +1,14 @@
 // Photo positions are percentages of the supplied image, not survey coordinates.
 const places=[
  {name:'操場',x:39,y:39,description:'校園中央的草地與環形跑道。'},
- {name:'綜合球場',x:40,y:14,description:'位於圖片上方、操場北側的球場。'},
- {name:'遊戲區',x:57,y:17,description:'位於綜合球場東側的遊具區。'},
- {name:'教學大樓',x:71,y:31,description:'位於操場東側的長條教學大樓。'},
- {name:'幼兒園',x:75,y:59,description:'位於圖片右下方、教學大樓南端。'},
+ {name:'綜合球場',x:40,y:14,description:'位於示意圖中操場上方的球場。'},
+ {name:'遊戲區',x:57,y:17,description:'位於示意圖中綜合球場右側的遊具區。'},
+ {name:'教學大樓',x:71,y:31,description:'位於示意圖中操場右側的長條教學大樓。'},
+ {name:'幼兒園',x:75,y:59,description:'位於示意圖右下方、教學大樓下端。'},
  {name:'前門',x:12,y:78,description:'位於圖片左下方，面向台 3 線。'},
  {name:'後門',x:86,y:76,description:'位於圖片右下方，鄰近停車空間。'},
- {name:'操場南側校舍',x:40,y:57,description:'位於操場南側的橫向校舍，正式名稱與用途待確認。'},
- {name:'南側校舍',x:42,y:74,description:'位於圖片下方、台 3 線北側的橫向校舍，正式名稱與用途待確認。'}
+ {name:'操場南側校舍',x:40,y:57,description:'位於示意圖中操場下方的橫向校舍，正式名稱與用途待確認。'},
+ {name:'南側校舍',x:42,y:74,description:'位於示意圖下方、台 3 線上方的橫向校舍，正式名稱與用途待確認。'}
 ];
 const panel=document.querySelector('.map-panel');
 const sidebar=document.querySelector('.sidebar');
@@ -18,12 +18,14 @@ viewButton.textContent='3D 視角';viewButton.id='photo-view-toggle';
 toolbar.prepend(viewButton);
 const spaceCaptureLink=document.createElement('a');spaceCaptureLink.href='./field.html?mode=space';spaceCaptureLink.textContent='空間定位拍照';spaceCaptureLink.className='space-capture-link';viewButton.after(spaceCaptureLink);
 const photo=document.createElement('div');photo.id='photo-map';photo.hidden=true;
-const image=document.createElement('img');image.src='./assets/campus-overview.png';image.alt='大南國小校園俯視圖，北向上，台 3 線位於下方。';
-const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);photo.append(stage);panel.append(photo);
+const image=document.createElement('img');image.src='./assets/campus-overview.png';image.alt='大南國小校園配置示意圖，方向未校正，台 3 線繪於圖片下方。';
+const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);
+// Cover the baked-in north arrow without modifying the shared source image.
+const orientationMask=document.createElement('span');orientationMask.className='photo-orientation-mask';orientationMask.textContent='示意';orientationMask.setAttribute('aria-hidden','true');stage.append(orientationMask);photo.append(stage);panel.append(photo);
 function fitPhoto(){const width=Math.min(photo.clientWidth,photo.clientHeight*1586/992);stage.style.width=`${width}px`;stage.style.height=`${width*992/1586}px`;}
 new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
-guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">圖片相對位置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
+guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">方向未校正，圖中上下左右不代表實際方位。圖片為配置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
 const list=document.createElement('div');guide.append(list);
 const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／四向實景校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);

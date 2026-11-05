@@ -18,3 +18,7 @@
 .species-library{margin-top:20px;border-top:1px solid var(--line);padding-top:12px}.species-library h3{font-size:16px}.species-library>p{font-size:12px;line-height:1.8}.species-library figure{margin:12px 0}.species-library img{display:block;width:100%;max-height:300px;object-fit:contain;background:#e7eddf;border-radius:8px}.species-library figcaption{font-size:11px;line-height:1.7;overflow-wrap:anywhere}
 
 .map-toolbar .space-capture-link{padding:8px 12px;border-radius:6px;background:#245b3e;color:white;text-decoration:none;font-size:12px}.map-toolbar .space-capture-link[hidden]{display:none}
+
+/* The supplied illustration has no verified geographic orientation. */
+.photo-orientation-mask{position:absolute;top:0;right:0;width:10%;height:17%;display:flex;align-items:center;justify-content:center;background:#f6f5ed;color:#24483c;border-radius:0 0 0 8px;font-size:clamp(9px,1.2vw,16px);pointer-events:none}
+.map-badge{flex-shrink:0;white-space:nowrap}
