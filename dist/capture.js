@@ -1,6 +1,5 @@
-import {mountNorthUp} from './map-orientation.js';
 // 百分比依既有俯視示意圖估計；出入口與植物群需現場確認。
-import {stations} from './space-domain.js?v=north-up-20261106';
+import {stations} from './space-domain.js?v=orientation-20261106';
 const $=s=>document.querySelector(s);
 let mode='phone',selected='P01',completed={},published=[];
 try{completed=JSON.parse(localStorage.getItem('danan-capture-v1')||'{}')||{};}catch{}
@@ -23,12 +22,11 @@ function render(){
  const s=stations.find(s=>s.id===selected);
  const heading=document.createElement('h2');heading.textContent=`${s.id}｜${s.name} ×${count()} 張`;
  const note=document.createElement('p');note.textContent=s.note;
- const instructions=document.createElement('p');instructions.textContent=mode==='phone'?'站在同一安全位置，手機橫放，以眼睛高度依序拍北（圖中上方 ↑）、東（右方 →）、南（下方 ↓）、西（左方 ←）各 1 張；現場以手機指南針確認，共 4 張。不用拍天空或腳下；上傳後可左右切換實景，不會自動拼成完整球面。':'使用 360 相機拍 1 張完整球面環景，輸出 2:1 原圖（建議 6000×3000 以上），相機高約 1.5–1.7 公尺。';
+ const instructions=document.createElement('p');instructions.textContent=mode==='phone'?'站在同一安全位置，手機橫放，以眼睛高度依序拍北（圖中左下 ↙）、東（左上 ↖）、南（右上 ↗）、西（右下 ↘）各 1 張；現場以手機指南針確認，共 4 張。不用拍天空或腳下；上傳後可左右切換實景，不會自動拼成完整球面。':'使用 360 相機拍 1 張完整球面環景，輸出 2:1 原圖（建議 6000×3000 以上），相機高約 1.5–1.7 公尺。';
  const file=document.createElement('p');file.textContent=`建議檔名：${s.id}_${s.name}_${mode==='phone'?'01 至 04':'360'}.jpg。保留原圖並記錄拍攝日期、實際位置與朝向。`;
  const upload=document.createElement('a');upload.className='capture-link';upload.href=`./field.html?mode=space&station=${s.id}`;upload.textContent=`前往後台：${s.id} 拍照／上傳 →`;
  $('#selected').replaceChildren(heading,note,instructions,file,upload);
 }
-mountNorthUp($('#capture-map'));
 $('#route').innerHTML=`<polyline points="${stations.map(s=>`${s.x},${s.y}`).join(' ')}"/>`;
 $('#mode').onchange=e=>{mode=e.target.value;render();};$('#print').onclick=()=>window.print();render();
 fetch('./public-photos.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}).then(items=>{published=items;render();}).catch(()=>{});
