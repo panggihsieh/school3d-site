@@ -41,7 +41,7 @@ function drawSummary(){
 function renderBirdLearning(){
  if(topic!=='birds')return;
  const section=document.createElement('section');section.className='annual-summary';
- section.innerHTML='<h3>梅山大南鳥類・聽聲學習</h3><p class="intro">看看鳥類照片、聽鳥鳴，再用字卡與朗讀認識鳥名和特徵。可在學習網站選擇鳥種、隨機抽卡與進行挑戰。</p><p><a href="https://birdsound-panggihsieh.firebaseapp.com/learn?bank=ef49b00a-b28c-4226-abce-bf736bf91e78" target="_blank" rel="noopener">開啟鳥類字卡與鳥鳴練習 ↗</a></p><p class="coverage">另開「AI 鳥鳴小偵探」學習網站，保留指定題庫。題庫內容以該站為準；建議觀察地點不代表校園目擊紀錄。請在室內或使用耳機練習，現地不以鳥音引誘鳥類。</p>';
+ section.innerHTML='<h3>梅山大南鳥類・聽聲學習</h3><p class="intro">看看鳥類照片、聽鳥鳴，再用字卡與朗讀認識鳥名和特徵。可在學習網站選擇鳥種、隨機抽卡與進行挑戰。</p><p><a href="https://birdsound-panggihsieh.firebaseapp.com/" target="_blank" rel="noopener">開啟 AI 鳥鳴小偵探首頁 ↗</a></p><p><a href="https://birdsound-panggihsieh.firebaseapp.com/learn?bank=ef49b00a-b28c-4226-abce-bf736bf91e78" target="_blank" rel="noopener">開啟鳥類字卡與鳥鳴練習 ↗</a></p><p class="coverage">另開「AI 鳥鳴小偵探」學習網站，保留指定題庫。題庫內容以該站為準；建議觀察地點不代表校園目擊紀錄。請在室內或使用耳機練習，現地不以鳥音引誘鳥類。</p>';
  $('#summary').append(section);
 }
 function renderList(){
