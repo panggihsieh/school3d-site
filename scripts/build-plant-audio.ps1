@@ -1,4 +1,4 @@
-﻿param([switch]$ContextOnly)
+﻿param([switch]$ContextOnly,[switch]$StationOnly)
 Add-Type -AssemblyName System.Speech
 $taskRoot = Split-Path -Parent $PSScriptRoot
 $taskOutput = Join-Path $taskRoot 'dist/assets/plant-audio'
@@ -20,6 +20,12 @@ try {
   if ($ContextOnly) { $taskClips = $taskContextClips } else { foreach ($taskEntry in $taskContextClips.GetEnumerator()) { $taskClips[$taskEntry.Key] = $taskEntry.Value } }
   foreach ($taskTree in $(if ($ContextOnly) { @() } else { $taskData.points })) {
     if ($taskTree.topic -eq 'carbon') { $taskClips[$taskTree.id] = "目前目標，$($taskTree.label)，$($taskTree.species)。" }
+  }
+  if ($StationOnly) {
+    $taskClips = @{}
+    Push-Location $taskRoot
+    try { $taskStations = node --input-type=module -e "import {stations,stationDescription} from './dist/space-domain.js'; console.log(JSON.stringify(stations.map(s=>({id:s.id,text:stationDescription(s)}))));" | ConvertFrom-Json } finally { Pop-Location }
+    foreach ($taskStation in $taskStations) { $taskClips[$taskStation.id] = $taskStation.text }
   }
   foreach ($taskClip in $taskClips.GetEnumerator()) {
     $taskSynth.SetOutputToWaveFile((Join-Path $taskOutput ($taskClip.Key + '.wav')), $taskFormat)

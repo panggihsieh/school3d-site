@@ -35,3 +35,5 @@
 .teacher-login{display:inline-flex;align-items:center;padding:9px 14px;border:1px solid var(--line);border-radius:7px;background:#fffdf6;color:var(--ink);text-decoration:none;white-space:nowrap}.teacher-login:hover{background:#e9efdf}.teacher-login[hidden]{display:none}@media(max-width:720px){.header-actions .teacher-login{font-size:11px;padding:8px}}#site-logout[hidden]{display:none}
 
 .reference-zoom{display:block;width:100%;padding:0;background:white;cursor:zoom-in}.reference-zoom:hover{background:#edf4e6}.reference-lightbox{width:min(1000px,94vw);max-height:94dvh;border:0;border-radius:12px;padding:16px;background:#fff}.reference-lightbox::backdrop{background:#000b}.reference-lightbox>button{display:block;margin:0 0 12px auto}.reference-lightbox>img{display:block;max-width:100%;max-height:78dvh;margin:auto;object-fit:contain}
+
+.topic-photo-overlay .photo-stage>img{opacity:.28;filter:saturate(.6)}.topic-photo-overlay .plant-pin{background:#173d35;color:#fff;border:2px solid #fff;font-weight:800;min-width:38px;min-height:38px;box-shadow:0 2px 8px #1238}.topic-photo-overlay .plant-pin[aria-pressed=true]{background:#75391d;outline:3px solid #e5b86b}

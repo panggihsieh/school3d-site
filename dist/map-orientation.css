@@ -3,3 +3,8 @@
 
 .campus-brand{position:absolute;top:0;left:0;width:32%;height:18%;z-index:3;display:flex;align-items:flex-start;background:#faf7ef;pointer-events:none;border-radius:10px}
 .campus-brand>img{display:block!important;width:100%!important;height:auto!important;max-height:100%;object-fit:contain!important;border-radius:999px}
+
+.map-north-large{width:12%;height:22%;font-size:clamp(18px,3vw,40px)}.map-north-large>span{font-size:clamp(38px,6vw,85px)}
+.map-version-reference{margin:16px 0}.map-version-reference>summary{cursor:pointer;font-weight:600}.map-version-reference .reference-map{position:relative;max-width:720px;margin:12px auto}.reference-map>img{display:block;width:100%}
+
+.map-north[hidden]{display:none}

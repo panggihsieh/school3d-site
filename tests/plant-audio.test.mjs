@@ -12,7 +12,7 @@ test('autoplay rejection offers the native player rather than claiming audible s
 });
 test('every campus tree and diagnostic phrase has a non-silent PCM WAV clip',()=>{
  const trees=JSON.parse(readFileSync(new URL('../dist/data.json',import.meta.url))).points.filter(t=>t.topic==='carbon');
- for(const id of [...trees.map(t=>t.id),'test','stt-success','no-target','location-unavailable','location-stale','location-inaccurate','outside-campus','target-distant']){
+ for(const id of [...trees.map(t=>t.id),'test','stt-success','no-target','location-unavailable','location-stale','location-inaccurate','outside-campus','target-distant',...Array.from({length:18},(_,i)=>'P'+String(i+1).padStart(2,'0'))]){
   const wav=readFileSync(new URL(`../dist/assets/plant-audio/${id}.wav`,import.meta.url));assert.equal(wav.toString('ascii',0,4),'RIFF');assert.equal(wav.toString('ascii',8,12),'WAVE');assert.ok(wav.length>1000);assert.ok(wav.subarray(100).some(b=>b>0));
  }
 });

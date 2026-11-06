@@ -1,2 +1,2 @@
-export const campusMapImage='./assets/campus-overview-3d-north-v4.png';
-export function addCampusBrand(map){const brand=document.createElement('div');brand.className='campus-brand';const image=document.createElement('img');image.src='./assets/campus-map-brand.png';image.alt='大南國小 校園俯覽圖';brand.append(image);map.append(brand);}
+export const campusMapImage='./assets/campus-overview.png';
+export function addCampusBrand(map){const compass=document.createElement('span');compass.className='map-north map-north-large';compass.setAttribute('role','img');compass.setAttribute('aria-label','北朝左下方');compass.innerHTML='北<span aria-hidden="true">↙</span>';map.append(compass);}
