@@ -4,7 +4,7 @@ export function createPlantAudio({audio,status,stopSpeech}){
  function play(id,{manual=true}={}){
   if(!/^(MOE\d+|P(?:0[1-9]|1[0-8])|test|stt-success|no-target|location-unavailable|location-stale|location-inaccurate|outside-campus|target-distant)$/.test(id)||(!manual&&manualActive))return false;
   stop();stopSpeech();manualActive=manual;const request=version;
-  audio.src=`./assets/plant-audio/${id}.wav`;audio.volume=1;audio.load();
+  audio.src=`./assets/plant-audio/${id}.wav${/^P/.test(id)?'?v=relative-directions-20261106':''}`;audio.volume=1;audio.load();
   status('正在播放標準音訊…');
   audio.onended=()=>{if(version===request){manualActive=false;status('標準音訊播放結束。');}};
   audio.onerror=()=>{if(version===request){manualActive=false;status('音檔載入失敗，請檢查網路後重試。');}};

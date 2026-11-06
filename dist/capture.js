@@ -23,7 +23,7 @@ function render(){
  const s=stations.find(s=>s.id===selected);
  const heading=document.createElement('h2');heading.textContent=`${s.id}｜${s.name} ×${count()} 張`;
  const note=document.createElement('p');note.textContent='位置為建議區域，待現勘核對。'+s.note;
- const instructions=document.createElement('p');instructions.textContent=mode==='phone'?'站在同一安全位置，手機橫放，以眼睛高度依序拍北（圖中左下 ↙）、東（左上 ↖）、南（右上 ↗）、西（右下 ↘）各 1 張；現場以手機指南針確認，共 4 張。不移動站位，鏡頭約眼睛高度、保持水平；各張涵蓋前方環境，可保留部分重疊。不用拍天空或腳下。儲存前核對站號與方向；勿站車道或跨越圍牆，勿為取景進入危險區域。上傳後可左右切換實景，不會自動拼成完整球面。':'使用 360 相機拍 1 張完整球面環景，輸出 2:1 原圖（建議 6000×3000 以上），相機高約 1.5–1.7 公尺。';
+ const instructions=document.createElement('p');instructions.textContent=mode==='phone'?'站在同一安全位置，手機橫放，以眼睛高度依序拍前方、右方、後方、左方各 1 張；以本站第一張的朝向為前方，補拍沿用原本的前方，共 4 張。不移動站位，鏡頭約眼睛高度、保持水平；各張涵蓋前方環境，可保留部分重疊。不用拍天空或腳下。儲存前核對站號與方向；勿站車道或跨越圍牆，勿為取景進入危險區域。上傳後可左右切換實景，不會自動拼成完整球面。':'使用 360 相機拍 1 張完整球面環景，輸出 2:1 原圖（建議 6000×3000 以上），相機高約 1.5–1.7 公尺。';
  const file=document.createElement('p');file.textContent=`建議檔名：${s.id}_${s.name}_${mode==='phone'?'01 至 04':'360'}.jpg。保留原圖並記錄拍攝日期、實際位置與朝向。`;
  const upload=document.createElement('a');upload.className='capture-link';upload.href=`./field.html?mode=space&station=${s.id}`;upload.textContent=`前往後台：${s.id} 拍照／上傳 →`;
  $('#selected').replaceChildren(heading,note,instructions,file,upload);

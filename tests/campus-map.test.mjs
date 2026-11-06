@@ -5,7 +5,7 @@ test('all active campus overview surfaces use the same current image and origina
  assert.ok(existsSync(new URL('../dist/'+campusMapImage,import.meta.url)));
  assert.ok(read('capture.html').includes(campusMapImage));assert.ok(read('space-capture.js').includes(campusMapImage));assert.ok(read('field.js').includes(campusMapImage));
  assert.match(read('photo-map.js'),/image.src=campusMapImage/);
- assert.deepEqual(directions.map(x=>x[0]),['north','east','south','west']);assert.match(directions[0][1],/左下/);assert.match(directions[1][1],/左上/);
+ assert.deepEqual(directions.map(x=>x[0]),['north','east','south','west']);assert.deepEqual(directions.map(x=>x[1]),['前方','右方','後方','左方']);
  assert.ok(read('space-capture.js').includes('兩版俯視圖參考'));assert.ok(read('space-capture.js').includes('campus-overview-3d-north-v4.png'));
 });
 test('image station relocation preserves photo identity without inventing measured GPS',()=>{
