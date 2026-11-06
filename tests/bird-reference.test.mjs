@@ -11,6 +11,8 @@ test('twelve school photo slots retain licensed photographs and verified file ha
   assert.match(bird.sourceUrl,/^https:\/\/commons.wikimedia.org\/wiki\/File:/);
   assert.match(bird.licenseUrl,/^https?:\/\//);
   assert.equal(createHash('sha256').update(readFileSync(new URL('../dist/'+bird.image,import.meta.url))).digest('hex'),bird.sha256);
+  if(bird.aiGenerated){assert.match(bird.changes,/AI 合成/);assert.ok(bird.originalPhoto?.image);assert.equal(createHash('sha256').update(readFileSync(new URL('../dist/'+bird.originalPhoto.image,import.meta.url))).digest('hex'),bird.originalPhoto.sha256);}
+
  }
  assert.match(data.birds.find(b=>b.id==='owl-b').name,/待核對/);
 });
