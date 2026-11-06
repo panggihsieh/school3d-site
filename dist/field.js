@@ -1,6 +1,6 @@
 import {createFieldSpeaker} from './field-speech.js?v=1';
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
-import {createSpeciesReference} from './species-library.js?v=space-capture-1';
+import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=space-capture-1';
 import {mountSpaceCapture} from './space-capture.js?v=orientation-20261106';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
@@ -9,7 +9,7 @@ import {firebaseConfig,adminEmail} from './firebase-config.js';
 import {isAuthorizedAdmin} from './admin-auth.js';
 import {uploadServiceURL} from './field-config.js';
 import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget} from './field-domain.js?v=orientation-20261106';
-const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,arrivalFor='',draftDB,drafts=[],objectURLs=[],followedTarget=false,actualTarget='';
+const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,resumeLocation=false,arrivalFor='',draftDB,drafts=[],objectURLs=[],followedTarget=false,actualTarget='';
 const admin=()=>isAuthorizedAdmin(user);
 const showWikiReference=createWikiReference($('#target'));
 const showLibraryReference=createSpeciesReference($('#target'));
@@ -23,9 +23,10 @@ function renderTarget(force=false){if(!selected)return;$('#target').replaceChild
 function options(){const search=$('#tree-search').value.trim().toLowerCase();const list=trees.filter(t=>`${t.name} ${t.label} ${t.sourceTreeId}`.toLowerCase().includes(search));$('#tree').replaceChildren();for(const t of list){const o=document.createElement('option');o.value=t.id;o.textContent=t.name;$('#tree').append(o);}if(list.some(t=>t.id===selected?.id))$('#tree').value=selected.id;else if(list[0])setTarget(list[0].id);}
 function updateNearby(){
  if(!position)return;const nearby=nearbyTrees(trees,position);
+ const nearest=nearby[0];$('#nearest-live').textContent=nearest?`目前最近：${nearest.label} ${nearest.species}，約 ${Math.round(nearest.distance)} 公尺（定位精度 ±${Math.round(position.accuracy)} 公尺）。${$('#follow-location').checked?'隨位置持續更新。':'拍攝目標已固定；最近植物仍隨位置更新。'}`:'目前沒有植物定位資料。';$('#resume-follow').hidden=$('#follow-location').checked||!nearest;
  if($('#follow-location').checked){
   const result=chooseNearbyTarget(nearby,followedTarget?selected?.id:null,position.accuracy);
-  if(result.tree){followedTarget=true;if(result.tree.id!==selected?.id){$('#tree-search').value='';options();setTarget(result.tree.id);}}
+  if(result.tree){followedTarget=true;if(result.tree.id!==selected?.id){$('#tree-search').value='';setTarget(result.tree.id);options();}}
   $('#follow-status').textContent=result.reason==='accuracy'?'定位誤差較大，附近清單持續更新；精度改善到 ±25 公尺內後會自動切換。':result.tree?`自動跟隨中：${result.tree.name}，約 ${Math.round(result.tree.distance)} 公尺。${result.reason==='stable'?'附近植物距離相近，暫時保持目標以減少定位飄移切換。':'位置移動後會自動更新植物、照片與對話目標。'}`:'目前沒有可定位的植物資料。';
  }
  $('#nearby').replaceChildren();for(const t of nearby.slice(0,5)){const b=document.createElement('button');b.textContent=`${t.label} ${t.species} · 約 ${Math.round(t.distance)} 公尺`;b.setAttribute('aria-pressed',String(t.id===selected?.id));b.onclick=()=>manualTarget(t.id);$('#nearby').append(b);}
@@ -45,7 +46,7 @@ function drawMap(){
 }
 function locate(){
  if(!admin())return;if(!navigator.geolocation){$('#gps-status').textContent='此瀏覽器不支援定位。';return;}
- stopLocation();followedTarget=false;$('#locate').disabled=true;$('#stop').disabled=false;$('#gps-status').textContent='定位中，請允許瀏覽器使用位置…';$('#follow-status').textContent=$('#follow-location').checked?'取得手機位置後，會自動顯示附近植物。':'目標已固定，附近清單仍會依位置更新。';say('開始定位，取得位置後會顯示附近樹木。');
+ stopLocation();followedTarget=false;if(!$('#confirmed').checked){$('#follow-location').checked=true;$('#tree-search').value='';options();}$('#locate').disabled=true;$('#stop').disabled=false;$('#gps-status').textContent='定位中，請允許瀏覽器使用位置…';$('#follow-status').textContent=$('#follow-location').checked?'取得手機位置後，會自動顯示附近植物。':'目標已固定，附近清單仍會依位置更新。';say('開始定位，取得位置後會顯示附近樹木。');
  watch=navigator.geolocation.watchPosition(p=>{
   position={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy,time:p.timestamp};
   $('#gps-status').textContent=`定位精度約 ±${Math.round(position.accuracy)} 公尺，更新於 ${new Date(p.timestamp).toLocaleTimeString('zh-TW')}。${position.accuracy>25?'目前誤差較大，暫不觸發到達提醒。':''}`;
@@ -79,6 +80,7 @@ async function publicGallery(){try{const r=await fetch('./public-photos.json',{c
 async function start(){
  for(const [value,label] of photoKinds){const o=document.createElement('option');o.value=value;o.textContent=label;$('#kind').append(o);}$('#kind').onchange=()=>$('#instructions').textContent=photoKinds.find(k=>k[0]===$('#kind').value)[2];$('#kind').onchange();
  $('#locate').onclick=locate;$('#stop').onclick=()=>{stopLocation();$('#gps-status').textContent='已停止定位。';};$('#voice').onchange=()=>{if($('#voice').checked)say('語音提醒已啟動。');else speaker.stop();};$('#speak').onclick=()=>say(selected?`目前目標${selected.label}，${selected.species}。${$('#instructions').textContent}`:'請先選擇目標樹木。',true);$('#speech-stop').onclick=()=>{speaker.stop();$('#speech-status').textContent='已停止朗讀。';};$('#tree-search').oninput=()=>{pauseFollowing('已切換手動搜尋；勾選「依手機位置自動顯示附近植物」可恢復。');options();};$('#tree').onchange=e=>manualTarget(e.target.value);$('#confirmed').onchange=()=>{if($('#confirmed').checked)pauseFollowing('已固定拍照目標，移動時不會換株；拍攝完成後可重新勾選自動跟隨。');$('#camera').disabled=$('#album').disabled=!$('#confirmed').checked;};$('#camera').onchange=()=>capture($('#camera'));$('#album').onchange=()=>capture($('#album'));
+ $('#resume-follow').onclick=()=>{$('#follow-location').checked=true;$('#follow-location').onchange();};
  $('#follow-location').onchange=()=>{followedTarget=false;if($('#follow-location').checked){$('#confirmed').checked=false;$('#camera').disabled=$('#album').disabled=true;$('#tree-search').value='';options();if(watch!==undefined&&position)updateNearby();else $('#follow-status').textContent='自動跟隨已開啟，按「開始定位」後會顯示您附近的植物。';}else pauseFollowing('已固定目前植物；勾選自動跟隨可恢復動態切換。');};
  $('#refresh-published').onclick=async()=>{try{await refreshPublishedPhotos();$('#public-gallery').replaceChildren();await publicGallery();actualTarget='';renderTarget(true);}catch{$('#public-gallery').textContent='發布清單暫時無法載入，請稍後重試。';}};
  $('#export').onclick=async()=>{if(!drafts.length){$('#queue-status').textContent='尚無照片可匯出。';return;}const payload={version:1,photos:await Promise.all(drafts.map(async d=>({...d,blob:undefined,image:await blobBase64(d.blob)})))};const url=URL.createObjectURL(new Blob([JSON.stringify(payload)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='校園照片備份.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};
@@ -87,7 +89,7 @@ async function start(){
  $('#login').disabled=false;$('#login').onclick=async()=>{try{const provider=new api.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});await api.signInWithPopup(auth,provider);}catch(e){$('#auth-status').textContent=`登入失敗：${e.code||e.message}。請在 Safari 開啟並允許彈出視窗。`;}};$('#logout').onclick=()=>api.signOut(auth).catch(e=>$('#auth-status').textContent=e.message);
  api.onAuthStateChanged(auth,async current=>{const rejected=!!current&&!isAuthorizedAdmin(current);user=rejected?null:current;document.dispatchEvent(new Event('teacher-context-change'));$('#login').hidden=!!user;$('#logout').hidden=!user;$('#workspace').hidden=!admin();$('#auth-status').textContent=admin()?'管理員已登入，可開始定位與拍照。':user?'此帳號不是管理員，請登出並切換指定帳號。':'請使用 teacher.hsieh@gmail.com 登入。';if(!admin()){stopLocation();speaker.stop();for(const url of objectURLs)URL.revokeObjectURL(url);objectURLs=[];$('#queue').replaceChildren();drafts=[];}else try{await renderDrafts();}catch(e){$('#queue-status').textContent=`無法讀取本機照片：${e.message}`;}if(rejected){try{await api.signOut(auth);$('#auth-status').textContent='此帳號沒有管理權限，已拒絕登入。請使用指定管理員 Google 帳號。';}catch{$('#auth-status').textContent='此帳號沒有管理權限，後台已鎖定；登出未完成，請重新整理後切換帳號。';}}});
 }
-document.addEventListener('visibilitychange',()=>{if(document.hidden){stopLocation();speaker.stop();$('#gps-status').textContent='頁面進入背景，定位已停止；回來後請重新按開始定位。';}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){resumeLocation=watch!==undefined;stopLocation();speaker.stop();$('#gps-status').textContent='頁面進入背景，定位暫停；回到前景後會恢復更新。';}else if(resumeLocation&&admin()){resumeLocation=false;locate();}});
 window.addEventListener('pagehide',()=>{stopLocation();speaker.stop();});
 if(new URLSearchParams(location.search).get('mode')==='space'||new URLSearchParams(location.search).has('station')){document.body.classList.add('space-capture-mode');document.title='校園空間定位拍照｜大南國小';document.querySelector('h1').textContent='校園空間定位拍照';document.querySelector('header p').textContent='登入 → 定位或選站 → 確認位置 → 拍四個水平方向 → 上傳簡易 VR 素材';}
 publicGallery();start().catch(e=>$('#auth-status').textContent=`初始化失敗：${e.message}。請確認網路並重新整理。`);

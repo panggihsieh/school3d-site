@@ -10,7 +10,10 @@ export function referenceFigure(photo,name){
  source.textContent=photo.title;try{const url=new URL(photo.source);if(url.protocol==='https:'&&['commons.wikimedia.org','journals.plos.org'].includes(url.hostname))source.href=url.href;}catch{}
  source.target='_blank';source.rel='noopener noreferrer';
  const credit=document.createElement('p');credit.textContent=`作者：${photo.artist} · ${photo.license}。圖片使用來源提供的縮圖或組圖，未另修改；完整來源、授權及原圖見連結。`;
- caption.append(source,credit);figure.append(image,caption);return figure;
+ const zoom=document.createElement('button');zoom.type='button';zoom.className='reference-zoom';zoom.setAttribute('aria-label',`放大${name}參考圖片`);zoom.append(image);zoom.addEventListener('click',()=>{
+  const dialog=document.createElement('dialog');dialog.className='reference-lightbox';const close=document.createElement('button');close.type='button';close.textContent='關閉 ✕';const large=document.createElement('img');large.src=photo.url;large.alt=image.alt;dialog.append(close,large);document.body.append(dialog);close.onclick=()=>dialog.close();dialog.addEventListener('close',()=>dialog.remove());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});dialog.showModal();
+ });
+ const hint=document.createElement('p');hint.textContent='點擊圖片放大';caption.append(hint,source,credit);figure.append(zoom,caption);return figure;
 }
 export function createSpeciesReference(target){
  const panel=document.createElement('section');panel.className='wiki-reference species-library';target.after(panel);let last='',version=0;

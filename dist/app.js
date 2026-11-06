@@ -1,6 +1,6 @@
 import {openTreeQuest} from './tree-quest.js';
 import * as THREE from 'three';
-import {showSpeciesReference} from './species-library.js?v=space-capture-1';
+import {showSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {validateData,summarizeCarbon,mergeOfficialData} from './domain.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
