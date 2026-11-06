@@ -1,8 +1,8 @@
-import {mountSpeechTest} from './field-stt.js?v=1';
-import {createFieldSpeaker} from './field-speech.js?v=ios-audio-20261106';
+import {mountSpeechTest} from './field-stt.js?v=tts-exclusive-20261106';
+import {createFieldSpeaker} from './field-speech.js?v=tts-exclusive-20261106';
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
-import {mountTeacherAI} from './teacher-ai.js?v=space-capture-1';
+import {mountTeacherAI} from './teacher-ai.js?v=tts-exclusive-20261106';
 import {mountSpaceCapture} from './space-capture.js?v=orientation-20261106';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 import {refreshPublishedPhotos} from './published-photos.js?v=1';
@@ -15,7 +15,7 @@ const admin=()=>isAuthorizedAdmin(user);
 const showWikiReference=createWikiReference($('#target'));
 const showLibraryReference=createSpeciesReference($('#target'));
 const speaker=createFieldSpeaker({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,enabled:()=>$('#voice').checked,audioSession:navigator.audioSession,status:text=>$('#speech-status').textContent=text});
-function say(text,manual=false){return speaker.speak(text,{manual});}
+function say(text,manual=false){if(manual)document.dispatchEvent(new Event('teacher-read-target'));return speaker.speak(text,{manual});}
 function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(watch);watch=undefined;$('#locate').disabled=false;$('#stop').disabled=true;$('#follow-status').textContent=$('#follow-location').checked?'自動跟隨已開啟，按「開始定位」後會顯示您附近的植物。':'目標已固定；勾選「依手機位置自動顯示附近植物」可恢復。';}
 function pauseFollowing(message){$('#follow-location').checked=false;followedTarget=false;$('#follow-status').textContent=message;}
 function manualTarget(id){pauseFollowing('已固定您選取的植物；勾選「依手機位置自動顯示附近植物」可恢復動態切換。');setTarget(id);}
@@ -84,7 +84,7 @@ async function renderDrafts(){drafts=(await store('getAll')).filter(d=>d.owner==
 async function publicGallery(){try{const r=await fetch('./public-photos.json',{cache:'no-store'});if(!r.ok)throw Error();const records=await r.json();$('#public-gallery').textContent=records.length?'':'尚無已發布照片。';for(const p of records.slice().reverse()){const card=document.createElement('article');card.className='photo-card';const img=document.createElement('img');img.src=p.url;img.alt=p.title;img.loading='lazy';const title=document.createElement('p');title.textContent=p.title;card.append(img,title);$('#public-gallery').append(card);}}catch{$('#public-gallery').textContent='相簿暫時無法載入。';}}
 async function start(){
  for(const [value,label] of photoKinds){const o=document.createElement('option');o.value=value;o.textContent=label;$('#kind').append(o);}$('#kind').onchange=()=>$('#instructions').textContent=photoKinds.find(k=>k[0]===$('#kind').value)[2];$('#kind').onchange();
- $('#locate').onclick=locate;$('#stop').onclick=()=>{stopLocation();$('#gps-status').textContent='已停止定位。';};$('#voice').onchange=()=>{if($('#voice').checked)say('語音提醒已啟動。');else speaker.stop();};$('#speak').onclick=()=>say(selected?`目前目標${selected.label}，${selected.species}。${$('#instructions').textContent}`:'請先選擇目標樹木。',true);$('#speech-stop').onclick=()=>{speaker.stop();$('#speech-status').textContent='已停止朗讀。';};$('#tree-search').oninput=()=>{pauseFollowing('已切換手動搜尋；勾選「依手機位置自動顯示附近植物」可恢復。');options();};$('#tree').onchange=e=>manualTarget(e.target.value);$('#confirmed').onchange=()=>{if($('#confirmed').checked)pauseFollowing('已固定拍照目標，移動時不會換株；拍攝完成後可重新勾選自動跟隨。');$('#camera').disabled=$('#album').disabled=!$('#confirmed').checked;};$('#camera').onchange=()=>capture($('#camera'));$('#album').onchange=()=>capture($('#album'));
+ $('#locate').onclick=locate;$('#stop').onclick=()=>{stopLocation();$('#gps-status').textContent='已停止定位。';};$('#voice').onchange=()=>{if($('#voice').checked)say('語音提醒已啟動。');else speaker.stop();};$('#tts-test').onclick=()=>say('語音輸出測試。您好，這是大南國小植物導覽。',true);$('#speak').onclick=()=>say(selected?`目前目標${selected.label}，${selected.species}。${$('#instructions').textContent}`:'請先選擇目標樹木。',true);$('#speech-stop').onclick=()=>{speaker.stop();$('#speech-status').textContent='已停止朗讀。';};$('#tree-search').oninput=()=>{pauseFollowing('已切換手動搜尋；勾選「依手機位置自動顯示附近植物」可恢復。');options();};$('#tree').onchange=e=>manualTarget(e.target.value);$('#confirmed').onchange=()=>{if($('#confirmed').checked)pauseFollowing('已固定拍照目標，移動時不會換株；拍攝完成後可重新勾選自動跟隨。');$('#camera').disabled=$('#album').disabled=!$('#confirmed').checked;};$('#camera').onchange=()=>capture($('#camera'));$('#album').onchange=()=>capture($('#album'));
  $('#resume-follow').onclick=()=>{$('#follow-location').checked=true;$('#follow-location').onchange();};
  $('#follow-location').onchange=()=>{followedTarget=false;if($('#follow-location').checked){$('#confirmed').checked=false;$('#camera').disabled=$('#album').disabled=true;$('#tree-search').value='';options();if(watch!==undefined&&position)updateNearby();else $('#follow-status').textContent='自動跟隨已開啟，按「開始定位」後會顯示您附近的植物。';}else pauseFollowing('已固定目前植物；勾選自動跟隨可恢復動態切換。');};
  $('#refresh-published').onclick=async()=>{try{await refreshPublishedPhotos();$('#public-gallery').replaceChildren();await publicGallery();actualTarget='';renderTarget(true);}catch{$('#public-gallery').textContent='發布清單暫時無法載入，請稍後重試。';}};

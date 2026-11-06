@@ -3,13 +3,13 @@ export function mountTeacherAI({getUser,getPlant,isAdmin,compress}){
  const section=document.createElement('section');section.id='teacher-ai';section.innerHTML='<h2>教師 AI 對話 · GPT-6.1 Sol</h2><p>文字／照片問答與逐段回覆，搭配瀏覽器語音輸入、朗讀。連續語音採輪流問答，非 Realtime 音訊串流。</p><p>送出時會將問題、近期對話、選取植物資料及附加照片送至 OpenAI；不傳送目前 GPS。照片不會自動公開。API 依用量計費。</p><p class="ai-target"></p><label>問題<textarea class="ai-question" rows="3" maxlength="2000" placeholder="介紹這株植物，或指導我拍攝葉片"></textarea></label><label>附加照片（選填）<input class="ai-image" type="file" accept="image/*"></label><p class="ai-image-status"></p><button class="ai-remove" type="button">移除照片</button><p><button class="ai-send" type="button">送出問題</button> <button class="ai-mic" type="button">語音提問</button> <button class="ai-live" type="button">開始連續語音</button> <button class="ai-stop" type="button">停止</button></p><label><input class="ai-read" type="checkbox" checked> 朗讀 AI 回答</label><p class="ai-status" role="status">需部署新版 Worker，並設定 OPENAI_API_KEY Secret；金鑰不要填在此頁。</p><div class="ai-log" style="white-space:pre-wrap;line-height:1.8;max-height:360px;overflow:auto"></div><button class="ai-clear" type="button">清除對話</button>';
  document.querySelector('#workspace').prepend(section);
  const $=s=>section.querySelector(s),question=$('.ai-question'),status=$('.ai-status'),log=$('.ai-log');
- let history=[],image='',controller=null,recognition=null,live=false,session=0,plantId='',processingImage=false,imageVersion=0;
+ let history=[],image='',controller=null,recognition=null,live=false,session=0,plantId='',processingImage=false,imageVersion=0,aiUtterance=null;
  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
- const stop=()=>{session++;live=false;recognition?.abort();recognition=null;controller?.abort();controller=null;window.speechSynthesis?.cancel();$('.ai-live').textContent='開始連續語音';$('.ai-send').disabled=false;};
+ const stop=()=>{session++;live=false;recognition?.abort();recognition=null;controller?.abort();controller=null;if(aiUtterance){aiUtterance=null;window.speechSynthesis?.cancel();}$('.ai-live').textContent='開始連續語音';$('.ai-send').disabled=false;};
  function speak(text,version){
   if(!$('.ai-read').checked||!window.speechSynthesis){if(live)listen();return;}
-  speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='zh-TW';
-  utterance.onend=()=>{if(live&&version===session)listen();};utterance.onerror=()=>{live=false;$('.ai-live').textContent='開始連續語音';status.textContent='朗讀中斷，可再按語音提問。';};speechSynthesis.speak(utterance);
+  speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);aiUtterance=utterance;utterance.lang='zh-TW';
+  utterance.onend=()=>{if(aiUtterance!==utterance)return;aiUtterance=null;if(live&&version===session)listen();};utterance.onerror=()=>{if(aiUtterance!==utterance)return;aiUtterance=null;live=false;$('.ai-live').textContent='開始連續語音';status.textContent='朗讀中斷，可再按語音提問。';};speechSynthesis.speak(utterance);
  }
  function listen(){
   if(!Recognition||!isAdmin()||recognition||controller||document.hidden)return;
@@ -48,5 +48,5 @@ export function mountTeacherAI({getUser,getPlant,isAdmin,compress}){
  $('.ai-clear').onclick=()=>{stop();history=[];log.replaceChildren();status.textContent='對話已清除。';};
  if(!Recognition){$('.ai-mic').disabled=$('.ai-live').disabled=true;status.textContent='此瀏覽器不支援語音辨識，可用文字／照片提問。';}
  const update=()=>{const p=getPlant();if(!isAdmin()||p?.id!==plantId){stop();history=[];imageVersion++;processingImage=false;image='';$('.ai-image').value='';$('.ai-image-status').textContent='';log.replaceChildren();plantId=p?.id||'';}$('.ai-target').textContent=p?`目前植物：${p.name}`:'請先選取植物。';};
- document.addEventListener('teacher-context-change',update);document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);update();
+ document.addEventListener('teacher-read-target',stop);document.addEventListener('teacher-context-change',update);document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);update();
 }

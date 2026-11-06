@@ -15,6 +15,7 @@ export function mountSpeechTest({button,status,result,Recognition,isAdmin,stopSp
   try{recognition.start();}catch{stop();status.textContent='無法啟動語音測試，請重新點選，或使用 Safari／Chrome。';}
  };
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&current){stop();status.textContent='頁面進入背景，語音測試已停止。';}});
+ document.addEventListener('teacher-read-target',()=>{if(current){stop();status.textContent='已停止收音，切換至語音朗讀。';}});
  document.addEventListener('teacher-context-change',()=>{if(!isAdmin())stop();});
  return {stop};
 }

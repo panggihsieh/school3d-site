@@ -1,5 +1,7 @@
 export function createFieldSpeaker({synth,Utterance,enabled,status,audioSession}){
  let current=null,timer=null,manualReading=false;
+ // Load the device voice list before the user's first synchronous speech request.
+ synth?.getVoices?.();
  function stop(){clearTimeout(timer);current=null;manualReading=false;synth?.cancel();}
  function speak(text,{manual=false}={}){
   if(!manual&&(!enabled()||manualReading))return false;
@@ -13,8 +15,8 @@ export function createFieldSpeaker({synth,Utterance,enabled,status,audioSession}
    status('準備朗讀…');
    utterance.onstart=()=>{if(current!==utterance)return;started=true;clearTimeout(timer);status('瀏覽器已啟動朗讀。若仍無聲，請關閉 iPhone 靜音、調高媒體音量，並檢查藍牙輸出；也可在 Safari 開啟本站重試。');};
    utterance.onend=()=>{if(current!==utterance)return;clearTimeout(timer);current=null;manualReading=false;status('朗讀完成。');};
-   utterance.onerror=e=>{if(current!==utterance)return;clearTimeout(timer);current=null;manualReading=false;status(`朗讀未完成（${e.error||'音訊錯誤'}），請檢查音量及音訊輸出，再按「朗讀目前目標」。`);};
-   synth.resume?.();synth.speak(utterance);
+   utterance.onerror=e=>{if(current!==utterance)return;clearTimeout(timer);current=null;manualReading=false;status(`朗讀未完成（${e.error||'音訊錯誤'}），請先停止語音提問或 STT，再按「語音輸出測試」。`);};
+   synth.speak(utterance);if(synth.paused)synth.resume?.();
    if(current===utterance&&!started)timer=setTimeout(()=>{if(current===utterance){stop();status('瀏覽器尚未開始播放，請點「朗讀目前目標」重試，並確認裝置媒體音量與網站音訊設定。');}},8000);
    return true;
   }catch{stop();status('無法啟動朗讀，請再次點選按鈕，或改用 Safari／Chrome。');return false;}
