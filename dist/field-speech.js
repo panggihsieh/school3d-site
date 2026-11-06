@@ -1,4 +1,4 @@
-export function createFieldSpeaker({synth,Utterance,enabled,status,audioSession}){
+export function createFieldSpeaker({synth,Utterance,enabled,status,audioSession,getVoice}){
  let current=null,timer=null,manualReading=false;
  // Load the device voice list before the user's first synchronous speech request.
  synth?.getVoices?.();
@@ -13,7 +13,7 @@ export function createFieldSpeaker({synth,Utterance,enabled,status,audioSession}
    // iOS may route the default session through the silent-switch audio category.
    try{if(audioSession)audioSession.type='playback';}catch{}
    const utterance=new Utterance(text);current=utterance;manualReading=manual;let started=false;utterance.volume=1;utterance.pitch=1;utterance.lang='zh-TW';utterance.rate=.9;
-   const voices=synth.getVoices?.()||[];const voice=voices.find(v=>/^zh[-_]TW$/i.test(v.lang)&&v.localService)||voices.find(v=>/^zh[-_]TW$/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));if(voice)utterance.voice=voice;
+   const voices=synth.getVoices?.()||[];const preference=getVoice?.();const voice=preference==='system'?null:preference?voices.find(v=>v.voiceURI===preference):voices.find(v=>/^zh[-_]TW$/i.test(v.lang)&&v.localService)||voices.find(v=>/^zh[-_]TW$/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));if(voice)utterance.voice=voice;
    status(`準備朗讀：${text}`);
    utterance.onstart=()=>{if(current!==utterance)return;started=true;clearTimeout(timer);status('瀏覽器已啟動朗讀。若仍無聲，請關閉 iPhone 靜音、調高媒體音量，並檢查藍牙輸出；也可在 Safari 開啟本站重試。');};
    utterance.onend=()=>{if(current!==utterance)return;clearTimeout(timer);current=null;manualReading=false;status('朗讀完成。');};

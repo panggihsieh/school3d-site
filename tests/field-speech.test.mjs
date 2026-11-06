@@ -33,3 +33,9 @@ test('idle speech engine is not cancelled before a new reading',()=>{
  speaker.speak('語音測試',{manual:true});utterance.onend();speaker.speak('目前目標，T001，芒果。',{manual:true});
  assert.equal(cancellations,0);utterance.onend();speaker.stop();
 });
+test('system voice mode avoids forcing a device voice and selected Chinese voices are honored',()=>{
+ const voice={voiceURI:'taiwan-test',lang:'zh-TW',name:'Test'};let utterance,preference='system';
+ const speaker=createFieldSpeaker({synth:{getVoices:()=>[voice],cancel(){},speak:u=>{utterance=u;u.onstart();}},Utterance:class{},enabled:()=>true,status(){},getVoice:()=>preference});
+ speaker.speak('朗讀測試',{manual:true});assert.equal(utterance.voice,undefined);utterance.onend();
+ preference=voice.voiceURI;speaker.speak('朗讀測試',{manual:true});assert.equal(utterance.voice,voice);utterance.onend();speaker.stop();
+});
