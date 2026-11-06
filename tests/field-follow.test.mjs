@@ -2,14 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
-import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget} from '../dist/field-domain.js';
+import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,targetReadingContext} from '../dist/field-domain.js';
 // Run the page's actual GPS callback without Firebase, device permissions or network.
 function page(){
  const elements=new Map(),references=[],events=[],spoken=[],clips=[],handlers={};let onPosition;
  class Element{constructor(){this.children=[];this.checked=false;this.value='';this.namespaceURI='http://www.w3.org/2000/svg';}replaceChildren(...children){this.children=children;}append(...children){this.children.push(...children);}setAttribute(key,value){this[key]=value;}}
  const element=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};
  element('#follow-location').checked=true;
- const context=vm.createContext({URLSearchParams,location:{search:''},photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,showPublishedPhotos:()=>{},createPlantAudio:()=>({play(id,options){clips.push({id,options});},stop(){}}),createFieldSpeaker:()=>({speak(text,options){spoken.push({text,options});},stop(){}}),createWikiReference:()=>()=>{},createSpeciesReference:()=>plant=>references.push(plant.id),isAuthorizedAdmin:()=>true,window:{addEventListener(){}},navigator:{geolocation:{watchPosition(callback){onPosition=callback;return 1;},clearWatch(){}}},Event:class{constructor(type){this.type=type;}},document:{querySelector:element,createElement:()=>new Element(),createElementNS:()=>new Element(),addEventListener(type,handler){handlers[type]=handler;},dispatchEvent:e=>events.push(e.type)}});
+ const context=vm.createContext({URLSearchParams,location:{search:''},photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,targetReadingContext,showPublishedPhotos:()=>{},createPlantAudio:()=>({play(id,options){clips.push({id,options});},stop(){}}),createFieldSpeaker:()=>({speak(text,options){spoken.push({text,options});},stop(){}}),createWikiReference:()=>()=>{},createSpeciesReference:()=>plant=>references.push(plant.id),isAuthorizedAdmin:()=>true,window:{addEventListener(){}},navigator:{geolocation:{watchPosition(callback){onPosition=callback;return 1;},clearWatch(){}}},Event:class{constructor(type){this.type=type;}},document:{querySelector:element,createElement:()=>new Element(),createElementNS:()=>new Element(),addEventListener(type,handler){handlers[type]=handler;},dispatchEvent:e=>events.push(e.type)}});
  const source=readFileSync(new URL('../dist/field.js',import.meta.url),'utf8').replace(/^import .*;\r?$/gm,'').replace(/^publicGallery\(\);start\(\).*$/m,'');
  vm.runInContext(source,context);
  vm.runInContext(`trees=[{id:'west',name:'西側樹',label:'T001',species:'芒果',latitude:23.5588,longitude:120.5547},{id:'east',name:'東側樹',label:'T002',species:'榕樹',latitude:23.5588,longitude:120.5552}];selected=trees[1];locate();`,context);
@@ -57,4 +57,28 @@ test('recorded reminders honor the automatic speech switch; manual target readin
  const p=page();p.element('#tts-voice').value='recorded';p.fix(120.5547);assert.equal(p.clips.length,0);
  p.run('readCurrentTarget()');assert.equal(p.clips.at(-1).id,'west');
  p.element('#voice').checked=true;p.fix(120.5552);assert.equal(p.clips.at(-1).id,'east');assert.equal(p.clips.at(-1).options.manual,false);
+});
+
+test('off-campus manual reading warns instead of playing the selected tree in both modes',()=>{
+ for(const mode of ['system','recorded']){
+  const p=page();p.element('#tts-voice').value=mode;p.fix(120.60);p.run('readCurrentTarget()');
+  assert.match(p.element('#gps-status').textContent,/不在校園樹木附近/);
+  if(mode==='recorded')assert.equal(p.clips.at(-1).id,'outside-campus');
+  else assert.match(p.spoken.at(-1).text,/不在校園樹木附近/);
+ }
+});
+test('manual reading rejects stopped, stale and inaccurate GPS even with a selected tree',()=>{
+ const p=page();p.element('#tts-voice').value='recorded';p.fix(120.5547);
+ p.run('position.time=Date.now()-31000;readCurrentTarget()');assert.equal(p.clips.at(-1).id,'location-stale');
+ p.fix(120.5547,80);p.run('readCurrentTarget()');assert.equal(p.clips.at(-1).id,'location-inaccurate');
+ p.fix(120.5547);p.run('stopLocation();readCurrentTarget()');assert.equal(p.clips.at(-1).id,'location-unavailable');
+});
+test('reading proximity guards preserve the near target and distinguish a distant manual target',()=>{
+ const now=100000,tree={id:'MOE1',label:'T001',species:'芒果',latitude:23.5588,longitude:120.5547};
+ const position={...tree,time:now,accuracy:5};
+ assert.equal(targetReadingContext([tree],tree,position,true,now).clip,tree.id);
+ assert.equal(targetReadingContext([tree],null,position,true,now).clip,'no-target');
+ assert.equal(targetReadingContext([tree],tree,undefined,true,now).clip,'location-unavailable');
+ assert.equal(targetReadingContext([tree],tree,{...position,time:now+6000},true,now).clip,'location-stale');
+ assert.equal(targetReadingContext([tree],{...tree,longitude:120.557},position,true,now).clip,'target-distant');
 });

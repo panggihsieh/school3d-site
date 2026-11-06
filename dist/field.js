@@ -1,4 +1,4 @@
-import {createPlantAudio} from './plant-audio.js?v=1';
+import {createPlantAudio} from './plant-audio.js?v=reading-context-20261106';
 import {mountSpeechTest} from './field-stt.js?v=stt-success-20261106';
 import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106';
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
@@ -10,14 +10,19 @@ import {refreshPublishedPhotos} from './published-photos.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
 import {isAuthorizedAdmin} from './admin-auth.js';
 import {uploadServiceURL} from './field-config.js';
-import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget} from './field-domain.js?v=orientation-20261106';
+import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,targetReadingContext} from './field-domain.js?v=reading-context-20261106';
 const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,resumeLocation=false,arrivalFor='',draftDB,drafts=[],objectURLs=[],followedTarget=false,actualTarget='';
 const admin=()=>isAuthorizedAdmin(user);
 const showWikiReference=createWikiReference($('#target'));
 const showLibraryReference=createSpeciesReference($('#target'));
 const speaker=createFieldSpeaker({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,enabled:()=>$('#voice').checked,audioSession:navigator.audioSession,getVoice:()=>$('#tts-voice').value||'system',status:text=>$('#speech-status').textContent=text});
 const plantAudio=createPlantAudio({audio:$('#plant-audio'),status:text=>$('#speech-status').textContent=text,stopSpeech:()=>speaker.stop()});
-function readCurrentTarget(){if($('#tts-voice').value==='recorded'){document.dispatchEvent(new Event('teacher-read-target'));return plantAudio.play(selected?.id||'no-target');}const text=selected?`目前目標，${String(selected.label||'').slice(0,16)}，${String(selected.species||selected.name||'植物').slice(0,24)}。`:'請先選擇目標樹木。';say(text,true);}
+function readCurrentTarget(){
+ const context=targetReadingContext(trees,selected,position,watch!==undefined);
+ $('#gps-status').textContent=context.message;
+ if($('#tts-voice').value==='recorded'){document.dispatchEvent(new Event('teacher-read-target'));return plantAudio.play(context.clip);}
+ return say(context.message,true);
+}
 function say(text,manual=false){if(!manual&&!$('#voice').checked)return false;if($('#tts-voice').value==='recorded'){const clip=text==='STT 成功'?'stt-success':text.startsWith('已接近')?selected?.id:/語音輸出測試|朗讀測試成功/.test(text)?'test':null;if(clip){if(manual)document.dispatchEvent(new Event('teacher-read-target'));return plantAudio.play(clip,{manual});}}plantAudio.stop();if(manual)document.dispatchEvent(new Event('teacher-read-target'));return speaker.speak(text,{manual});}
 function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(watch);watch=undefined;$('#locate').disabled=false;$('#stop').disabled=true;$('#follow-status').textContent=$('#follow-location').checked?'自動跟隨已開啟，按「開始定位」後會顯示您附近的植物。':'目標已固定；勾選「依手機位置自動顯示附近植物」可恢復。';}
 function pauseFollowing(message){$('#follow-location').checked=false;followedTarget=false;$('#follow-status').textContent=message;}
