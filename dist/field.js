@@ -1,4 +1,4 @@
-import {createFieldSpeaker} from './field-speech.js?v=1';
+import {createFieldSpeaker} from './field-speech.js?v=ios-audio-20261106';
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=space-capture-1';
@@ -13,7 +13,7 @@ const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,pos
 const admin=()=>isAuthorizedAdmin(user);
 const showWikiReference=createWikiReference($('#target'));
 const showLibraryReference=createSpeciesReference($('#target'));
-const speaker=createFieldSpeaker({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,enabled:()=>$('#voice').checked,status:text=>$('#speech-status').textContent=text});
+const speaker=createFieldSpeaker({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,enabled:()=>$('#voice').checked,audioSession:navigator.audioSession,status:text=>$('#speech-status').textContent=text});
 function say(text,manual=false){return speaker.speak(text,{manual});}
 function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(watch);watch=undefined;$('#locate').disabled=false;$('#stop').disabled=true;$('#follow-status').textContent=$('#follow-location').checked?'自動跟隨已開啟，按「開始定位」後會顯示您附近的植物。':'目標已固定；勾選「依手機位置自動顯示附近植物」可恢復。';}
 function pauseFollowing(message){$('#follow-location').checked=false;followedTarget=false;$('#follow-status').textContent=message;}
