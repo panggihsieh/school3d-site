@@ -6,7 +6,7 @@
   <meta name="description" content="探索大南國小的校園空間、植物碳資訊、鳥類觀察及生態景點。">
   <link rel="stylesheet" href="./style.css?v=tree-quest-20261105">
   <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
-</head>
+<link rel="stylesheet" href="./map-orientation.css?v=north-sw-1"></head>
 <body>
 <header class="header">
   <a class="brand" href="#teacher-entry" aria-label="大南國小生態校園首頁"><span class="brand-mark">森</span><span><strong>大南・生態校園</strong><small>DANAN ECO CAMPUS</small></span></a>
@@ -22,7 +22,7 @@
 </nav>
 <main>
  <section class="map-panel" aria-label="校園3D地圖">
-  <div class="map-heading"><div><span class="eyebrow">EXPLORE THE CAMPUS</span><h1 id="map-title">從校園，開始探索。</h1><p id="map-subtitle">選擇地圖標記，認識每一處校園空間。</p></div><span class="map-badge">方向未校正</span></div>
+  <div class="map-heading"><div><span class="eyebrow">EXPLORE THE CAMPUS</span><h1 id="map-title">從校園，開始探索。</h1><p id="map-subtitle">選擇地圖標記，認識每一處校園空間。</p></div><span class="map-badge">北向 ↙</span></div>
   <div id="viewport"><canvas id="scene" aria-label="可旋轉縮放的3D校園，亦可使用右側清單選取地點"></canvas><div id="markers"></div><div id="loading" role="status">正在載入 3D 校園…</div></div>
   <div class="map-toolbar" aria-label="地圖控制"><button id="reset-view">全校視角</button><button id="top-view">俯視</button><button id="zoom-in" aria-label="放大地圖">＋</button><button id="zoom-out" aria-label="縮小地圖">－</button></div>
   <div class="map-footer"><span><i class="dot"></i><span id="map-status">校園配置・位置與高度待確認</span></span><span id="placing-hint">拖曳旋轉 · 滾輪縮放</span></div>
