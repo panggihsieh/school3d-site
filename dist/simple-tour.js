@@ -1,4 +1,4 @@
-import {stations,directions,latestViews,nextDirection} from './space-domain.js?v=orientation-20261106';
+import {stations,directions,latestViews,nextDirection} from './space-domain.js?v=campus-3d-v4-20261106';
 export function mountSimpleTour(records){
  const panel=document.querySelector('#simple-view');panel.innerHTML='<label>實景站點<select id="simple-station"></select></label><p id="simple-progress" role="status"></p><div class="simple-frame" tabindex="0" aria-label="四向照片導覽，可左右滑動或按方向鍵"><img id="simple-photo" alt="" hidden><p id="simple-empty"></p></div><div id="simple-directions" class="simple-directions"></div><p><button id="turn-left">← 向左看</button> <button id="turn-right">向右看 →</button></p><p><button id="simple-previous">上一站</button> <button id="simple-next">下一站</button> <a id="simple-capture" class="button">拍攝本站照片（管理員）</a></p><p>手機橫放，左右滑動或按方向切換實景。四張普通照片分方向展示，不含天空；尚未發布的方向會保留空位，不會自動補畫。</p>';
  const $=s=>panel.querySelector(s);let kind='north',photoVersion=0,startX;const requested=new URLSearchParams(location.search).get('station');

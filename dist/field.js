@@ -4,13 +4,13 @@ import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106'
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=ai-status-20261106';
-import {mountSpaceCapture} from './space-capture.js?v=orientation-20261106';
+import {mountSpaceCapture} from './space-capture.js?v=campus-3d-v4-20261106';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 import {refreshPublishedPhotos} from './published-photos.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
 import {isAuthorizedAdmin} from './admin-auth.js';
 import {uploadServiceURL} from './field-config.js';
-import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,targetReadingContext} from './field-domain.js?v=reading-context-20261106';
+import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,targetReadingContext} from './field-domain.js?v=campus-3d-v4-20261106';
 const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,resumeLocation=false,arrivalFor='',draftDB,drafts=[],objectURLs=[],followedTarget=false,actualTarget='';
 const admin=()=>isAuthorizedAdmin(user);
 const showWikiReference=createWikiReference($('#target'));
@@ -28,10 +28,24 @@ function stopLocation(){if(watch!==undefined)navigator.geolocation.clearWatch(wa
 function pauseFollowing(message){$('#follow-location').checked=false;followedTarget=false;$('#follow-status').textContent=message;}
 function manualTarget(id){pauseFollowing('已固定您選取的植物；勾選「依手機位置自動顯示附近植物」可恢復動態切換。');setTarget(id);}
 function setTarget(id){selected=trees.find(t=>t.id===id);$('#tree').value=id;$('#confirmed').checked=false;$('#camera').disabled=$('#album').disabled=true;arrivalFor='';renderTarget();drawMap();document.dispatchEvent(new Event('teacher-context-change'));}
-function renderTarget(force=false){if(!selected)return;$('#target').replaceChildren();const h=document.createElement('h3');h.textContent=selected.name;const p=document.createElement('p');p.textContent=`平台編號 ${selected.sourceTreeId}；${selected.latitude}, ${selected.longitude}。${position?`距離約 ${Math.round(nearbyTrees([selected],position)[0].distance)} 公尺。`:''}平台位置待現場核對。`;$('#target').append(h,p);showWikiReference(selected,{force});showLibraryReference(selected,{force});if(actualTarget!==selected.id){actualTarget=selected.id;$('#target-photos').replaceChildren();showPublishedPhotos(selected.id,$('#target-photos'));}}
+function locationReliable(){return !!position&&Number.isFinite(position.accuracy)&&position.accuracy>=0&&position.accuracy<=25&&Date.now()-position.time<=30000&&position.time<=Date.now()+5000;}
+function renderTarget(force=false){if(!selected)return;$('#target').replaceChildren();const h=document.createElement('h3');h.textContent=selected.name;const p=document.createElement('p');p.textContent=`平台編號 ${selected.sourceTreeId}；${selected.latitude}, ${selected.longitude}。${locationReliable()?`距離約 ${Math.round(nearbyTrees([selected],position)[0].distance)} 公尺。`:''}平台位置待現場核對。`;$('#target').append(h,p);showWikiReference(selected,{force});showLibraryReference(selected,{force});if(actualTarget!==selected.id){actualTarget=selected.id;$('#target-photos').replaceChildren();showPublishedPhotos(selected.id,$('#target-photos'));}}
 function options(){const search=$('#tree-search').value.trim().toLowerCase();const list=trees.filter(t=>`${t.name} ${t.label} ${t.sourceTreeId}`.toLowerCase().includes(search));$('#tree').replaceChildren();for(const t of list){const o=document.createElement('option');o.value=t.id;o.textContent=t.name;$('#tree').append(o);}if(list.some(t=>t.id===selected?.id))$('#tree').value=selected.id;else if(list[0])setTarget(list[0].id);}
 function updateNearby(){
- if(!position)return;const nearby=nearbyTrees(trees,position);
+ if(!position)return;
+ if(!locationReliable()){
+  $('#nearest-live').textContent=`定位精度不足或資料過期，無法判斷最近植物（回報誤差 ±${Math.round(position.accuracy)} 公尺）。請保持頁面在前景並重新取得精確定位。`;
+  $('#nearby').replaceChildren();$('#resume-follow').hidden=true;
+  $('#follow-status').textContent='暫停自動換株與到達提醒；精度改善到 ±25 公尺內且定位更新後才恢復。';
+  renderTarget();drawMap();return;
+ }
+ const nearby=nearbyTrees(trees,position);
+ if(nearby[0]?.distance>200){
+  $('#nearest-live').textContent=`目前不在校園樹木附近；距最近校樹約 ${Math.round(nearby[0].distance)} 公尺，不代表已接近該株。`;
+  $('#nearby').replaceChildren();$('#resume-follow').hidden=true;
+  $('#follow-status').textContent='校外暫停自動換株，保留原選取目標；回到校樹附近才恢復。';
+  renderTarget();drawMap();return;
+ }
  const nearest=nearby[0];$('#nearest-live').textContent=nearest?`目前最近：${nearest.label} ${nearest.species}，約 ${Math.round(nearest.distance)} 公尺（定位精度 ±${Math.round(position.accuracy)} 公尺）。${$('#follow-location').checked?'隨位置持續更新。':'拍攝目標已固定；最近植物仍隨位置更新。'}`:'目前沒有植物定位資料。';$('#resume-follow').hidden=$('#follow-location').checked||!nearest;
  if($('#follow-location').checked){
   const result=chooseNearbyTarget(nearby,followedTarget?selected?.id:null,position.accuracy);
@@ -44,18 +58,19 @@ function updateNearby(){
 function drawMap(){
  const svg=$('#field-map');svg.replaceChildren();if(!trees.length)return;
  const lat=trees.reduce((s,t)=>s+t.latitude,0)/trees.length,lon=trees.reduce((s,t)=>s+t.longitude,0)/trees.length;
- // Rotate only the display: north points lower-left, east upper-left.
- const xy=p=>{const east=(p.longitude-lon)*111320*Math.cos(lat*Math.PI/180),north=(p.latitude-lat)*111320;return [-(east+north)*Math.SQRT1_2,(east-north)*Math.SQRT1_2];};
+ // North-up display; raw GPS coordinates and distance calculations are unchanged.
+ const xy=p=>{const east=(p.longitude-lon)*111320*Math.cos(lat*Math.PI/180),north=(p.latitude-lat)*111320;return [east,north];};
  const coords=trees.map(xy);const xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]);const minX=Math.min(...xs)-15,maxX=Math.max(...xs)+15,minY=Math.min(...ys)-15,maxY=Math.max(...ys)+15;
  const scale=Math.min(550/(maxX-minX),350/(maxY-minY));const project=p=>{const [x,y]=xy(p);return [25+(x-minX)*scale,375-(y-minY)*scale];};
  const node=(tag,attrs,text)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);if(text)el.textContent=text;svg.append(el);return el;};
  // Faint context image only; no geographic registration is implied.
- node('image',{href:'./assets/campus-overview.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.12,'aria-hidden':'true'});
+ node('image',{href:'./assets/campus-overview-3d-north-v4.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.12,'aria-hidden':'true'});
  node('rect',{x:540,y:12,width:60,height:65,fill:'#eef4e7'});
- node('text',{x:550,y:30,fill:'#193d30'},'北 ↙');
+ node('text',{x:550,y:30,fill:'#193d30'},'北 ↑');
  node('text',{x:12,y:395,fill:'#506450','font-size':11},'淡化底圖僅供環境參考・未精準對位');
  for(const t of trees){const [cx,cy]=project(t);const pin=node('circle',{cx,cy,r:t.id===selected?.id?8:3.5,fill:t.id===selected?.id?'#d06c0b':'#37814c'});const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=t.name;pin.append(title);}
- if(position){const [cx,cy]=project(position);if(cx>=0&&cx<=600&&cy>=0&&cy<=400){node('circle',{cx,cy,r:position.accuracy*scale,fill:'#2187cf22',stroke:'#2187cf'});node('circle',{cx,cy,r:6,fill:'#0876ca',stroke:'white','stroke-width':2});}else node('text',{x:20,y:25,fill:'#8d3d20'},'你目前在校園座標圖範圍外');}
+ if(position&&!locationReliable()){node('text',{x:20,y:25,fill:'#8d3d20'},'手機定位精度不足或資料過期，暫不顯示藍點');}
+ else if(position){const [cx,cy]=project(position);if(cx>=0&&cx<=600&&cy>=0&&cy<=400){node('circle',{cx,cy,r:position.accuracy*scale,fill:'#2187cf22',stroke:'#2187cf'});node('circle',{cx,cy,r:6,fill:'#0876ca',stroke:'white','stroke-width':2});}else node('text',{x:20,y:25,fill:'#8d3d20'},'你目前在校園座標圖範圍外');}
 }
 function locate(){
  if(!admin())return;if(!navigator.geolocation){$('#gps-status').textContent='此瀏覽器不支援定位。';return;}

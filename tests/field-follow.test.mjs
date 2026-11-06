@@ -42,7 +42,7 @@ test('returning to the foreground resumes the active location watch',()=>{
 
 test('faint campus background renders behind GPS points with a registration notice',()=>{
  const p=page();p.fix(120.5547);const nodes=p.element('#field-map').children;
- const image=nodes.findIndex(n=>n.href==='./assets/campus-overview.png');assert.equal(image,0);assert.equal(nodes[image].opacity,.12);
+ const image=nodes.findIndex(n=>n.href==='./assets/campus-overview-3d-north-v4.png');assert.equal(image,0);assert.equal(nodes[image].opacity,.12);
  assert.ok(nodes.some(n=>String(n.textContent).includes('未精準對位')));
  assert.ok(nodes.slice(image+1).some(n=>n.fill==='#d06c0b'));assert.equal(p.run('selected.id'),'west');
 });
@@ -82,3 +82,6 @@ test('reading proximity guards preserve the near target and distinguish a distan
  assert.equal(targetReadingContext([tree],tree,{...position,time:now+6000},true,now).clip,'location-stale');
  assert.equal(targetReadingContext([tree],{...tree,longitude:120.557},position,true,now).clip,'target-distant');
 });
+
+test('25 km GPS uncertainty never claims nearest plants or shows a precise phone point',()=>{const p=page();p.fix(120.60,25000);assert.match(p.element('#nearest-live').textContent,/無法判斷最近植物/);assert.equal(p.element('#nearby').children.length,0);assert.equal(p.run('selected.id'),'east');assert.ok(!p.element('#field-map').children.some(n=>n.fill==='#0876ca'));p.fix(120.5547,6);assert.match(p.element('#nearest-live').textContent,/T001/);assert.equal(p.element('#nearby').children.length,2);});
+test('accurate but distant GPS reports outside campus without auto-switching the target',()=>{const p=page();p.fix(120.60,6);assert.match(p.element('#nearest-live').textContent,/不在校園樹木附近/);assert.equal(p.element('#nearby').children.length,0);assert.equal(p.run('selected.id'),'east');});

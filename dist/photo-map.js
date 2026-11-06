@@ -1,3 +1,4 @@
+import {campusMapImage,addCampusBrand} from './campus-map.js';
 // Photo positions are percentages of the supplied image, not survey coordinates.
 const places=[
  {name:'操場',x:58,y:61,description:'草地與環形跑道，依衛星截圖重繪。'},
@@ -15,14 +16,14 @@ viewButton.textContent='3D 視角';viewButton.id='photo-view-toggle';
 toolbar.prepend(viewButton);
 const spaceCaptureLink=document.createElement('a');spaceCaptureLink.href='./field.html?mode=space';spaceCaptureLink.textContent='空間定位拍照';spaceCaptureLink.className='space-capture-link';viewButton.after(spaceCaptureLink);
 const photo=document.createElement('div');photo.id='photo-map';photo.hidden=true;
-const image=document.createElement('img');image.src='./assets/campus-overview-campus-only-v3.png';image.alt='大南國小校園俯視重繪示意圖，正北朝上，只呈現校園本體，不顯示周邊道路與廠房；邊界為示意，非測繪圖。';
-const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);
+const image=document.createElement('img');image.src=campusMapImage;image.alt='大南國小校園俯視重繪示意圖，正北朝上，只呈現校園本體，不顯示周邊道路與廠房；邊界為示意，非測繪圖。';
+const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);addCampusBrand(stage);
 photo.append(stage);panel.append(photo);
 function fitPhoto(){const ratio=image.naturalWidth&&image.naturalHeight?image.naturalWidth/image.naturalHeight:1.5;const width=Math.min(photo.clientWidth,photo.clientHeight*ratio);stage.style.width=`${width}px`;stage.style.height=`${width/ratio}px`;stage.style.aspectRatio=String(ratio);}
 image.addEventListener('load',fitPhoto);
 new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
-guide.innerHTML='<p class="intro">依提供的 Google Earth 衛星截圖與校園圖參考重繪。點選標記查看各區介紹。</p><p class="coverage">僅呈現校園本體，圍牆範圍依參考圖概略繪製。本圖正北朝上：北 ↑、東 →、南 ↓、西 ←。AI 重繪為配置示意，非實拍、非測繪圖；建物用途與出入口待現場核對。拍照站點頁仍使用原圖，請依站號及現場指南針確認。</p>';
+guide.innerHTML='<p class="intro">依提供的 Google Earth 衛星截圖與校園圖參考重繪。點選標記查看各區介紹。</p><p class="coverage">僅呈現校園本體，圍牆範圍依參考圖概略繪製。本圖正北朝上：北 ↑、東 →、南 ↓、西 ←。AI 重繪為配置示意，非實拍、非測繪圖；建物用途與出入口待現場核對。所有補拍地圖使用同版底圖；站點是建議區域，入口、樓梯口與用途須現場確認。</p>';
 const list=document.createElement('div');guide.append(list);
 const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／四向實景校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);
@@ -31,7 +32,7 @@ const plantLayer=document.createElement('div');plantLayer.className='photo-plant
 const plantNote=document.createElement('p');plantNote.className='photo-plant-note';plantNote.textContent='新底圖植物點位待標示；舊圖標點保留但不套用。可選取植物後按「標示選取植物」。';photo.append(plantNote);
 const placePlant=document.createElement('button');placePlant.textContent='標示選取植物';toolbar.append(placePlant);
 let positioning=false,plantPositions={};
-try{plantPositions=JSON.parse(localStorage.getItem('danan-photo-plants-campus-only-v3')||'{}')||{};}catch{}
+try{plantPositions=JSON.parse(localStorage.getItem('danan-photo-plants-3d-north-v4')||'{}')||{};}catch{}
 function drawPlants(){
  plantLayer.replaceChildren();
  document.querySelectorAll('#point-list [data-id]').forEach(row=>{
@@ -45,7 +46,7 @@ stage.addEventListener('click',e=>{
  if(!positioning||currentTopic!=='carbon'||e.target.closest('button'))return;
  const row=document.querySelector('#point-list .active');if(!row)return;
  const r=stage.getBoundingClientRect(),next={...plantPositions,[row.dataset.id]:{x:Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),y:Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))}};
- try{localStorage.setItem('danan-photo-plants-campus-only-v3',JSON.stringify(next));plantPositions=next;positioning=false;placePlant.textContent='標示選取植物';drawPlants();plantNote.textContent='植物點位為手動圖片標示，僅儲存在此瀏覽器，尚未包含在導覽 JSON 匯出中。';}catch{plantNote.textContent='無法儲存圖片點位，請檢查瀏覽器儲存空間。';}
+ try{localStorage.setItem('danan-photo-plants-3d-north-v4',JSON.stringify(next));plantPositions=next;positioning=false;placePlant.textContent='標示選取植物';drawPlants();plantNote.textContent='植物點位為手動圖片標示，僅儲存在此瀏覽器，尚未包含在導覽 JSON 匯出中。';}catch{plantNote.textContent='無法儲存圖片點位，請檢查瀏覽器儲存空間。';}
 });
 function selectPlace(index){
  const p=places[index];
