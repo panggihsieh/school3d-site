@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="./map-orientation.css?v=campus-3d-v4-20261106"></head>
 <body>
 <header class="header">
-  <a class="brand" href="#teacher-entry" aria-label="大南國小生態校園首頁"><span class="brand-mark">森</span><span><strong>大南・生態校園</strong><small>DANAN ECO CAMPUS</small></span></a>
+  <div class="brand"><span class="brand-mark">森</span><span><strong>大南・生態校園</strong><small>DANAN ECO CAMPUS</small></span></div>
   <button id="site-qr-button" class="site-qr-button" type="button" aria-label="放大網站 QR Code" aria-haspopup="dialog"><img src="./assets/site-qr.svg" width="40" height="40" alt="網站 QR Code"></button>
   <span class="version">校園配置草案 <span>v0.3</span></span>
   <div class="header-actions"><a id="teacher-login" class="teacher-login" href="./field.html">教師登入</a><button id="site-logout" type="button" hidden>登出</button><button id="import-button">匯入資料</button><button id="export-button" class="primary">匯出資料 ↗</button><input id="import-file" type="file" accept="application/json,.json" hidden></div>
@@ -43,7 +43,6 @@
 <dialog id="site-qr-dialog" aria-labelledby="site-qr-title"><div class="dialog-heading"><h2 id="site-qr-title">掃描開啟生態校園</h2><button type="button" data-close="site-qr-dialog" aria-label="關閉 QR Code">✕</button></div><img class="site-qr-large" src="./assets/site-qr.svg" width="320" height="320" alt="大南生態校園網站 QR Code"><p class="site-qr-caption">使用手機相機掃描，即可開啟本站。</p></dialog>
 <script src="./site-qr.js"></script>
 <script type="module" src="./site-auth.js"></script>
-<script src="./admin-entry.js?v=20261105-2"></script>
 <script type="module" src="./app.js?v=live-follow-20261106"></script>
 <script type="module" src="./photo-map.js?v=campus-3d-v4-20261106"></script>
 <script type="module" src="./seasonal-birds.js"></script>

@@ -48,7 +48,7 @@ Third-party software: Three.js 0.180.0 (MIT), see `dist/vendor/THREE-LICENSE.txt
 
 ## 管理員隱藏入口
 
-左上角「大南・生態校園」標誌連點 5 次（每次間隔不超過 3 秒），彈出教師拍照／GPS 採集後台 QR Code；也可點視窗內連結在目前裝置開啟。鍵盤可聚焦標誌連按 Enter。首頁不常駐顯示管理後台連結與 QR Code。
+左上角「大南・生態校園」標誌僅供展示，不提供滑鼠點選、移入或鍵盤觸發的教師後台入口。
 
 後台僅接受已驗證的 teacher.hsieh@gmail.com Google 帳號，其他帳號隱藏工作區並自動登出。隱藏入口只是操作入口，實際上傳仍由 Worker 驗證 Firebase JWT、指定管理員信箱及 Google 登入方式；直接知道後台網址也不會取得上傳權限。雲端上傳授權設定仍依 upload-service/SETUP.md 完成。
 
