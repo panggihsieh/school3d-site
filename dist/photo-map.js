@@ -1,4 +1,4 @@
-import {campusMapImage,addCampusBrand} from './campus-map.js?v=entry-restore-20261106';
+import {campusMapImage,addCampusBrand} from './campus-map.js?v=original-map-20261106';
 // Photo positions are percentages of the supplied image, not survey coordinates.
 const places=[
  {name:'操場',x:39,y:39,description:'校園中央的草地與環形跑道。'},
