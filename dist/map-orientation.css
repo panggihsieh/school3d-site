@@ -1,2 +1,8 @@
 .map-north{position:absolute;top:0;right:0;width:10%;height:17%;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f6f5ed;color:#24483c;border-radius:0 0 0 8px;font:bold clamp(10px,1.4vw,20px)/1.1 system-ui,sans-serif;pointer-events:none}
 .map-north>span{font-size:clamp(22px,3vw,42px);line-height:1}
+
+.north-up-map{position:relative;aspect-ratio:1!important;height:auto;background:#e9edde;overflow:hidden}
+.north-up-map>.north-up-content{position:absolute;left:50%;top:50%;width:87.00320830%;height:54.41814794%;transform:translate(-50%,-50%) rotate(135deg)}
+.north-up-content>img{display:block;width:100%;height:100%;object-fit:fill}
+.north-up-content .photo-pin,.north-up-content .pin,.north-up-content #space-pins button{transform:translate(-50%,-50%) rotate(-135deg)}
+.north-up-compass{position:absolute;right:8px;top:8px;background:#fffdf1;padding:6px 10px;border-radius:6px;color:#24483c;font-weight:bold;z-index:4;pointer-events:none}

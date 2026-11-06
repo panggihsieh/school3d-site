@@ -1,4 +1,4 @@
-import * as THREE from 'three';import {OrbitControls} from './vendor/OrbitControls.js';import {GLTFLoader} from './vendor/GLTFLoader.js';import {mountSimpleTour} from './simple-tour.js?v=orientation-20261106';
+import * as THREE from 'three';import {OrbitControls} from './vendor/OrbitControls.js';import {GLTFLoader} from './vendor/GLTFLoader.js';import {mountSimpleTour} from './simple-tour.js?v=north-up-20261106';
 const $=s=>document.querySelector(s);let renderer,scene,camera,rig,controls,model,sphere,simpleTour,supported=false,panoramas=[],mode='model',loadId=0,xrSession=null;
 function status(text){$('#tour-status').textContent=text;}
 function resize(){if(!renderer)return;const c=$('#viewer');if(c.hidden||!c.clientWidth||!c.clientHeight)return;renderer.setSize(c.clientWidth,c.clientHeight,false);camera.aspect=c.clientWidth/c.clientHeight;camera.updateProjectionMatrix();}
