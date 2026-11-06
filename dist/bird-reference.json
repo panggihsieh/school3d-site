@@ -9,18 +9,22 @@
       "schoolPhotoNumber": 1,
       "image": "./assets/birds/barbet.jpg",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Taiwan_barbet_(Psilopogon_nuchalis)_Qianshan.jpg",
-      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Taiwan_barbet_%28Psilopogon_nuchalis%29_Qianshan.jpg/1920px-Taiwan_barbet_%28Psilopogon_nuchalis%29_Qianshan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/Taiwan_barbet_%28Psilopogon_nuchalis%29_Qianshan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Taiwan_barbet_%28Psilopogon_nuchalis%29_Qianshan.jpg/1920px-Taiwan_barbet_%28Psilopogon_nuchalis%29_Qianshan.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/Taiwan_barbet_%28Psilopogon_nuchalis%29_Qianshan.jpg",
       "artist": "Charles J. Sharp",
       "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceWidth": 3236,
-      "sourceHeight": 4314,
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourceWidth": 1920,
+      "sourceHeight": 2560,
       "sha256": "3a043e7c4f13f0e8a7bcf49e9ed40f10826e6f825cb3d2740c849ed9918a7603",
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
+      "imageWidth": 1920,
+      "imageHeight": 2560,
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
     },
     {
       "id": "sparrow",
@@ -28,19 +32,23 @@
       "taxon": "Passer montanus",
       "schoolPhotoNumber": 2,
       "image": "./assets/birds/sparrow.jpg",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Passer_montanus_-Japan-8.jpg",
-      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Passer_montanus_-Japan-8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Passer_montanus_-Japan-8.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "artist": "Yoshikazu Oba from Fukuoka, Japan",
-      "license": "CC BY 2.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-      "sourceWidth": 1024,
-      "sourceHeight": 768,
-      "sha256": "c470443b54cf35611a76c7fab41c0e2697268b231e5efa677e113226f890062b",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tree_Sparrow_August_2007_Osaka_Japan.jpg",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/9/98/Tree_Sparrow_August_2007_Osaka_Japan.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/98/Tree_Sparrow_August_2007_Osaka_Japan.jpg",
+      "artist": "Laitche",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourceWidth": 1920,
+      "sourceHeight": 1285,
+      "sha256": "ba0bb391a967df6f6a4fa6d20739348831bb678336a86ddbac708947c3857c5e",
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
+      "imageWidth": 1920,
+      "imageHeight": 1285,
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
     },
     {
       "id": "bulbul",
@@ -60,7 +68,10 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
+      "imageWidth": 1200,
+      "imageHeight": 902
     },
     {
       "id": "white-eye",
@@ -80,7 +91,9 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 1920,
+      "imageHeight": 1271
     },
     {
       "id": "wagtail",
@@ -89,18 +102,21 @@
       "schoolPhotoNumber": 5,
       "image": "./assets/birds/wagtail.jpg",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Motacilla_alba_-_White_Wagtail_Juvenile_02.jpg",
-      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Motacilla_alba_-_White_Wagtail_Juvenile_02.jpg/1920px-Motacilla_alba_-_White_Wagtail_Juvenile_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Motacilla_alba_-_White_Wagtail_Juvenile_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Motacilla_alba_-_White_Wagtail_Juvenile_02.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Motacilla_alba_-_White_Wagtail_Juvenile_02.jpg",
       "artist": "Zeynel Cebeci",
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourceWidth": 2250,
       "sourceHeight": 1510,
-      "sha256": "3284d265328049c55d875b33ed83c96b5b726f09be8acf40e6b133d370749333",
+      "sha256": "4b953add819374f8f6dc485e51bd354e381307c1273aaf9b14eed39188d691dc",
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 2250,
+      "imageHeight": 1510,
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
     },
     {
       "id": "black-bulbul",
@@ -109,8 +125,8 @@
       "schoolPhotoNumber": 6,
       "image": "./assets/birds/black-bulbul.jpg",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hypsipetes_leucocephalus_in_Taiwan.jpg",
-      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Hypsipetes_leucocephalus_in_Taiwan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Hypsipetes_leucocephalus_in_Taiwan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Hypsipetes_leucocephalus_in_Taiwan.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Hypsipetes_leucocephalus_in_Taiwan.jpg",
       "artist": "Lai Wagtail",
       "license": "CC BY 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
@@ -120,7 +136,11 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/v2-regional-birds.json",
+      "imageWidth": 1024,
+      "imageHeight": 1410,
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
     },
     {
       "id": "owl-a",
@@ -129,18 +149,22 @@
       "schoolPhotoNumber": 7,
       "image": "./assets/birds/owl-a.jpg",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Collared_Scops_Owl(Otus_lettia)_by_Jack_Walf_.jpg",
-      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Collared_Scops_Owl%28Otus_lettia%29_by_Jack_Walf_.jpg/1920px-Collared_Scops_Owl%28Otus_lettia%29_by_Jack_Walf_.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Collared_Scops_Owl%28Otus_lettia%29_by_Jack_Walf_.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Collared_Scops_Owl%28Otus_lettia%29_by_Jack_Walf_.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Collared_Scops_Owl%28Otus_lettia%29_by_Jack_Walf_.jpg",
       "artist": "jack walf",
       "license": "CC BY-SA 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
       "sourceWidth": 3603,
       "sourceHeight": 2402,
-      "sha256": "295292a7ad042db5c0901995a6a39306793af24cac4bfbada8f6d59ec93a6fdf",
+      "sha256": "be8f3c79b7cedc435231c09547e1b0401c4e6c0057480f6082cd560752891f6d",
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
+      "imageWidth": 3603,
+      "imageHeight": 2402,
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
     },
     {
       "id": "owl-b",
@@ -160,7 +184,9 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 1000,
+      "imageHeight": 667
     },
     {
       "id": "nightjar",
@@ -180,7 +206,9 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 1920,
+      "imageHeight": 1440
     },
     {
       "id": "heron",
@@ -200,7 +228,9 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 1140,
+      "imageHeight": 760
     },
     {
       "id": "dove",
@@ -220,7 +250,9 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 1592,
+      "imageHeight": 1195
     },
     {
       "id": "swallow",
@@ -240,7 +272,10 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null
+      "animation": null,
+      "imageWidth": 1280,
+      "imageHeight": 853
     }
-  ]
+  ],
+  "photoSourceRepository": "https://github.com/panggihsieh/birdsound"
 }

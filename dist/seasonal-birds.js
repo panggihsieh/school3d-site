@@ -19,7 +19,7 @@ function describe(bird){
  info.replaceChildren();info.hidden=false;
  const title=document.createElement('strong');title.textContent=`${seasons[season()]}情境 · ${bird.name}`;
  const text=document.createElement('p');text.textContent=bird.description;
- const link=document.createElement('a');link.href=bird.url;link.target='_blank';link.rel='noopener';link.textContent='農業部鳥類資料 ↗';
+ const link=document.createElement('a');link.href=bird.url;link.target='_blank';link.rel='noopener';link.textContent='校方鳥類介紹 ↗';
  const close=document.createElement('button');close.textContent='關閉';close.onclick=()=>info.hidden=true;info.append(title,text,link,close);
 }
 function spawn(manual=false){
@@ -30,15 +30,17 @@ function spawn(manual=false){
  const photo=document.createElement('img');photo.src=bird.image;photo.alt=bird.name;photo.style.cssText='width:110px;height:80px;object-fit:cover;border-radius:12px;border:2px solid white';el.append(photo);
  el.onclick=()=>{clearTimeout(removeTimer);el.classList.add('bird-paused');describe(bird);removeTimer=setTimeout(()=>el.remove(),15000);};
  el.onpointerenter=()=>el.classList.add('bird-paused');el.onfocus=()=>el.classList.add('bird-paused');
+ el.onpointerleave=()=>{if(document.activeElement!==el)el.classList.remove('bird-paused');};el.onblur=()=>el.classList.remove('bird-paused');
  if(manual){el.style.animationDelay='-2s';describe(bird);}
  layer.append(el);removeTimer=setTimeout(()=>el.remove(),motion.matches?12000:10000);
 }
 function schedule(){clearTimeout(timer);if(enabled&&!document.hidden&&!motion.matches)timer=setTimeout(()=>{spawn();schedule();},10000+Math.random()*14000);}
 function update(){toggle.textContent=enabled?'暫停動畫':'開啟動畫';toggle.setAttribute('aria-pressed',String(enabled));schedule();}
-toggle.onclick=()=>{enabled=!enabled;if(!enabled){layer.replaceChildren();clearTimeout(removeTimer);}update();};
+toggle.onclick=()=>{enabled=!enabled;if(enabled)spawn();if(!enabled){layer.replaceChildren();clearTimeout(removeTimer);}update();};
 bar.querySelector('.bird-show').onclick=()=>spawn(true);
 seasonSelect.onchange=()=>{info.hidden=true;spawn(true);schedule();};
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);clearTimeout(removeTimer);layer.replaceChildren();}else schedule();});
 motion.addEventListener('change',()=>{enabled=!motion.matches;layer.replaceChildren();update();});
 window.addEventListener('pagehide',()=>{clearTimeout(timer);clearTimeout(removeTimer);layer.replaceChildren();});
 update();
+if(enabled)spawn();
