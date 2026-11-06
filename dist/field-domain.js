@@ -1,4 +1,4 @@
-export const photoKinds=[['whole','全株','退到能拍到完整樹冠的位置，保留周圍地物。'],['bark','樹皮','拍攝樹幹與樹皮紋理。'],['leaf-front','葉片正面','靠近拍清楚葉形，不需摘葉。'],['leaf-back','葉片背面','輕扶葉片拍背面，不需摘葉。'],['label','編號牌','若有編號牌，請拍清楚；沒有可略過。'],['flower-fruit','花或果實','當季有才拍，沒有可略過。']];
+export const photoKinds=[['whole','全株','退到能拍到完整樹冠的位置，保留周圍地物。校園俯視圖北在左下 ↙、東在左上 ↖、南在右上 ↗、西在右下 ↘；現場方位請用手機指南針確認。'],['bark','樹皮','拍攝樹幹與樹皮紋理。'],['leaf-front','葉片正面','靠近拍清楚葉形，不需摘葉。'],['leaf-back','葉片背面','輕扶葉片拍背面，不需摘葉。'],['label','編號牌','若有編號牌，請拍清楚；沒有可略過。'],['flower-fruit','花或果實','當季有才拍，沒有可略過。']];
 export function distanceMeters(a,b){const rad=Math.PI/180;const dlat=(b.latitude-a.latitude)*rad,dlon=(b.longitude-a.longitude)*rad;const v=Math.sin(dlat/2)**2+Math.cos(a.latitude*rad)*Math.cos(b.latitude*rad)*Math.sin(dlon/2)**2;return 6371000*2*Math.atan2(Math.sqrt(v),Math.sqrt(1-v));}
 export function nearbyTrees(trees,position){return trees.map(t=>({...t,distance:distanceMeters(position,t)})).sort((a,b)=>a.distance-b.distance);}
 export function arrivalEligible(distance,accuracy){return Number.isFinite(distance)&&Number.isFinite(accuracy)&&accuracy<=25&&distance<=12;}

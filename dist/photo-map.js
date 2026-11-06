@@ -7,8 +7,8 @@ const places=[
  {name:'幼兒園',x:75,y:59,description:'位於示意圖右下方、教學大樓下端。'},
  {name:'前門',x:12,y:78,description:'位於圖片左下方，面向台 3 線。'},
  {name:'後門',x:86,y:76,description:'位於圖片右下方，鄰近停車空間。'},
- {name:'操場南側校舍',x:40,y:57,description:'位於示意圖中操場下方的橫向校舍，正式名稱與用途待確認。'},
- {name:'南側校舍',x:42,y:74,description:'位於示意圖下方、台 3 線上方的橫向校舍，正式名稱與用途待確認。'}
+ {name:'操場下方校舍',x:40,y:57,description:'位於示意圖中操場下方的橫向校舍，正式名稱與用途待確認。'},
+ {name:'圖下方校舍',x:42,y:74,description:'位於示意圖下方、台 3 線上方的橫向校舍，正式名稱與用途待確認。'}
 ];
 const panel=document.querySelector('.map-panel');
 const sidebar=document.querySelector('.sidebar');
@@ -25,7 +25,7 @@ const orientationMask=document.createElement('span');orientationMask.className='
 function fitPhoto(){const width=Math.min(photo.clientWidth,photo.clientHeight*1586/992);stage.style.width=`${width}px`;stage.style.height=`${width*992/1586}px`;}
 new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
-guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">北方朝圖中左下方（↙），依現場確認方向標示。圖片為配置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
+guide.innerHTML='<p class="intro">依提供的校園圖片標示位置。點選圖上的地點或下方清單，查看空間介紹。</p><p class="coverage">北 ↙、東 ↖、南 ↗、西 ↘（均為圖中方向）。植物圖片點位也使用此方向；現場請用手機指南針確認。圖片為配置示意，非測繪圖；樹木點位請切換至植物碳資訊。</p>';
 const list=document.createElement('div');guide.append(list);
 const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／四向實景校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);
