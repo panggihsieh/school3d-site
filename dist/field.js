@@ -4,7 +4,7 @@ import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106'
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=ai-status-20261106';
-import {mountSpaceCapture} from './space-capture.js?v=entry-restore-20261106';
+import {mountSpaceCapture} from './space-capture.js?v=locate-read-20261106';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 import {refreshPublishedPhotos} from './published-photos.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
@@ -63,8 +63,8 @@ function drawMap(){
  const coords=trees.map(xy);const xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]);const minX=Math.min(...xs)-15,maxX=Math.max(...xs)+15,minY=Math.min(...ys)-15,maxY=Math.max(...ys)+15;
  const scale=Math.min(550/(maxX-minX),350/(maxY-minY));const project=p=>{const [x,y]=xy(p);return [25+(x-minX)*scale,375-(y-minY)*scale];};
  const node=(tag,attrs,text)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);if(text)el.textContent=text;svg.append(el);return el;};
- // Faint context image only; no geographic registration is implied.
- node('image',{href:'./assets/campus-overview.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.12,'aria-hidden':'true'});
+ // Context image only; no geographic registration is implied.
+ node('image',{href:'./assets/campus-overview.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.4,'aria-hidden':'true'});
  node('rect',{x:540,y:12,width:60,height:65,fill:'#eef4e7'});
  node('text',{x:550,y:30,fill:'#193d30'},'北 ↙');
  node('text',{x:12,y:395,fill:'#506450','font-size':11},'淡化底圖僅供環境參考・未精準對位');
