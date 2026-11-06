@@ -27,3 +27,9 @@ test('unsupported audio session setter does not prevent speech',()=>{
  const speaker=createFieldSpeaker({synth:{cancel(){},speak:u=>{spoken=true;u.onstart();}},Utterance:class{},audioSession,enabled:()=>true,status(){}});
  assert.equal(speaker.speak('目標',{manual:true}),true);assert.equal(spoken,true);speaker.stop();
 });
+test('idle speech engine is not cancelled before a new reading',()=>{
+ let cancellations=0,utterance;
+ const speaker=createFieldSpeaker({synth:{cancel(){cancellations++;},speak:u=>{utterance=u;u.onstart();}},Utterance:class{},enabled:()=>true,status(){}});
+ speaker.speak('語音測試',{manual:true});utterance.onend();speaker.speak('目前目標，T001，芒果。',{manual:true});
+ assert.equal(cancellations,0);utterance.onend();speaker.stop();
+});

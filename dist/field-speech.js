@@ -6,13 +6,15 @@ export function createFieldSpeaker({synth,Utterance,enabled,status,audioSession}
  function speak(text,{manual=false}={}){
   if(!manual&&(!enabled()||manualReading))return false;
   if(!synth||!Utterance){status('此瀏覽器不支援朗讀，請改用 Safari 或 Chrome；目前目標仍顯示在畫面上。');return false;}
-  stop();
+  // Avoid cancelling an idle iOS engine immediately before starting a new utterance.
+  const busy=!!current||synth.speaking||synth.pending;
+  clearTimeout(timer);current=null;manualReading=false;if(busy)synth.cancel();
   try{
    // iOS may route the default session through the silent-switch audio category.
    try{if(audioSession)audioSession.type='playback';}catch{}
    const utterance=new Utterance(text);current=utterance;manualReading=manual;let started=false;utterance.volume=1;utterance.pitch=1;utterance.lang='zh-TW';utterance.rate=.9;
    const voices=synth.getVoices?.()||[];const voice=voices.find(v=>/^zh[-_]TW$/i.test(v.lang)&&v.localService)||voices.find(v=>/^zh[-_]TW$/i.test(v.lang))||voices.find(v=>/^zh/i.test(v.lang));if(voice)utterance.voice=voice;
-   status('準備朗讀…');
+   status(`準備朗讀：${text}`);
    utterance.onstart=()=>{if(current!==utterance)return;started=true;clearTimeout(timer);status('瀏覽器已啟動朗讀。若仍無聲，請關閉 iPhone 靜音、調高媒體音量，並檢查藍牙輸出；也可在 Safari 開啟本站重試。');};
    utterance.onend=()=>{if(current!==utterance)return;clearTimeout(timer);current=null;manualReading=false;status('朗讀完成。');};
    utterance.onerror=e=>{if(current!==utterance)return;clearTimeout(timer);current=null;manualReading=false;status(`朗讀未完成（${e.error||'音訊錯誤'}），請先停止語音提問或 STT，再按「語音輸出測試」。`);};
