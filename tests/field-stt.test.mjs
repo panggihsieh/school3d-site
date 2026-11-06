@@ -2,15 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mountSpeechTest} from '../dist/field-stt.js';
 function setup({supported=true,authorized=true}={}){
- const button={},status={},result={},handlers={};let active,stopped=0;
+ const button={},status={},result={},handlers={};let active,stopped=0,successes=0;
  class Recognition{constructor(){active=this;}start(){this.onstart();}abort(){this.aborted=true;this.onend?.();}}
  const document={addEventListener:(name,handler)=>handlers[name]=handler};
- mountSpeechTest({button,status,result,Recognition:supported?Recognition:null,isAdmin:()=>authorized,stopSpeech:()=>stopped++,document});
- return {button,status,result,document,handlers,active:()=>active,stopped:()=>stopped};
+ mountSpeechTest({button,status,result,Recognition:supported?Recognition:null,isAdmin:()=>authorized,stopSpeech:()=>stopped++,onSuccess:()=>successes++,document});
+ return {button,status,result,document,handlers,active:()=>active,stopped:()=>stopped,successes:()=>successes};
 }
 test('STT starts only on click, uses Chinese, displays results and resets after completion',()=>{
  const p=setup();assert.equal(p.active(),undefined);p.button.onclick();const r=p.active();assert.equal(r.lang,'zh-TW');assert.equal(p.stopped(),1);
- r.onresult({results:[[{transcript:'大南國小'}]]});assert.equal(p.result.textContent,'大南國小');r.onend();assert.match(p.status.textContent,/完成/);assert.equal(p.button.textContent,'語音測試 STT');
+ r.onresult({results:[[{transcript:'大南國小'}]]});assert.equal(p.result.textContent,'大南國小');r.onend();assert.match(p.status.textContent,/STT 成功/);assert.equal(p.button.textContent,'語音測試 STT');
 });
 test('permission errors remain visible after recognition ends',()=>{
  const p=setup();p.button.onclick();p.active().onerror({error:'not-allowed'});p.active().onend();assert.match(p.status.textContent,/權限未開啟/);
@@ -21,4 +21,18 @@ test('backgrounding aborts the microphone and ignores late transcripts',()=>{
 test('unsupported browsers and unauthorized users do not open microphones',()=>{
  const p=setup({supported:false});assert.equal(p.button.disabled,true);assert.match(p.status.textContent,/不支援/);
  const q=setup({authorized:false});q.button.onclick();assert.equal(q.active(),undefined);
+});
+
+test('success announcement plays once after recognition ends, never while listening',()=>{
+ const p=setup();p.button.onclick();const r=p.active();r.onresult({results:[[{transcript:'測試'}]]});assert.equal(p.successes(),0);
+ r.onend();r.onend();assert.equal(p.successes(),1);
+});
+test('errors, empty results and cancelled tests never announce success',()=>{
+ for(const kind of ['error','empty','cancel']){
+  const p=setup();p.button.onclick();const r=p.active();
+  if(kind==='error'){r.onresult({results:[[{transcript:'部分文字'}]]});r.onerror({error:'network'});}
+  if(kind==='empty')r.onresult({results:[[{transcript:'  '}]]});
+  if(kind==='cancel')p.button.onclick();
+  r.onend();assert.equal(p.successes(),0);
+ }
 });
