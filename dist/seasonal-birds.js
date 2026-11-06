@@ -2,10 +2,10 @@ import {seasonForMonth} from './learning.js';
 
 const seasons={spring:'春季',summer:'夏季',autumn:'秋季',winter:'冬季'};
 const birds={
- swallow:{name:'家燕',color:'#294b60',chest:'#eed7b2',description:'在臺灣有夏候鳥、冬候鳥與過境族群。這裡以春夏情境呈現，不表示其他季節不存在。',url:'https://kmweb.moa.gov.tw/theme_data.php?id=50&theme=bird_illustration'},
- shrike:{name:'紅尾伯勞',color:'#a56e45',chest:'#f3e4c8',description:'在臺灣主要為冬候鳥與過境鳥，秋冬較適合用來認識候鳥季節。此動畫不代表校園實際出現紀錄。',url:'https://kmweb.moa.gov.tw/theme_data.php?id=142&theme=bird_illustration'}
+ swallow:{name:'麻雀',image:'./assets/birds/sparrow.jpg',description:'校方介紹鳥類的參考照片。此照片移動僅為情境示意，不代表當季校園觀測或真實飛行影片。攝影及授權請見「校方鳥類照片」。',url:'https://www.dnps.cyc.edu.tw/file/bird/bird.htm'},
+ shrike:{name:'白頭翁',image:'./assets/birds/bulbul.jpg',description:'校方介紹鳥類的參考照片。各季均可認識這些鳥類；此處沒有即時觀測資料。攝影及授權請見「校方鳥類照片」。',url:'https://www.dnps.cyc.edu.tw/file/bird/bird.htm'}
 };
-const pools={spring:['swallow','shrike'],summer:['swallow'],autumn:['shrike','swallow'],winter:['shrike']};
+const pools={spring:['swallow','shrike'],summer:['swallow','shrike'],autumn:['shrike','swallow'],winter:['shrike','swallow']};
 const bar=document.createElement('section');bar.className='seasonal-bar';bar.setAttribute('aria-label','季節鳥類情境');
 bar.innerHTML='<span>季節鳥類 · 情境動畫</span><label>季節 <select aria-label="鳥類動畫季節"><option value="auto">依臺灣目前月份</option><option value="spring">春季</option><option value="summer">夏季</option><option value="autumn">秋季</option><option value="winter">冬季</option></select></label><button type="button" class="bird-toggle">暫停動畫</button><button type="button" class="bird-show">看看季節鳥</button><small>非即時觀測；點鳥看介紹</small>';
 document.querySelector('.topics').after(bar);
@@ -27,7 +27,7 @@ function spawn(manual=false){
  clearTimeout(removeTimer);layer.replaceChildren();
  const options=pools[season()],bird=birds[options[Math.floor(Math.random()*options.length)]],el=document.createElement('button');
  el.type='button';el.className=`seasonal-bird ${motion.matches?'still-bird':''}`;el.style.top=`${42+Math.random()*22}%`;el.style.setProperty('--bird-color',bird.color);el.style.setProperty('--bird-chest',bird.chest);el.setAttribute('aria-label',`${bird.name}，季節情境動畫，點選介紹`);
- el.innerHTML='<svg viewBox="0 0 100 70" aria-hidden="true"><path class="bird-tail" d="M35 43 4 52 19 37 6 20 39 30Z"/><ellipse class="bird-body" cx="51" cy="36" rx="27" ry="15"/><ellipse class="bird-chest" cx="58" cy="42" rx="18" ry="8"/><path class="bird-wing" d="M40 34Q24 -4 76 12L63 35Z"/><circle class="bird-body" cx="77" cy="24" r="12"/><path fill="#d8ad5b" d="m87 21 12 5-13 4Z"/><circle fill="#fff" cx="81" cy="21" r="3"/><circle fill="#182b25" cx="82" cy="21" r="1.6"/></svg>';
+ const photo=document.createElement('img');photo.src=bird.image;photo.alt=bird.name;photo.style.cssText='width:110px;height:80px;object-fit:cover;border-radius:12px;border:2px solid white';el.append(photo);
  el.onclick=()=>{clearTimeout(removeTimer);el.classList.add('bird-paused');describe(bird);removeTimer=setTimeout(()=>el.remove(),15000);};
  el.onpointerenter=()=>el.classList.add('bird-paused');el.onfocus=()=>el.classList.add('bird-paused');
  if(manual){el.style.animationDelay='-2s';describe(bird);}
