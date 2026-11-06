@@ -48,7 +48,13 @@
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
       "imageWidth": 1920,
       "imageHeight": 1285,
-      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。",
+      "mapCutout": {
+        "image": "./assets/birds/sparrow-cutout.png",
+        "changes": "AI 去背處理；原照片另行保留，僅用於 B01／B02 情境動畫。",
+        "license": "Public domain",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tree_Sparrow_August_2007_Osaka_Japan.jpg"
+      }
     },
     {
       "id": "bulbul",
@@ -71,7 +77,13 @@
       "animation": null,
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
       "imageWidth": 1200,
-      "imageHeight": 902
+      "imageHeight": 902,
+      "mapCutout": {
+        "image": "./assets/birds/bulbul-cutout.png",
+        "changes": "AI 去背處理；原照片另行保留，僅用於 B01／B02 情境動畫。",
+        "license": "CC BY-SA 3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chinese_Bubul.JPG"
+      }
     },
     {
       "id": "white-eye",

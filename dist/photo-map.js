@@ -43,6 +43,7 @@ function drawPlants(){
   const p=plantPositions[row.dataset.id]||(['birds','ecology'].includes(currentTopic)?suggestedPoints[row.dataset.id]:null);if(!p||!Number.isFinite(p.x)||!Number.isFinite(p.y))return;
   const pin=document.createElement('button');pin.className='photo-pin plant-pin';pin.style.left=`${p.x}%`;pin.style.top=`${p.y}%`;pin.textContent=row.querySelector('.point-number').textContent;pin.title=row.querySelector('.point-label').textContent+(!plantPositions[row.dataset.id]?'（示意建議位置，待現場確認）':'（手動圖片標點）');pin.setAttribute('aria-label',pin.title);pin.setAttribute('aria-pressed',String(row.classList.contains('active')));pin.onclick=()=>row.click();plantLayer.append(pin);
  });
+ document.dispatchEvent(new Event('campus-photo-points'));
 }
 new MutationObserver(drawPlants).observe(document.querySelector('#point-list'),{childList:true,subtree:true});
 placePlant.onclick=()=>{if(!document.querySelector('#point-list .active'))return;positioning=!positioning;placePlant.textContent=positioning?'點圖片標示（再按取消）':(currentTopic==='carbon'?'標示選取植物':'標示選取地點');};
