@@ -20,11 +20,18 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/barbet.webm",
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
       "imageWidth": 1920,
       "imageHeight": 2560,
-      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。",
+      "animationSha256": "a45a279f1648457110d0ffaa0660a27359acb12069e8525327f0207775398e75",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Charles J. Sharp",
+      "animationLicense": "CC BY-SA 4.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Taiwan_barbet_(Psilopogon_nuchalis)_Qianshan.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "sparrow",
@@ -44,7 +51,7 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/sparrow.webm",
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
       "imageWidth": 1920,
       "imageHeight": 1285,
@@ -54,7 +61,14 @@
         "changes": "AI 去背處理；原照片另行保留，僅用於 B01／B02 情境動畫。",
         "license": "Public domain",
         "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tree_Sparrow_August_2007_Osaka_Japan.jpg"
-      }
+      },
+      "animationSha256": "0a7730244fa7f629533e7688225715bef1d124236b29374c5a0e78ed96cf2372",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Laitche",
+      "animationLicense": "Public domain",
+      "animationLicenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Tree_Sparrow_August_2007_Osaka_Japan.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "bulbul",
@@ -74,7 +88,7 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/bulbul.webm",
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
       "imageWidth": 1200,
       "imageHeight": 902,
@@ -83,7 +97,14 @@
         "changes": "AI 去背處理；原照片另行保留，僅用於 B01／B02 情境動畫。",
         "license": "CC BY-SA 3.0",
         "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chinese_Bubul.JPG"
-      }
+      },
+      "animationSha256": "d42eb33e32084bbb70710eb3275c0d49e17a566a7ee9c7f77cd4e852c8d8d126",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Earthshine.. at English Wikipedia",
+      "animationLicense": "CC BY-SA 3.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Chinese_Bubul.JPG",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "white-eye",
@@ -103,9 +124,16 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/white-eye.webm",
       "imageWidth": 1920,
-      "imageHeight": 1271
+      "imageHeight": 1271,
+      "animationSha256": "fffa0b7b8a3c3cc91bd9488e65aad2203eb0f9e7cb7b5d8475a666c0580d222c",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Jimmy Kao",
+      "animationLicense": "CC BY-SA 3.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Zosterops_simplex,_Taiwan_(62952977).jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "wagtail",
@@ -125,10 +153,17 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/wagtail.webm",
       "imageWidth": 2250,
       "imageHeight": 1510,
-      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。",
+      "animationSha256": "fd90dce330c0de52b1643f098e5a7e746cc2bc6d367c17e89dff0d8b57db861d",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Grzegorz W. Tężycki",
+      "animationLicense": "CC BY-SA 4.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Motacilla-alba-20JHLDPL.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "black-bulbul",
@@ -148,11 +183,18 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/black-bulbul.webm",
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/v2-regional-birds.json",
       "imageWidth": 1024,
       "imageHeight": 1410,
-      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。",
+      "animationSha256": "1b15fe3b17f32e3560a62112ad56820c24ef3d23e1a79e3fdbf2c9ad1ad15b3b",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Charles J. Sharp",
+      "animationLicense": "CC BY-SA 4.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Black_bulbul_(Hypsipetes_leucocephalus_nigerrimus)_Qianshan.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "owl-a",
@@ -172,11 +214,18 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/owl-a.webm",
       "referenceManifest": "https://github.com/panggihsieh/birdsound/blob/main/data/bird-photos.json",
       "imageWidth": 3603,
       "imageHeight": 2402,
-      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。"
+      "changes": "保留來源可取得的照片解析度，未 AI 補畫；網頁以等比例縮放顯示。",
+      "animationSha256": "c8456629e40b77252fd1e39f0c4c330028f3b4b98b9010c0ac6a6e6bd726d4b1",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "jack walf",
+      "animationLicense": "CC BY-SA 2.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Collared_Scops_Owl(Otus_lettia)_by_Jack_Walf_.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "owl-b",
@@ -218,9 +267,16 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/nightjar.webm",
       "imageWidth": 1920,
-      "imageHeight": 1440
+      "imageHeight": 1440,
+      "animationSha256": "74546589bf77ada5654062ddecf16a2c27cc3e38e5c90eaa9c8d6bcca0ee3d9d",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Cataloging Nature",
+      "animationLicense": "CC BY 2.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:2014-04-02_Caprimulgus_affinis_stictomus_(Savanna_Nightjar).jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "heron",
@@ -240,9 +296,16 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/heron.webm",
       "imageWidth": 1140,
-      "imageHeight": 760
+      "imageHeight": 760,
+      "animationSha256": "e96885cd131e5b571f9b34631d1fa067b14e03643ef206e88b421d5dbbed62c4",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "Francesco Veronesi from Italy",
+      "animationLicense": "CC BY-SA 2.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Malayan_Night-Heron_-_Taiwan_S4E8695_(17320173361).jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "dove",
@@ -262,9 +325,16 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/dove.webm",
       "imageWidth": 1592,
-      "imageHeight": 1195
+      "imageHeight": 1195,
+      "animationSha256": "9ae3ea968e864f7185851be94f5964f2afd102b9b1e011770ef897f9d14928b2",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "iNaturalist/zinogre",
+      "animationLicense": "CC BY-SA 4.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Spilopelia_chinensis_Zhengzhou_20220915,_crop.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     },
     {
       "id": "swallow",
@@ -284,9 +354,16 @@
       "schoolSource": "https://www.dnps.cyc.edu.tw/file/bird/bird.htm",
       "evidence": "school-introduction",
       "locationNote": "物種參考照片，非梅山現地拍攝或當日校園目擊證據。",
-      "animation": null,
+      "animation": "./assets/birds/animations/swallow.webm",
       "imageWidth": 1280,
-      "imageHeight": 853
+      "imageHeight": 853,
+      "animationSha256": "ba244b5eecb8e3f902b2c3afc2c79fa583ceaabc537476e62ded095aa4a5f213",
+      "animationDurationSeconds": 15,
+      "animationAttribution": "panjigusti",
+      "animationLicense": "CC BY 4.0",
+      "animationLicenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "animationSource": "https://commons.wikimedia.org/wiki/File:Cecropis_striolata,_Kulon_Progo_Regency,_Yogyakarta,_Java_1.jpg",
+      "animationChanges": "影片由 AI 合成並透明去背，非實際野外行為錄影。"
     }
   ],
   "photoSourceRepository": "https://github.com/panggihsieh/birdsound"

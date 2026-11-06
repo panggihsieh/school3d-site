@@ -41,3 +41,7 @@
 .bird-practice-launch{display:inline-flex;align-items:center;gap:9px;max-width:100%;padding:12px 14px;border-radius:7px;background:var(--green);color:#fff;text-decoration:none;font-size:14px;line-height:1.5}.bird-practice-launch:hover{background:var(--ink)}.bird-practice-launch svg{flex:none}
 
 .photo-stage>.seasonal-birds{overflow:visible}.seasonal-birds[hidden]{display:none}.seasonal-birds .seasonal-bird{left:auto;width:clamp(65px,14%,120px);height:auto;aspect-ratio:4/3;transform:translate(calc(-100% - 24px),-50%);animation:none;filter:drop-shadow(0 2px 2px #2343)}.seasonal-birds .seasonal-bird.bird-right{transform:translate(24px,-50%)}.seasonal-bird img{display:block;width:100%;height:100%;object-fit:contain;border:0;border-radius:0;transform-origin:50% 85%;animation:bird-perch 3s ease-in-out infinite}.seasonal-bird[data-station=B02] img{animation-delay:-1.5s}.seasonal-birds.is-paused img,.seasonal-bird:hover img,.seasonal-bird:focus-visible img{animation-play-state:paused}@keyframes bird-perch{50%{transform:rotate(2deg) scale(1.025)}}@media(prefers-reduced-motion:reduce){.seasonal-bird img{animation:none}}
+
+.seasonal-bird video{display:block;width:100%;height:100%;object-fit:contain;border:0;background:transparent}
+
+.seasonal-birds .seasonal-bird img{animation:none}
