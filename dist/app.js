@@ -1,3 +1,4 @@
+import {createEcologySpots} from './ecology-spots.js';
 import {openTreeQuest} from './tree-quest.js';
 import * as THREE from 'three';
 import {showSpeciesReference} from './species-library.js?v=live-follow-20261106';
@@ -12,6 +13,7 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const STORE='danan-ecology-v1';
 const topics={campus:['校園空間','CAMPUS GUIDE','從校園，開始探索。','選擇地圖標記，認識每一處校園空間。'],carbon:['植物碳資訊','PLANTS & CARBON','看見樹木，也看見碳。','植物吸碳與維護排碳分開記錄，依年度比較。'],birds:['鳥類觀察','BIRD OBSERVATION','停下來，聽見自然。','認識觀察點、記錄鳥類，聆聽已匯入的鳥鳴。'],ecology:['生態景點','ECOLOGY SPOTS','每一處綠意，都有發現。','選擇景點，帶著一個小任務開始觀察。']};
+let ecologyUI;
 let state,topic='campus',selected=null,query='',speciesFilter='',year=2026,placing=false,editingId=null,newPoint=false;
 let scene,camera,renderer,controls,model,frame,treeGroup,markers=[],pointerStart=null,groundRay=new THREE.Raycaster();
 const timer={};
@@ -22,12 +24,13 @@ function save(next){
  catch(e){const message=e.name==='QuotaExceededError'?'儲存空間不足，請減少音檔大小或先匯出備份。':e.message;if($('#editor').open)$('#form-error').textContent=message;else toast(message);return false;}
 }
 function current(){return state.points.find(p=>p.id===selected);}
-function filtered(){return state.points.filter(p=>p.topic===topic&&(!speciesFilter||topic!=='carbon'||p.species===speciesFilter)&&`${p.name} ${p.area} ${p.species}`.toLowerCase().includes(query.toLowerCase()));}
+function filtered(){if(topic==='ecology')return [];return state.points.filter(p=>p.topic===topic&&(!speciesFilter||topic!=='carbon'||p.species===speciesFilter)&&`${p.name} ${p.area} ${p.species}`.toLowerCase().includes(query.toLowerCase()));}
 function fmt(v,unit=''){return v===null||v===undefined?'待補':`${new Intl.NumberFormat('zh-TW',{maximumFractionDigits:2}).format(v)}${unit?' '+unit:''}`;}
 function row(label,value){return `<div class="info-row"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`;}
 
 function drawSummary(){
  const points=state.points.filter(p=>p.topic===topic);
+ if(topic==='ecology'&&ecologyUI){$('#summary').innerHTML='<p class="intro">跟著四季，認識校園的生命連結。</p>';const count=document.createElement('p');count.className='coverage';count.textContent=ecologyUI.summary();$('#summary').append(count);return;}
  if(topic==='carbon'){
   const totals=summarizeCarbon(points,year);
   const {uptake:u,emissions:e,complete}=totals;
@@ -50,11 +53,13 @@ function renderEcologyEntry(){
  const h=document.createElement('h3');h.textContent='四季生態導覽';const text=document.createElement('p');text.className='intro';text.textContent='11 個主題，串起果實與鳥類、寄主植物與蝴蝶、生態池與落葉分解。';const a=document.createElement('a');a.className='ecology-guide-launch';a.href='./ecology.html';a.textContent='開啟四季導覽與實景照片 ↗';const note=document.createElement('p');note.className='coverage';note.textContent='可搜尋、依季節篩選及放大照片；參考生態關係不等於校內已確認紀錄。';entry.append(h,text,a,note);$('#summary').append(entry);
 }
 function renderList(){
+ if(topic==='ecology'&&ecologyUI){ecologyUI.renderList(query);return;}
  const points=filtered();
  $('#point-list').innerHTML=points.length?points.map(p=>`<button class="point-row ${p.id===selected?'active':''}" data-id="${p.id}" aria-pressed="${p.id===selected}"><span class="point-number">${esc(p.label||p.id)}</span><span class="point-label">${esc(p.name)}<small>${esc(p.area||'區域待補')}</small></span><span class="point-arrow">↗</span></button>`).join(''):'<p class="empty">沒有符合的地點。可調整搜尋，或按 ＋ 新增。</p>';
  $('#point-list').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>select(b.dataset.id,true));
 }
 function renderDetail(){
+ if(topic==='ecology'&&ecologyUI){closePlantExperience();closeTreePreview();ecologyUI.renderDetail(selected);return;}
  closePlantExperience();
  closeTreePreview();
  const p=current();
@@ -89,9 +94,9 @@ if(topic==='carbon'){
  }
 }
 function cancelPlacing(){placing=false;document.body.classList.remove('placing');$('#placing-hint').textContent='拖曳旋轉 · 滾輪縮放';}
-function select(id,focus=false){cancelPlacing();selected=id;renderList();renderDetail();updateMarkerElements();if(matchMedia('(min-width:721px)').matches){const aside=$('.sidebar');aside.scrollTo({top:aside.scrollTop+$('#detail').getBoundingClientRect().top-aside.getBoundingClientRect().top-10,behavior:'smooth'});}else $('#detail').scrollIntoView({behavior:'smooth',block:'nearest'});if(focus&&camera){const p=current();const delta=new THREE.Vector3(p.x,0,p.z).sub(controls.target);controls.target.add(delta);camera.position.add(delta);controls.update();}}
+function select(id,focus=false){if(topic==='ecology'&&ecologyUI){selected=id;ecologyUI.select(id);return;}cancelPlacing();selected=id;renderList();renderDetail();updateMarkerElements();if(matchMedia('(min-width:721px)').matches){const aside=$('.sidebar');aside.scrollTo({top:aside.scrollTop+$('#detail').getBoundingClientRect().top-aside.getBoundingClientRect().top-10,behavior:'smooth'});}else $('#detail').scrollIntoView({behavior:'smooth',block:'nearest'});if(focus&&camera){const p=current();const delta=new THREE.Vector3(p.x,0,p.z).sub(controls.target);controls.target.add(delta);camera.position.add(delta);controls.update();}}
 function renderSpeciesFilter(){const wrap=$('#species-filter-wrap');wrap.hidden=topic!=='carbon';const counts=new Map();for(const p of state.points.filter(p=>p.topic==='carbon'))counts.set(p.species||'未鑑定',(counts.get(p.species||'未鑑定')||0)+1);$('#species-filter').innerHTML='<option value="">全部樹種</option>'+[...counts].sort((a,b)=>a[0].localeCompare(b[0],'zh-TW')).map(([name,count])=>`<option value="${esc(name)}">${esc(name)}（${count} 株）</option>`).join('');$('#species-filter').value=speciesFilter;}
-function refresh(){rebuildTrees();drawSummary();renderBirdLearning();renderEcologyEntry();renderSpeciesFilter();renderList();renderDetail();updateMarkerElements();}
+function refresh(){ecologyUI?.activate(topic==='ecology');$('#add-point').hidden=topic==='ecology';rebuildTrees();drawSummary();renderBirdLearning();renderEcologyEntry();renderSpeciesFilter();renderList();renderDetail();updateMarkerElements();}
 function switchTopic(next){cancelPlacing();topic=next;query='';speciesFilter='';$('#search').value='';selected=state.points.find(p=>p.topic===topic)?.id||null;document.querySelectorAll('.topic').forEach(b=>{b.classList.toggle('active',b.dataset.topic===topic);if(b.dataset.topic===topic)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});const [title,kicker,heading,subtitle]=topics[topic];$('#section-title').textContent=title;$('#section-kicker').textContent=kicker;$('#map-title').textContent=heading;$('#map-subtitle').textContent=subtitle;refresh();}
 
 function field(name,label,value='',type='text',extra=''){return `<label class="field">${esc(label)}<input name="${name}" type="${type}" value="${esc(value??'')}" ${extra}></label>`;}
@@ -151,5 +156,5 @@ $('#export-button').onclick=()=>{const a=document.createElement('a');a.href=URL.
 $('#import-button').onclick=()=>$('#import-file').click();
 $('#import-file').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>12000000)throw Error('資料檔超過 12 MB。');const next=validateData(JSON.parse(await f.text()));if(window.confirm('匯入會取代目前導覽資料，確定已保留備份並繼續？')&&save({...next,dataset:state.dataset})){selected=state.points.find(p=>p.topic===topic)?.id||null;refresh();toast('導覽資料已匯入。');}}catch(error){toast(error instanceof SyntaxError?'JSON 格式錯誤，請檢查檔案。':error.message);}finally{e.target.value='';}};
 $('#fallback-map').onclick=()=>window.open('./assets/campus-map.png','_blank','noopener');
-try{const response=await fetch('./data.json');if(!response.ok)throw Error('無法載入地點資料');const defaults=validateData(await response.json());state=defaults;try{const saved=localStorage.getItem(STORE);if(saved){const old=validateData(JSON.parse(saved));if(old.dataset!==defaults.dataset){const legacyResponse=await fetch('./legacy-data.json');if(!legacyResponse.ok)throw Error('舊版資料範本載入失敗');const legacy=validateData(await legacyResponse.json());state=mergeOfficialData(defaults,old,legacy);save(state);toast('已加入教育部樹木資料，保留原有自訂編輯。');}else state=old;}}catch{toast('無法讀取本機資料，先使用原始配置。');}selected=state.points.find(p=>p.topic==='campus')?.id;const requested=new URLSearchParams(location.search).get('topic');if(Object.hasOwn(topics,requested))switchTopic(requested);else refresh();const requestedTree=new URLSearchParams(location.search).get('tree');const linkedTree=state.points.find(p=>p.id===requestedTree&&p.topic==='carbon');if(linkedTree){switchTopic('carbon');speciesFilter=linkedTree.species||'';renderSpeciesFilter();select(linkedTree.id);}setupScene();}catch(e){$('#loading').textContent='導覽資料載入失敗，請重新整理頁面。';$('#detail').textContent=e.message;}
+try{ecologyUI=await createEcologySpots();const response=await fetch('./data.json');if(!response.ok)throw Error('無法載入地點資料');const defaults=validateData(await response.json());state=defaults;try{const saved=localStorage.getItem(STORE);if(saved){const old=validateData(JSON.parse(saved));if(old.dataset!==defaults.dataset){const legacyResponse=await fetch('./legacy-data.json');if(!legacyResponse.ok)throw Error('舊版資料範本載入失敗');const legacy=validateData(await legacyResponse.json());state=mergeOfficialData(defaults,old,legacy);save(state);toast('已加入教育部樹木資料，保留原有自訂編輯。');}else state=old;}}catch{toast('無法讀取本機資料，先使用原始配置。');}selected=state.points.find(p=>p.topic==='campus')?.id;const requested=new URLSearchParams(location.search).get('topic');if(Object.hasOwn(topics,requested))switchTopic(requested);else refresh();const requestedTree=new URLSearchParams(location.search).get('tree');const linkedTree=state.points.find(p=>p.id===requestedTree&&p.topic==='carbon');if(linkedTree){switchTopic('carbon');speciesFilter=linkedTree.species||'';renderSpeciesFilter();select(linkedTree.id);}setupScene();}catch(e){$('#loading').textContent='導覽資料載入失敗，請重新整理頁面。';$('#detail').textContent=e.message;}
 window.addEventListener('pagehide',()=>{closePlantExperience();closeTreePreview();cancelAnimationFrame(frame);renderer?.dispose();});

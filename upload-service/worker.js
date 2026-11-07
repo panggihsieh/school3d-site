@@ -1,3 +1,4 @@
+import {validEcologyId,validateEcologyPosition} from '../dist/ecology-position-core.js';
 import {createRemoteJWKSet, jwtVerify} from 'jose';
 import {handleAI} from './ai.js';
 const keys=createRemoteJWKSet(new URL('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'));
@@ -9,7 +10,7 @@ export async function verifyTeacher(token,env,keySet=keys){
 }
 export function validatePhoto(body){
  if(!body || !/^[a-f0-9-]{36}$/.test(body.id))throw Error('照片欄位不正確');
- const station=/^P(0[1-9]|1[0-8])$/.test(body.target);
+ const station=/^P(0[1-9]|1[0-8])$/.test(body.target)||validEcologyId(body.target);
  if(!(station?['north','east','south','west','entrance','path','panorama'].includes(body.kind):/^MOE\d+$/.test(body.target)&&['whole','bark','leaf-front','leaf-back','label','flower-fruit'].includes(body.kind)))throw Error('照片欄位不正確');
  const maximum=body.kind==='panorama'?2600000:MAX_IMAGE;
  if(typeof body.title!=='string'||!body.title.trim()||body.title.length>120||typeof body.description!=='string'||body.description.length>1000)throw Error('名稱或說明不正確');
@@ -35,7 +36,7 @@ export async function publishPhoto(env,photo){
  // 確認目標來自倉庫中的官方植物清單；不接受任意寫入路徑。
  const data=await github(env,`contents/dist/data.json?ref=${head.object.sha}`);
  const trees=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0)))).points;
- if(!/^P(0[1-9]|1[0-8])$/.test(photo.target)&&!trees.some(t=>t.id===photo.target&&t.topic==='carbon'))throw Error('樹木編號不存在');
+ if(!validEcologyId(photo.target)&&!/^P(0[1-9]|1[0-8])$/.test(photo.target)&&!trees.some(t=>t.id===photo.target&&t.topic==='carbon'))throw Error('樹木編號不存在');
  const record={id:photo.id,target:photo.target,kind:photo.kind,title:photo.title,description:photo.description,url:`./assets/uploads/${photo.id}.jpg`,publishedAt:new Date().toISOString(),...(photo.location?{location:photo.location}:{})};
  const image=await github(env,'git/blobs','POST',{content:photo.image,encoding:'base64'});
  const index=await github(env,'git/blobs','POST',{content:utf8base64(JSON.stringify([...manifest,record],null,2)),encoding:'base64'});
@@ -44,6 +45,20 @@ export async function publishPhoto(env,photo){
  // 非強制更新，與其他上傳衝突時回報重試，不覆蓋別人的照片。
  await github(env,`git/refs/heads/${branch}`,'PATCH',{sha:next.sha,force:false});
  return {record,commit:next.sha};
+}
+export async function publishEcologyPosition(env,body){
+ if(!validEcologyId(body?.id))throw Error('生態主題編號不正確');
+ const position=validateEcologyPosition(body.position),previous=validateEcologyPosition(body.previous);
+ const branch=env.GITHUB_BRANCH||'main',head=await github(env,`git/ref/heads/${branch}`),commit=await github(env,`git/commits/${head.object.sha}`);
+ const file=await github(env,`contents/dist/ecology-positions.json?ref=${head.object.sha}`);
+ const manifest=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(file.content.replace(/\s/g,'')),c=>c.charCodeAt(0))));
+ const old=manifest.positions[body.id]||null;
+ if(JSON.stringify(old)!==JSON.stringify(previous)){const e=Error('此景點已由其他操作更新，請重新整理後再調整');e.status=409;throw e;}
+ if(position)manifest.positions[body.id]=position;else delete manifest.positions[body.id];
+ const index=await github(env,'git/blobs','POST',{content:utf8base64(JSON.stringify(manifest,null,2)),encoding:'base64'});
+ const tree=await github(env,'git/trees','POST',{base_tree:commit.tree.sha,tree:[{path:'dist/ecology-positions.json',mode:'100644',type:'blob',sha:index.sha}]});
+ const next=await github(env,'git/commits','POST',{message:`更新生態景點 ${body.id} 圖片位置`,tree:tree.sha,parents:[head.object.sha]});
+ await github(env,`git/refs/heads/${branch}`,'PATCH',{sha:next.sha,force:false});return {commit:next.sha};
 }
 export default {async fetch(request,env){
  env={FIREBASE_PROJECT:'school3d-site',ADMIN_EMAIL:'teacher.hsieh@gmail.com',ALLOWED_ORIGIN:'https://panggihsieh.github.io',GITHUB_REPO:'panggihsieh/school3d-site',GITHUB_BRANCH:'main',...env};
@@ -54,6 +69,12 @@ export default {async fetch(request,env){
  if(new URL(request.url).pathname==='/ai/chat'&&request.method==='POST'){
   try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'僅限已驗證的管理員登入。'},401);}
   return handleAI(request,env,headers);
+ }
+ if(new URL(request.url).pathname==='/ecology/position'&&request.method==='POST'){
+  try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'僅限已驗證的管理員登入'},401);}
+  if(!env.GITHUB_TOKEN)return reply({error:'尚未設定 GitHub 寫入授權'},503);
+  let body;try{const reader=request.body?.getReader();if(!reader)throw Error('缺少位置資料');let text='',size=0;const decoder=new TextDecoder();while(true){const {value,done}=await reader.read();if(done)break;size+=value.length;if(size>2048){await reader.cancel();throw Error('位置資料過大')}text+=decoder.decode(value,{stream:true})}text+=decoder.decode();body=JSON.parse(text);if(!validEcologyId(body?.id))throw Error('生態主題編號不正確');validateEcologyPosition(body.position);validateEcologyPosition(body.previous)}catch(e){return reply({error:e.message},400)}
+  try{return reply(await publishEcologyPosition(env,body),201)}catch(e){return reply({error:[409,422].includes(e.status)?'位置或版本已更新，請重新整理後重試':e.status?'GitHub 寫入失敗，請檢查專用授權':e.message},[409,422].includes(e.status)?409:502)}
  }
  if(new URL(request.url).pathname!=='/upload'||request.method!=='POST')return reply({error:'找不到端點'},404);
  if(!env.GITHUB_TOKEN)return reply({error:'管理員尚未設定 GitHub 寫入授權，照片仍保留本機'},503);

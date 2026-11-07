@@ -39,6 +39,7 @@ let positioning=false,plantPositions={};
 try{plantPositions=JSON.parse(localStorage.getItem('danan-photo-plants-v1')||'{}')||{};}catch{}
 function drawPlants(){
  plantLayer.replaceChildren();
+ if(currentTopic==='ecology'){document.dispatchEvent(new Event('campus-photo-points'));return;}
  document.querySelectorAll('#point-list [data-id]').forEach(row=>{
   const p=plantPositions[row.dataset.id]||(['birds','ecology'].includes(currentTopic)?suggestedPoints[row.dataset.id]:null);if(!p||!Number.isFinite(p.x)||!Number.isFinite(p.y))return;
   const pin=document.createElement('button');pin.className='photo-pin plant-pin';pin.style.left=`${p.x}%`;pin.style.top=`${p.y}%`;pin.textContent=row.querySelector('.point-number').textContent;pin.title=row.querySelector('.point-label').textContent+(!plantPositions[row.dataset.id]?'（示意建議位置，待現場確認）':'（手動圖片標點）');pin.setAttribute('aria-label',pin.title);pin.setAttribute('aria-pressed',String(row.classList.contains('active')));pin.onclick=()=>row.click();plantLayer.append(pin);
@@ -51,7 +52,8 @@ stage.addEventListener('click',e=>{
  if(!positioning||!['carbon','birds','ecology'].includes(currentTopic)||e.target.closest('button'))return;
  const row=document.querySelector('#point-list .active');if(!row)return;
  const r=stage.getBoundingClientRect(),next={...plantPositions,[row.dataset.id]:{x:Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),y:Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))}};
- try{localStorage.setItem('danan-photo-plants-v1',JSON.stringify(next));plantPositions=next;positioning=false;placePlant.textContent=currentTopic==='carbon'?'標示選取植物':'標示選取地點';drawPlants();plantNote.textContent='植物點位為手動圖片標示，僅儲存在此瀏覽器，尚未包含在導覽 JSON 匯出中。';}catch{plantNote.textContent='無法儲存圖片點位，請檢查瀏覽器儲存空間。';}
+ try{localStorage.setItem('danan-photo-plants-v1',JSON.stringify(next));plantPositions=next;if(currentTopic==='ecology')plantNote.textContent='生態主題尚未定位時不放置標記；教師可登入後點圖放置或拖曳標記。';
+ positioning=false;placePlant.textContent=currentTopic==='carbon'?'標示選取植物':'標示選取地點';drawPlants();plantNote.textContent='植物點位為手動圖片標示，僅儲存在此瀏覽器，尚未包含在導覽 JSON 匯出中。';}catch{plantNote.textContent='無法儲存圖片點位，請檢查瀏覽器儲存空間。';}
 });
 function selectPlace(index){
  const p=places[index];
@@ -69,8 +71,9 @@ function show(){
  const overlay=['birds','ecology'].includes(currentTopic);
  panel.classList.toggle('topic-photo-overlay',visible&&overlay);
  stage.querySelectorAll(':scope > .photo-pin').forEach(pin=>pin.hidden=overlay);
- plantLayer.hidden=plantNote.hidden=placePlant.hidden=!(visible&&currentTopic!=='campus');
+ plantLayer.hidden=plantNote.hidden=placePlant.hidden=!(visible&&currentTopic!=='campus');if(currentTopic==='ecology'){placePlant.hidden=true;plantNote.textContent='生態主題尚未定位時不放置標記；教師可登入後點圖放置或拖曳標記。';}
  plantNote.textContent=overlay?'深色標記為建議觀察／景點位置，非目擊紀錄或實測座標；可選取清單後按「標示選取地點」手動校正。':'可選取植物後按「標示選取植物」。恢復原版底圖的既有標點。';
+ if(currentTopic==='ecology')plantNote.textContent='生態主題尚未定位時不放置標記；教師可登入後點圖放置或拖曳標記。';
  positioning=false;placePlant.textContent=currentTopic==='carbon'?'標示選取植物':'標示選取地點';
  viewButton.hidden=false;viewButton.textContent=visible?'3D 視角':'圖片俯視圖';viewButton.setAttribute('aria-pressed',String(visible));drawPlants();fitPhoto();
 }

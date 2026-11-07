@@ -19,3 +19,7 @@ Firebase Spark 登入 + Cloudflare Workers Free 驗證 + GitHub 公開照片。�
 建置與測試：`npm ci`、`npm test`、`npm run build`。`worker.bundle.js` 可貼到 Cloudflare Quick Edit；以 `wrangler deploy` 部署時使用 worker.js 與 wrangler.toml。`dist/field-config.js` 只包含公開 Worker URL。
 
 Worker 免費額度超過時應停止服務，請維持 Free 方案。GitHub 公開歷史會保留已發布檔案，即使日後移除也可能仍存在歷史中。
+
+## 生態景點位置與照片
+
+新增受相同管理員JWT保護的 POST /ecology/position，僅接受EC01–EC11及0–100%的圖片位置，單次更新 dist/ecology-positions.json 的一筆資料；比對舊值、非強制Git更新，衝突不覆寫。此為圖片百分比，非GPS。原有 /upload 同時接受EC01–EC11的四向照、入口、細節與完整環景，沿用相同大小限制、固定照片路徑及公開相簿清單。

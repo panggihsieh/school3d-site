@@ -1,3 +1,11 @@
+// ../dist/ecology-position-core.js
+var validEcologyId = (id) => /^EC(0[1-9]|1[01])$/.test(id);
+function validateEcologyPosition(p) {
+  if (p === null) return null;
+  if (!p || typeof p.x !== "number" || typeof p.y !== "number" || !Number.isFinite(p.x) || !Number.isFinite(p.y) || p.x < 0 || p.x > 100 || p.y < 0 || p.y > 100) throw Error("\u5716\u7247\u4F4D\u7F6E\u9808\u4ECB\u65BC 0\u2013100%");
+  return { x: Math.round(p.x * 100) / 100, y: Math.round(p.y * 100) / 100 };
+}
+
 // node_modules/jose/dist/webapi/lib/buffer_utils.js
 var encoder = new TextEncoder();
 var decoder = new TextDecoder();
@@ -797,7 +805,7 @@ async function verifyTeacher(token, env, keySet = keys) {
 }
 function validatePhoto(body) {
   if (!body || !/^[a-f0-9-]{36}$/.test(body.id)) throw Error("\u7167\u7247\u6B04\u4F4D\u4E0D\u6B63\u78BA");
-  const station = /^P(0[1-9]|1[0-8])$/.test(body.target);
+  const station = /^P(0[1-9]|1[0-8])$/.test(body.target) || validEcologyId(body.target);
   if (!(station ? ["north", "east", "south", "west", "entrance", "path", "panorama"].includes(body.kind) : /^MOE\d+$/.test(body.target) && ["whole", "bark", "leaf-front", "leaf-back", "label", "flower-fruit"].includes(body.kind))) throw Error("\u7167\u7247\u6B04\u4F4D\u4E0D\u6B63\u78BA");
   const maximum = body.kind === "panorama" ? 26e5 : MAX_IMAGE;
   if (typeof body.title !== "string" || !body.title.trim() || body.title.length > 120 || typeof body.description !== "string" || body.description.length > 1e3) throw Error("\u540D\u7A31\u6216\u8AAA\u660E\u4E0D\u6B63\u78BA");
@@ -843,7 +851,7 @@ async function publishPhoto(env, photo) {
   if (manifest.length >= 1500) throw Error("\u76F8\u7C3F\u5DF2\u9054 1500 \u5F35\u4E0A\u9650\uFF0C\u8ACB\u5148\u6574\u7406\u7167\u7247");
   const data = await github(env, `contents/dist/data.json?ref=${head.object.sha}`);
   const trees = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g, "")), (c) => c.charCodeAt(0)))).points;
-  if (!/^P(0[1-9]|1[0-8])$/.test(photo.target) && !trees.some((t) => t.id === photo.target && t.topic === "carbon")) throw Error("\u6A39\u6728\u7DE8\u865F\u4E0D\u5B58\u5728");
+  if (!validEcologyId(photo.target) && !/^P(0[1-9]|1[0-8])$/.test(photo.target) && !trees.some((t) => t.id === photo.target && t.topic === "carbon")) throw Error("\u6A39\u6728\u7DE8\u865F\u4E0D\u5B58\u5728");
   const record = { id: photo.id, target: photo.target, kind: photo.kind, title: photo.title, description: photo.description, url: `./assets/uploads/${photo.id}.jpg`, publishedAt: (/* @__PURE__ */ new Date()).toISOString(), ...photo.location ? { location: photo.location } : {} };
   const image = await github(env, "git/blobs", "POST", { content: photo.image, encoding: "base64" });
   const index = await github(env, "git/blobs", "POST", { content: utf8base64(JSON.stringify([...manifest, record], null, 2)), encoding: "base64" });
@@ -851,6 +859,26 @@ async function publishPhoto(env, photo) {
   const next = await github(env, "git/commits", "POST", { message: `Publish ${photo.target} ${photo.kind} photo`, tree: tree.sha, parents: [head.object.sha] });
   await github(env, `git/refs/heads/${branch}`, "PATCH", { sha: next.sha, force: false });
   return { record, commit: next.sha };
+}
+async function publishEcologyPosition(env, body) {
+  if (!validEcologyId(body?.id)) throw Error("\u751F\u614B\u4E3B\u984C\u7DE8\u865F\u4E0D\u6B63\u78BA");
+  const position = validateEcologyPosition(body.position), previous = validateEcologyPosition(body.previous);
+  const branch = env.GITHUB_BRANCH || "main", head = await github(env, `git/ref/heads/${branch}`), commit = await github(env, `git/commits/${head.object.sha}`);
+  const file = await github(env, `contents/dist/ecology-positions.json?ref=${head.object.sha}`);
+  const manifest = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(file.content.replace(/\s/g, "")), (c) => c.charCodeAt(0))));
+  const old = manifest.positions[body.id] || null;
+  if (JSON.stringify(old) !== JSON.stringify(previous)) {
+    const e = Error("\u6B64\u666F\u9EDE\u5DF2\u7531\u5176\u4ED6\u64CD\u4F5C\u66F4\u65B0\uFF0C\u8ACB\u91CD\u65B0\u6574\u7406\u5F8C\u518D\u8ABF\u6574");
+    e.status = 409;
+    throw e;
+  }
+  if (position) manifest.positions[body.id] = position;
+  else delete manifest.positions[body.id];
+  const index = await github(env, "git/blobs", "POST", { content: utf8base64(JSON.stringify(manifest, null, 2)), encoding: "base64" });
+  const tree = await github(env, "git/trees", "POST", { base_tree: commit.tree.sha, tree: [{ path: "dist/ecology-positions.json", mode: "100644", type: "blob", sha: index.sha }] });
+  const next = await github(env, "git/commits", "POST", { message: `\u66F4\u65B0\u751F\u614B\u666F\u9EDE ${body.id} \u5716\u7247\u4F4D\u7F6E`, tree: tree.sha, parents: [head.object.sha] });
+  await github(env, `git/refs/heads/${branch}`, "PATCH", { sha: next.sha, force: false });
+  return { commit: next.sha };
 }
 var worker_default = { async fetch(request, env) {
   env = { FIREBASE_PROJECT: "school3d-site", ADMIN_EMAIL: "teacher.hsieh@gmail.com", ALLOWED_ORIGIN: "https://panggihsieh.github.io", GITHUB_REPO: "panggihsieh/school3d-site", GITHUB_BRANCH: "main", ...env };
@@ -866,6 +894,43 @@ var worker_default = { async fetch(request, env) {
       return reply({ error: "\u50C5\u9650\u5DF2\u9A57\u8B49\u7684\u7BA1\u7406\u54E1\u767B\u5165\u3002" }, 401);
     }
     return handleAI(request, env, headers);
+  }
+  if (new URL(request.url).pathname === "/ecology/position" && request.method === "POST") {
+    try {
+      await verifyTeacher((request.headers.get("Authorization") || "").replace(/^Bearer /, ""), env);
+    } catch {
+      return reply({ error: "\u50C5\u9650\u5DF2\u9A57\u8B49\u7684\u7BA1\u7406\u54E1\u767B\u5165" }, 401);
+    }
+    if (!env.GITHUB_TOKEN) return reply({ error: "\u5C1A\u672A\u8A2D\u5B9A GitHub \u5BEB\u5165\u6388\u6B0A" }, 503);
+    let body;
+    try {
+      const reader = request.body?.getReader();
+      if (!reader) throw Error("\u7F3A\u5C11\u4F4D\u7F6E\u8CC7\u6599");
+      let text = "", size = 0;
+      const decoder2 = new TextDecoder();
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        size += value.length;
+        if (size > 2048) {
+          await reader.cancel();
+          throw Error("\u4F4D\u7F6E\u8CC7\u6599\u904E\u5927");
+        }
+        text += decoder2.decode(value, { stream: true });
+      }
+      text += decoder2.decode();
+      body = JSON.parse(text);
+      if (!validEcologyId(body?.id)) throw Error("\u751F\u614B\u4E3B\u984C\u7DE8\u865F\u4E0D\u6B63\u78BA");
+      validateEcologyPosition(body.position);
+      validateEcologyPosition(body.previous);
+    } catch (e) {
+      return reply({ error: e.message }, 400);
+    }
+    try {
+      return reply(await publishEcologyPosition(env, body), 201);
+    } catch (e) {
+      return reply({ error: [409, 422].includes(e.status) ? "\u4F4D\u7F6E\u6216\u7248\u672C\u5DF2\u66F4\u65B0\uFF0C\u8ACB\u91CD\u65B0\u6574\u7406\u5F8C\u91CD\u8A66" : e.status ? "GitHub \u5BEB\u5165\u5931\u6557\uFF0C\u8ACB\u6AA2\u67E5\u5C08\u7528\u6388\u6B0A" : e.message }, [409, 422].includes(e.status) ? 409 : 502);
+    }
   }
   if (new URL(request.url).pathname !== "/upload" || request.method !== "POST") return reply({ error: "\u627E\u4E0D\u5230\u7AEF\u9EDE" }, 404);
   if (!env.GITHUB_TOKEN) return reply({ error: "\u7BA1\u7406\u54E1\u5C1A\u672A\u8A2D\u5B9A GitHub \u5BEB\u5165\u6388\u6B0A\uFF0C\u7167\u7247\u4ECD\u4FDD\u7559\u672C\u6A5F" }, 503);
@@ -908,6 +973,7 @@ var worker_default = { async fetch(request, env) {
 } };
 export {
   worker_default as default,
+  publishEcologyPosition,
   publishPhoto,
   validatePhoto,
   verifyTeacher

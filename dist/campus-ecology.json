@@ -1,0 +1,539 @@
+{
+  "photos": [
+    {
+      "key": "ficus",
+      "name": "榕樹",
+      "file": "A banyan at Tainan Confucius Temple.jpg",
+      "author": "Dquai",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/ficus-e74f3ac0164c.jpg",
+      "thumb": "./assets/campus-eco/ficus-e74f3ac0164c.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:A_banyan_at_Tainan_Confucius_Temple.jpg",
+      "note": "臺南孔廟榕樹；非大南國小實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/1/19/A_banyan_at_Tainan_Confucius_Temple.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "e74f3ac0164ce09032248b9e4edf561cf0ad3ed64310244405cb80c12fd502b4"
+    },
+    {
+      "key": "barbet",
+      "name": "五色鳥",
+      "file": "Taiwan Barbet 7609.jpg",
+      "author": "Alnus",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "url": "./assets/campus-eco/barbet-fae58cc5f217.jpg",
+      "thumb": "./assets/campus-eco/barbet-fae58cc5f217.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Taiwan_Barbet_7609.jpg",
+      "note": "物種參考照；非大南國小實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Taiwan_Barbet_7609.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "fae58cc5f217e7673e5a11e03d9183daeeda71a38c7522747f1f6c3443564a7e"
+    },
+    {
+      "key": "melia",
+      "name": "苦楝",
+      "file": "Melia-azedarach-Mascarin.jpg",
+      "author": "Bouba",
+      "license": "CC BY-SA 1.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/1.0/",
+      "url": "./assets/campus-eco/melia-ccc4a316f183.jpg",
+      "thumb": "./assets/campus-eco/melia-ccc4a316f183.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Melia-azedarach-Mascarin.jpg",
+      "note": "留尼旺植物園參考照；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Melia-azedarach-Mascarin.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "ccc4a316f183353bde787c738e4f1ae960ce78fc5aa8fee0e56edda7bf70d2c8"
+    },
+    {
+      "key": "bulbul",
+      "name": "白頭翁",
+      "file": "Pycnonotus sinensis 白頭鵯(白頭翁).jpg",
+      "author": "1841Hongkong",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/bulbul-05c4571ec87a.jpg",
+      "thumb": "./assets/campus-eco/bulbul-05c4571ec87a.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Pycnonotus_sinensis_%E7%99%BD%E9%A0%AD%E9%B5%AF%28%E7%99%BD%E9%A0%AD%E7%BF%81%29.jpg",
+      "note": "香港嘉道理農場拍攝；物種參考照",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pycnonotus_sinensis_%E7%99%BD%E9%A0%AD%E9%B5%AF%28%E7%99%BD%E9%A0%AD%E7%BF%81%29.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "05c4571ec87aeecfcf3e08ad764d85c4d32349d192bb591df25beed621585090"
+    },
+    {
+      "key": "heron",
+      "name": "黑冠麻鷺",
+      "file": "Gorsachius melanolophus melanolophus 363333237.jpg",
+      "author": "葉子／leaf0605",
+      "license": "CC0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "./assets/campus-eco/heron-7cbbdf1a72ac.jpg",
+      "thumb": "./assets/campus-eco/heron-7cbbdf1a72ac.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Gorsachius_melanolophus_melanolophus_363333237.jpg",
+      "note": "臺灣拍攝；非大南國小實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Gorsachius_melanolophus_melanolophus_363333237.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "7cbbdf1a72ac0ceaf613a48a63de34490e643c09282bdc7f80b82be556f0f5c3"
+    },
+    {
+      "key": "ash",
+      "name": "光臘樹",
+      "file": "Fraxinus griffithii 20161226-02.jpg",
+      "author": "円周率３パーセント",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/ash-de074680d69c.jpg",
+      "thumb": "./assets/campus-eco/ash-de074680d69c.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Fraxinus_griffithii_20161226-02.jpg",
+      "note": "日本名古屋栽植樹木參考照；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Fraxinus_griffithii_20161226-02.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "de074680d69c87e560b90e8a499667ccfb35029a177cdc5e16832124a6ff7778"
+    },
+    {
+      "key": "beetle",
+      "name": "獨角仙成蟲",
+      "file": "Trypoxylus dichotomus tsunobosonis.LTP.png",
+      "author": "Lintepei",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/beetle-f186853c2ef1.jpg",
+      "thumb": "./assets/campus-eco/beetle-f186853c2ef1.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Trypoxylus_dichotomus_tsunobosonis.LTP.png",
+      "note": "臺灣亞種參考照；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Trypoxylus_dichotomus_tsunobosonis.LTP.png",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "f186853c2ef192fae05ca85e45ffd98b5509d5d3fdac4e052e44f4ddb93879b2"
+    },
+    {
+      "key": "sap",
+      "name": "獨角仙吸食光臘樹樹液",
+      "file": "A rhinoceros beetle sucking sap out of a Griffith's Ash.jpg",
+      "author": "Mearchan",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/sap-5335144dcf30.jpg",
+      "thumb": "./assets/campus-eco/sap-5335144dcf30.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:A_rhinoceros_beetle_sucking_sap_out_of_a_Griffith%27s_Ash.jpg",
+      "note": "嘉義地區拍攝；非大南國小實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/A_rhinoceros_beetle_sucking_sap_out_of_a_Griffith%27s_Ash.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "5335144dcf30b120e8391b261ffd19024f4e1fc52aec9dd7413878349d8fac68"
+    },
+    {
+      "key": "larva",
+      "name": "獨角仙幼蟲",
+      "file": "Jbeetlelarva.jpg",
+      "author": "AZU",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "url": "./assets/campus-eco/larva-9a4d7ffcd2b1.jpg",
+      "thumb": "./assets/campus-eco/larva-9a4d7ffcd2b1.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Jbeetlelarva.jpg",
+      "note": "獨角仙幼蟲物種層級參考照；非校內實拍，非臺灣亞種證據",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Jbeetlelarva.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "9a4d7ffcd2b161972e6380987f21fc37b6cf4286f5969ddc4538bd511e81f10e"
+    },
+    {
+      "key": "camphor",
+      "name": "樟樹葉片",
+      "file": "Starr 060225-6159 Cinnamomum camphora.jpg",
+      "author": "Forest & Kim Starr",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0/",
+      "url": "./assets/campus-eco/camphor-e1d3d93fb493.jpg",
+      "thumb": "./assets/campus-eco/camphor-e1d3d93fb493.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Starr_060225-6159_Cinnamomum_camphora.jpg",
+      "note": "夏威夷茂宜島葉片參考照；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Starr_060225-6159_Cinnamomum_camphora.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "e1d3d93fb49302e60026eab7578282605bf39ec7dbd73e194b5fd2afe6b43764"
+    },
+    {
+      "key": "bluebottle",
+      "name": "青帶鳳蝶",
+      "file": "Common bluebottle (Graphium sarpedon connectens) Jiannen Road.jpg",
+      "author": "Charles J Sharp／Sharp Photography",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/bluebottle-babe5c149601.jpg",
+      "thumb": "./assets/campus-eco/bluebottle-babe5c149601.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Common_bluebottle_%28Graphium_sarpedon_connectens%29_Jiannen_Road.jpg",
+      "note": "臺北劍南路拍攝；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Common_bluebottle_%28Graphium_sarpedon_connectens%29_Jiannen_Road.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "babe5c1496016109148cd1c9ac50006dac6dccd79e85362aa5c653fdc9ca090f"
+    },
+    {
+      "key": "dregea",
+      "name": "華他卡藤花朵",
+      "file": "Dregea volubilis flowers.jpg",
+      "author": "Vijayanrajapuram",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/dregea-3613228f9895.jpg",
+      "thumb": "./assets/campus-eco/dregea-3613228f9895.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Dregea_volubilis_flowers.jpg",
+      "note": "印度植物參考照；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Dregea_volubilis_flowers.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "3613228f9895301ebd37d29124a1c433285e6938dd72087b38e3d9c5221c8f05"
+    },
+    {
+      "key": "tiger",
+      "name": "淡紋青斑蝶",
+      "file": "Butterfly - Tirumala limniace.jpg",
+      "author": "Athulvis",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/tiger-1326105d834f.jpg",
+      "thumb": "./assets/campus-eco/tiger-1326105d834f.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Butterfly_-_Tirumala_limniace.jpg",
+      "note": "印度物種參考照；不作為臺灣亞種或校內紀錄證據",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Butterfly_-_Tirumala_limniace.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "1326105d834fabce2ce8064ca8d0adb257670a2392755fa65ed94a95637f3928"
+    },
+    {
+      "key": "aristolochia",
+      "name": "大葉馬兜鈴（示例）",
+      "file": "Aristolochia tagala leaves and flowers 2014 (2).jpg",
+      "author": "Vinayaraj",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/aristolochia-cc43f268682a.jpg",
+      "thumb": "./assets/campus-eco/aristolochia-cc43f268682a.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Aristolochia_tagala_leaves_and_flowers_2014_%282%29.jpg",
+      "note": "大葉馬兜鈴參考照；校內馬兜鈴種類尚未確認",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Aristolochia_tagala_leaves_and_flowers_2014_%282%29.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "cc43f268682ad0521c2602c57f23349e04c33e8a676f7a99f44eef1162a95027"
+    },
+    {
+      "key": "rose",
+      "name": "紅紋鳳蝶／紅珠鳳蝶",
+      "file": "Pachliopta aristolochiae.jpg",
+      "author": "Shalini binu；現行檔由 Edithsme 移除浮水印",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/rose-15339e2936ac.jpg",
+      "thumb": "./assets/campus-eco/rose-15339e2936ac.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Pachliopta_aristolochiae.jpg",
+      "note": "物種層級參考照；不代表臺灣亞種或校內紀錄",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Pachliopta_aristolochiae.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "15339e2936ac654b20dbb21bb2a1715f014994537947aaa63e10574635a8ab57"
+    },
+    {
+      "key": "koel",
+      "name": "臺灣欒樹",
+      "file": "Koelreuteria henryi on the roadside in Naha, Okinawa.jpg",
+      "author": "M108t",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "url": "./assets/campus-eco/koel-680ebf0ae561.jpg",
+      "thumb": "./assets/campus-eco/koel-680ebf0ae561.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Koelreuteria_henryi_on_the_roadside_in_Naha%2C_Okinawa.jpg",
+      "note": "日本沖繩栽植參考照；非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Koelreuteria_henryi_on_the_roadside_in_Naha%2C_Okinawa.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "680ebf0ae5614deea4161dcecf9a229bf7577a2048ba0c8c33e0d45171e3ff6c"
+    },
+    {
+      "key": "bug",
+      "name": "紅姬緣椿象",
+      "file": "Leptocoris vicinus 15900125.jpg",
+      "author": "Cheng-Tao Lin",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "url": "./assets/campus-eco/bug-c7240f7228e3.jpg",
+      "thumb": "./assets/campus-eco/bug-c7240f7228e3.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Leptocoris_vicinus_15900125.jpg",
+      "note": "物種參考照；非大南國小實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Leptocoris_vicinus_15900125.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "c7240f7228e35809665d833027f7d7480565e9947f4838bf750fc7012ab2883c"
+    },
+    {
+      "key": "litter",
+      "name": "落葉層環境",
+      "file": "Leaf Litter - Guelph, Ontario.jpg",
+      "author": "Ryan Hodnett",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/litter-7805cc63b43a.jpg",
+      "thumb": "./assets/campus-eco/litter-7805cc63b43a.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Leaf_Litter_-_Guelph%2C_Ontario.jpg",
+      "note": "加拿大落葉層環境參考；非校內實拍，不代表堆肥設施",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Leaf_Litter_-_Guelph%2C_Ontario.jpg",
+      "modification": "使用來源網站960像素縮圖，轉為JPEG，未另作內容修改",
+      "sha256": "7805cc63b43a4bae800c6454866119db97464fe4477a6a2f01d51c495d225e6f"
+    },
+    {
+      "key": "pond",
+      "name": "生態池環境示例",
+      "file": "Eaglesfield Park wildlife pond.jpg",
+      "author": "Paul W",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/pond-90a7ca4db858.jpg",
+      "thumb": "./assets/campus-eco/pond-90a7ca4db858.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Eaglesfield_Park_wildlife_pond.jpg",
+      "note": "英國倫敦池塘環境參考；非大南國小生態池",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/1/13/Eaglesfield_Park_wildlife_pond.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "90a7ca4db858d14f631eef7ccfebba8634d57d192916b714f5d717b7ee1ebe5d"
+    },
+    {
+      "key": "fungi",
+      "name": "落葉中的真菌菌絲",
+      "file": "Mycelium in forest floor.jpg",
+      "author": "PerytonMango",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "url": "./assets/campus-eco/fungi-780a5a5fe2fb.jpg",
+      "thumb": "./assets/campus-eco/fungi-780a5a5fe2fb.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Mycelium_in_forest_floor.jpg",
+      "note": "真菌菌絲環境參考；未辨識到種，非校內實拍",
+      "remote_url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mycelium_in_forest_floor.jpg",
+      "modification": "等比例縮小至最長邊1600像素、轉為JPEG；未另作內容修改",
+      "sha256": "780a5a5fe2fbb06161250901cbf8276f1abaef847da92c1b75dede7f46219f6d"
+    }
+  ],
+  "rows": [
+    {
+      "title": "大樹上的鳥餐廳",
+      "environment": "榕樹及校園結果樹木",
+      "animals": "五色鳥",
+      "season": "全年；4–8月留意繁殖行為，覓食配合結果期",
+      "tags": [
+        "春",
+        "夏",
+        "秋",
+        "冬"
+      ],
+      "relation": "五色鳥主要吃果實，也吃昆蟲；樹木提供停棲空間。照片僅辨認物種，不是該鳥吃該樹果實的現場證據。",
+      "idea": "食物來源、棲地與種子傳播",
+      "observe": "記錄鳥種、樹種、日期與實際啄食部位。",
+      "photos": [
+        "ficus",
+        "barbet"
+      ],
+      "ref": "https://www.taroko.gov.tw/ch/titlelist/conservation-work/3125",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC01"
+    },
+    {
+      "title": "苦楝的金色果實",
+      "environment": "苦楝",
+      "animals": "白頭翁",
+      "season": "秋季果實成熟後；冬季仍有掛果時",
+      "tags": [
+        "秋",
+        "冬"
+      ],
+      "relation": "苦楝成熟果實可供白頭翁取食；鳥是全年可能觀察的留鳥，秋冬是本主題的覓食觀察時機。",
+      "idea": "植物物候與鳥類食物",
+      "observe": "比較春季花朵與秋冬果實；觀察時不餵食。",
+      "photos": [
+        "melia",
+        "bulbul"
+      ],
+      "ref": "https://memorial-tree.tycg.gov.tw/species/9",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC02"
+    },
+    {
+      "title": "樹蔭下的獵食者",
+      "environment": "大樹下草地、落葉層與土壤",
+      "animals": "黑冠麻鷺；蚯蚓類（種類待辨識）",
+      "season": "全年；雨後濕潤地表為建議調查時機",
+      "tags": [
+        "春",
+        "夏",
+        "秋",
+        "冬"
+      ],
+      "relation": "黑冠麻鷺常在林下與草地尋找蚯蚓；利用的是地表環境，並非取食樹木果實。",
+      "idea": "樹木、土壤與食物網",
+      "observe": "遠距觀察啄食與靜止警戒行為，不追逐。",
+      "photos": [
+        "heron",
+        "litter"
+      ],
+      "ref": "https://www.nnp.gov.tw/ch/specialreport/animal-ecology-kaohsiung/772",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC03"
+    },
+    {
+      "title": "光臘樹的甲蟲餐廳",
+      "environment": "光臘樹（來源圖第19號，與本站編號尚未核對）",
+      "animals": "獨角仙成蟲",
+      "season": "5–8月，夏季為主",
+      "tags": [
+        "夏"
+      ],
+      "relation": "成蟲吸食樹液。另附嘉義地區的吸汁行為照片，可看見真實生態互動。",
+      "idea": "植物與昆蟲的資源關係",
+      "observe": "找自然出汁處；不刮樹皮、不採集。",
+      "photos": [
+        "ash",
+        "beetle",
+        "sap"
+      ],
+      "ref": "https://kmweb.moa.gov.tw/knowledgebase.php?func=2&id=254594&keyword=&type=12821",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC04"
+    },
+    {
+      "title": "落葉裡的成長基地",
+      "environment": "腐熟落葉、腐植土、腐熟木屑",
+      "animals": "獨角仙幼蟲",
+      "season": "秋、冬至翌年春季為建議課程安排，依實際族群修正",
+      "tags": [
+        "秋",
+        "冬",
+        "春"
+      ],
+      "relation": "幼蟲以腐植質為食，與成蟲食物不同。新堆落葉不保證有獨角仙；雞母蟲也可能是其他金龜子幼蟲。",
+      "idea": "完整生活史與分解環境",
+      "observe": "保留適當腐植層，避免反覆翻挖與破壞蛹室。",
+      "photos": [
+        "litter",
+        "larva"
+      ],
+      "ref": "https://kmweb.moa.gov.tw/subject/subject.php?id=65701",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC05"
+    },
+    {
+      "title": "樟樹上的蝴蝶寶寶",
+      "environment": "樟樹",
+      "animals": "青帶鳳蝶（青鳳蝶）",
+      "season": "全年可能出現；抽嫩芽時找卵與幼蟲",
+      "tags": [
+        "春",
+        "夏",
+        "秋",
+        "冬"
+      ],
+      "relation": "樟樹是寄主植物，幼蟲吃葉片，成蝶吸花蜜。所附青帶鳳蝶為臺灣拍攝的成蝶照片。",
+      "idea": "食草與蜜源的差別",
+      "observe": "觀察嫩芽、葉背與食痕；不把正常取食一律視為危害。",
+      "photos": [
+        "camphor",
+        "bluebottle"
+      ],
+      "ref": "https://kmweb.moa.gov.tw/theme_data.php?id=23&theme=butterfly_illustration",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC06"
+    },
+    {
+      "title": "華他卡藤的生命故事",
+      "environment": "華他卡藤",
+      "animals": "淡紋青斑蝶",
+      "season": "全年可能出現；配合嫩葉與當地族群觀察",
+      "tags": [
+        "春",
+        "夏",
+        "秋",
+        "冬"
+      ],
+      "relation": "華他卡藤是幼蟲寄主之一；成蝶吸蜜，幼蟲取食葉片。海外照片只用於物種參考。",
+      "idea": "寄主植物與繁殖",
+      "observe": "記錄卵與幼蟲的位置及葉片變化。",
+      "photos": [
+        "dregea",
+        "tiger"
+      ],
+      "ref": "https://kmweb.moa.gov.tw/theme_data.php?id=164&theme=butterfly_illustration",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC07"
+    },
+    {
+      "title": "馬兜鈴與鳳蝶",
+      "environment": "馬兜鈴類（校內種類待確認）",
+      "animals": "紅紋鳳蝶（紅珠鳳蝶）",
+      "season": "全年可能見成蝶；3–10月著重繁殖觀察",
+      "tags": [
+        "春",
+        "夏",
+        "秋"
+      ],
+      "relation": "幼蟲利用馬兜鈴類葉片。本表植物照片為大葉馬兜鈴示例，不能用來認定校內就是同一種。",
+      "idea": "寄主關係與正確辨識",
+      "observe": "先辨識植物，再觀察產卵與幼蟲取食。",
+      "photos": [
+        "aristolochia",
+        "rose"
+      ],
+      "ref": "https://biodiv.gov.taipei/page/additional/show.aspx?num=582&page=74",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC08"
+    },
+    {
+      "title": "臺灣欒樹的花與種子",
+      "environment": "臺灣欒樹",
+      "animals": "紅姬緣椿象；蜜蜂類（蜂種待辨識）",
+      "season": "約8–10月訪花；秋季結果後觀察椿象，春季亦可能聚集",
+      "tags": [
+        "夏",
+        "秋",
+        "春"
+      ],
+      "relation": "花朵提供蜜粉；紅姬緣椿象吸食種子汁液。這是取食關係，不直接稱為互利共生。照片以欒樹與紅姬緣椿象為主。",
+      "idea": "授粉、種子與昆蟲取食",
+      "observe": "分別記錄訪花者與種子上的昆蟲。",
+      "photos": [
+        "koel",
+        "bug"
+      ],
+      "ref": "https://tlpg.hsiliu.org.tw/plant/view/25",
+      "flag": "校內實際出現與利用行為待確認",
+      "id": "EC09"
+    },
+    {
+      "title": "生態池的水陸生命",
+      "environment": "生態池、水生植物與池岸",
+      "animals": "蜻蜓類若蟲與成蟲（校內物種待辨識）",
+      "season": "春至秋為建議調查時段；確切季節待物種確認",
+      "tags": [
+        "春",
+        "夏",
+        "秋"
+      ],
+      "relation": "使用英國生態池環境參考照，非校內池塘；尚不加入未確認物種照片，避免誤認為校內繁殖紀錄。",
+      "idea": "水陸棲地連結、水質與不放生",
+      "observe": "找羽化殼、記錄成蟲；不自行放養魚蛙。",
+      "photos": [
+        "pond"
+      ],
+      "ref": null,
+      "flag": "環境參考照；校內物種與季節待調查",
+      "id": "EC10"
+    },
+    {
+      "title": "落葉分解與土壤生命",
+      "environment": "堆落葉區、落葉層、腐木與土壤",
+      "animals": "蚯蚓類、馬陸類、真菌（均未確認到種）",
+      "season": "全年；落葉濕潤時適合比較，屬觀察建議",
+      "tags": [
+        "春",
+        "夏",
+        "秋",
+        "冬"
+      ],
+      "relation": "真菌等微生物參與分解；土壤動物利用有機物。所附照片可辨認落葉層與菌絲現象，不作物種鑑定。",
+      "idea": "養分循環與適地保留落葉",
+      "observe": "比較新葉與底層碎葉；觀察後恢復原狀。",
+      "photos": [
+        "litter",
+        "fungi"
+      ],
+      "ref": null,
+      "flag": "類群與環境參考；校內物種待調查",
+      "id": "EC11"
+    }
+  ]
+}
