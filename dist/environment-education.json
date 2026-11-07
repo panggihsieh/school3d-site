@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "title": "重要環境教育參考",
+  "documents": [
+    {
+      "id": "need-curriculum",
+      "title": "永續綠境：大南國小 NEED 特色課程與生態認證實踐",
+      "category": "課程與生態認證",
+      "format": "DOCX",
+      "description": "NEED 四大課程主題、WISER 學生圖像、EDCTS 教學策略及生態學校實踐。",
+      "originalFilename": "永續綠境：大南國小 NEED 特色課程與生態認證實踐.docx",
+      "url": "./assets/environment-education/need-curriculum.docx",
+      "bytes": 18168,
+      "sha256": "8328461623000ab4a1ed52d0e8cf3161208f68b034ab9aaf4f1bfc477053a3c9",
+      "source": "使用者提供之校方參考檔案",
+      "addedAt": "2026-11-07",
+      "priority": "important",
+      "changes": "原始位元組保存，未改寫或重製",
+      "rights": "保留原作者與校方權利，未另授開放授權"
+    },
+    {
+      "id": "campus-ecology-map",
+      "title": "大南國小校園生態地圖",
+      "category": "校園環境圖資",
+      "format": "JPEG",
+      "description": "手繪校園生態地圖，含 01–46 圖例；編號屬於此原圖，不直接對應網站樹木或拍照站號。",
+      "originalFilename": "校園生態地圖横式完成小檔.jpg",
+      "url": "./assets/environment-education/campus-ecology-map.jpg",
+      "bytes": 3136183,
+      "sha256": "c775f55548d5b09201ab029d45ba88b7f5675dbad926f0adaec554a38be1f9bc",
+      "source": "使用者提供之校方參考檔案",
+      "addedAt": "2026-11-07",
+      "priority": "important",
+      "changes": "原始位元組保存，未改寫或重製",
+      "rights": "保留原作者與校方權利，未另授開放授權"
+    }
+  ]
+}
