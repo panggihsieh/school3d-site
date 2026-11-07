@@ -1,0 +1,26 @@
+[
+  {
+    "station": "B01",
+    "file": "./assets/birds/sounds/sparrow.mp3",
+    "originalFile": "sparrow.ogg",
+    "source": "https://commons.wikimedia.org/wiki/File:Passer_montanus.ogg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Passer_montanus.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "artist": "Vladimir Yu. Arkhipov, Arkhivov",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "changes": "原音轉為 MP3，未剪接、未合成鳥鳴",
+    "sha256": "217974c1b329104ab82d05b66c59ca312681e85e0ee78fd526365a78cfa8780c"
+  },
+  {
+    "station": "B02",
+    "file": "./assets/birds/sounds/bulbul.mp3",
+    "originalFile": "bulbul.ogg",
+    "source": "https://commons.wikimedia.org/wiki/File:Pycnonotus_sinensis_call.ogg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pycnonotus_sinensis_call.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "artist": "The Nature Box",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "changes": "原音轉為 MP3，未剪接、未合成鳥鳴",
+    "sha256": "79dc561936c51b5720a6105705f34ae39c555a989de79a10789be6936c6b6477"
+  }
+]

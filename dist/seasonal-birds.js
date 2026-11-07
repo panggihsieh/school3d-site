@@ -4,6 +4,12 @@ const birds={
  B01:{name:'麻雀',image:'./assets/birds/sparrow-cutout.png',video:'./assets/birds/animations/sparrow.webm?v=0a7730244fa7',artist:'Laitche',license:'Public domain',licenseUrl:'https://creativecommons.org/publicdomain/mark/1.0/',source:'https://commons.wikimedia.org/wiki/File:Tree_Sparrow_August_2007_Osaka_Japan.jpg'},
  B02:{name:'白頭翁',image:'./assets/birds/bulbul-cutout.png',video:'./assets/birds/animations/bulbul.webm?v=d42eb33e3208',artist:'Earthshine..',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/',source:'https://commons.wikimedia.org/wiki/File:Chinese_Bubul.JPG'}
 };
+const sounds={
+ B01:{file:'./assets/birds/sounds/sparrow.mp3',artist:'Vladimir Yu. Arkhipov, Arkhivov',license:'CC BY-SA 3.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/3.0/',source:'https://commons.wikimedia.org/wiki/File:Passer_montanus.ogg'},
+ B02:{file:'./assets/birds/sounds/bulbul.mp3',artist:'The Nature Box',license:'CC0',licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/',source:'https://commons.wikimedia.org/wiki/File:Pycnonotus_sinensis_call.ogg'}
+};
+let birdAudio=null;
+function stopBirdSound(){if(birdAudio){birdAudio.pause();birdAudio.currentTime=0;birdAudio=null;}}
 const panel=document.querySelector('.map-panel');
 const bar=document.createElement('section');bar.className='seasonal-bar';bar.setAttribute('aria-label','季節鳥類情境');
 bar.innerHTML='<span>季節鳥類 · 情境動畫</span><label>季節 <select aria-label="鳥類動畫季節"><option value="auto">依臺灣目前月份</option><option value="spring">春季</option><option value="summer">夏季</option><option value="autumn">秋季</option><option value="winter">冬季</option></select></label><button type="button" class="bird-toggle">暫停動畫</button><button type="button" class="bird-show">看看季節鳥</button><small>固定於 B01／B02；情境示意，非目擊紀錄</small>';
@@ -14,21 +20,29 @@ const seasonSelect=bar.querySelector('select'),toggle=bar.querySelector('.bird-t
 const motion=matchMedia('(prefers-reduced-motion: reduce)');let enabled=!motion.matches;
 function season(){const month=Number(new Intl.DateTimeFormat('en',{timeZone:'Asia/Taipei',month:'numeric'}).format(new Date()));return seasonSelect.value==='auto'?seasonForMonth(month):seasonSelect.value;}
 function describe(id){
- const bird=birds[id];info.replaceChildren();info.hidden=false;
+ stopBirdSound();const bird=birds[id];info.replaceChildren();info.hidden=false;
  const title=document.createElement('strong');title.textContent=`${seasons[season()]}情境 · ${id} ${bird.name}`;
  const text=document.createElement('p');text.textContent='影片由 AI 合成並去背，非實際野外行為錄影；此位置不代表當季校園目擊或棲地調查結果。';
  const credit=document.createElement('p');credit.textContent=`原照片：${bird.artist} · `;
  const license=document.createElement('a');license.href=bird.licenseUrl;license.textContent=bird.license;
  const source=document.createElement('a');source.href=bird.source;source.textContent='原始照片 ↗';
  for(const a of [license,source]){a.target='_blank';a.rel='noopener';}
- credit.append(license);const close=document.createElement('button');close.type='button';close.textContent='關閉';close.onclick=()=>info.hidden=true;info.append(title,text,credit,source,close);
+ credit.append(license);
+ const sound=sounds[id],audio=document.createElement('audio'),play=document.createElement('button'),audioCredit=document.createElement('p'),audioSource=document.createElement('a'),audioLicense=document.createElement('a'),hint=document.createElement('small');
+ audio.src=sound.file;audio.preload='none';audio.setAttribute('aria-label',bird.name+'鳥鳴');play.type='button';play.className='bird-sound-toggle';play.innerHTML='<span aria-hidden="true">♪</span> 播放鳥鳴';play.setAttribute('aria-pressed','false');
+ function reset(){play.innerHTML='<span aria-hidden="true">♪</span> 播放鳥鳴';play.setAttribute('aria-pressed','false');}
+ play.onclick=()=>{if(!audio.paused){audio.pause();audio.currentTime=0;reset();return;}stopBirdSound();birdAudio=audio;hint.textContent='';const result=audio.play();if(result)result.catch(()=>{reset();hint.textContent='無法播放，請再按一次或稍後重試。';});};
+ audio.onplay=()=>{play.innerHTML='<span aria-hidden="true">■</span> 停止鳥鳴';play.setAttribute('aria-pressed','true');};audio.onpause=reset;audio.onended=reset;audio.onerror=()=>{reset();hint.textContent='鳥鳴載入失敗，請稍後再試。';};
+ audioCredit.className='bird-sound-credit';audioCredit.textContent='鳥鳴：'+sound.artist+' · ';audioSource.href=sound.source;audioSource.textContent='錄音來源';audioLicense.href=sound.licenseUrl;audioLicense.textContent=sound.license;for(const a of [audioSource,audioLicense]){a.target='_blank';a.rel='noopener';}audioCredit.append(audioLicense,document.createTextNode(' · '),audioSource);
+ const reminder=document.createElement('small');reminder.textContent='建議使用耳機聆聽；現地不以鳥音引誘鳥類。';reminder.className='bird-sound-hint';hint.setAttribute('role','status');
+ const close=document.createElement('button');close.type='button';close.textContent='關閉';close.onclick=()=>{stopBirdSound();info.hidden=true;};info.append(title,text,credit,source,play,close,audio,audioCredit,reminder,hint);
 }
 function sync(){
  const stage=document.querySelector('.photo-stage'),photo=document.querySelector('#photo-map');
  if(!stage)return;
  if(layer.parentElement!==stage)stage.append(layer);
  const visible=document.querySelector('.topic.active')?.dataset.topic==='birds'&&!photo.hidden;
- layer.hidden=!visible;if(!visible){info.hidden=true;update();return;}
+ layer.hidden=!visible;if(!visible){stopBirdSound();info.hidden=true;update();return;}
  const pins=[...stage.querySelectorAll('.photo-plants .plant-pin')].filter(pin=>birds[pin.textContent]);
  const ids=new Set(pins.map(pin=>pin.textContent));
  for(const bird of layer.children)if(!ids.has(bird.dataset.station))bird.remove();
@@ -42,8 +56,9 @@ function sync(){
 function update(){for(const video of layer.querySelectorAll('video')){if(enabled&&!document.hidden&&!layer.hidden)void video.play().catch(()=>{});else video.pause();}layer.classList.toggle('is-paused',!enabled||document.hidden);toggle.textContent=enabled?'暫停動畫':'開啟動畫';toggle.setAttribute('aria-pressed',String(enabled));}
 toggle.onclick=()=>{enabled=!enabled;update();};
 bar.querySelector('.bird-show').onclick=()=>{sync();if(!layer.hidden&&layer.children.length)describe(layer.firstElementChild.dataset.station);};
-seasonSelect.onchange=()=>{info.hidden=true;sync();};
+seasonSelect.onchange=()=>{stopBirdSound();info.hidden=true;sync();};
 document.addEventListener('campus-photo-points',sync);
-document.addEventListener('visibilitychange',update);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopBirdSound();update();});
+window.addEventListener('pagehide',stopBirdSound);
 motion.addEventListener('change',()=>{enabled=!motion.matches;update();});
 sync();update();

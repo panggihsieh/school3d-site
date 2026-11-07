@@ -45,3 +45,5 @@
 .seasonal-bird video{display:block;width:100%;height:100%;object-fit:contain;border:0;background:transparent}
 
 .seasonal-birds .seasonal-bird img{animation:none}
+
+.bird-information .bird-sound-toggle{margin:12px 0 8px 16px;min-height:44px;padding:10px 14px;font-size:14px}.bird-information .bird-sound-credit{font-size:11px;line-height:1.7;margin-top:12px}.bird-sound-hint,.bird-information small[role=status]{display:block;line-height:1.6;margin-top:6px}.bird-information audio{display:none}
