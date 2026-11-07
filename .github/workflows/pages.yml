@@ -25,12 +25,16 @@ jobs:
         run: |
           node --check dist/app.js
           node --check dist/domain.js
+          node --check dist/seasonal-birds.js
           node --check dist/tree/app.js
           node --check dist/tree/carbon.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Publish
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
