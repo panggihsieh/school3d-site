@@ -47,3 +47,5 @@
 .seasonal-birds .seasonal-bird img{animation:none}
 
 .bird-information .bird-sound-toggle{margin:12px 0 8px 16px;min-height:44px;padding:10px 14px;font-size:14px}.bird-information .bird-sound-credit{font-size:11px;line-height:1.7;margin-top:12px}.bird-sound-hint,.bird-information small[role=status]{display:block;line-height:1.6;margin-top:6px}.bird-information audio{display:none}
+
+.ecology-guide-entry{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.ecology-guide-entry h3{font-size:17px;margin:0 0 8px}.ecology-guide-launch{display:inline-block;padding:11px 15px;border-radius:7px;background:#24483c;color:#fffdf6;text-decoration:none;font-size:14px}.ecology-tree-link{display:block;margin:14px 0;font-size:13px;color:#285f49}

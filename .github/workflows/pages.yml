@@ -25,6 +25,8 @@ jobs:
         run: |
           node --check dist/app.js
           node --check dist/domain.js
+          node --check dist/ecology-guide.js
+          node --check dist/ecology-guide-core.js
           node --check dist/seasonal-birds.js
           node --check dist/tree/app.js
           node --check dist/tree/carbon.js
