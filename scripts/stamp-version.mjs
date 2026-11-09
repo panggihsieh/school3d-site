@@ -4,8 +4,8 @@ import {join,resolve} from 'node:path';
 
 const root=process.argv[2]||'dist';
 const git=(...args)=>execFileSync('git',args,{encoding:'utf8'}).trim();
-const version=`v0.3.${git('rev-list','--count','HEAD')}`;
-const modified=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(git('show','-s','--format=%cI','HEAD'))).replaceAll('-','/').replace(',','');
+const version=`v0.3.${Number(git('rev-list','--count','HEAD'))+1}`;
+const modified=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date()).replaceAll('-','/').replace(',','');
 const badge=`<!-- project-version:start --><footer id="project-version" aria-label="網站版本資訊" style="display:block;clear:both;margin:16px 12px;padding:10px 14px;border:1px solid #dce1d4;border-radius:6px;background:#fffdf7;color:#24483c;font:12px/1.8 system-ui,sans-serif;overflow-wrap:anywhere">版本：${version} ｜ 最後修改：${modified}（臺灣時間）</footer><!-- project-version:end -->`;
 let count=0;
 async function stamp(directory){
