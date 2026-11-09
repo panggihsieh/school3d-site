@@ -8,3 +8,9 @@
 .map-version-reference{margin:16px 0}.map-version-reference>summary{cursor:pointer;font-weight:600}.map-version-reference .reference-map{position:relative;max-width:720px;margin:12px auto}.reference-map>img{display:block;width:100%}
 
 .map-north[hidden]{display:none}
+.map-north small{font-size:clamp(8px,1vw,13px);margin-top:4px}
+.map-north-large{min-height:82px}
+.map-panel.photo-mode .map-toolbar #campus-station-toggle:not([hidden]){display:inline-block}
+.campus-station-layer{position:absolute;inset:0;pointer-events:none;z-index:2}
+.campus-station-pin{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;background:#fff6d5;color:#193d30;border:2px solid white;border-radius:6px;padding:3px 5px;box-shadow:0 2px 4px #0008;font:bold clamp(9px,1vw,13px)/1.3 system-ui,sans-serif;text-decoration:none}
+.campus-station-pin:hover,.campus-station-pin:focus-visible{background:#ffd36b;outline:2px solid #193d30;z-index:4}

@@ -1,8 +1,8 @@
-import {addCampusBrand} from './campus-map.js?v=entry-restore-20261106';
+import {addCampusBrand} from './campus-map.js?v=school-map-20261109';
 // 百分比依既有俯視示意圖估計；出入口與植物群需現場確認。
-import {stations} from './space-domain.js?v=entry-restore-20261106';
+import {stations} from './space-domain.js?v=school-map-20261109';
 const $=s=>document.querySelector(s);
-let mode='phone',selected='P01',completed={},published=[];
+let mode='phone',selected=stations.find(s=>s.id===new URLSearchParams(location.search).get('station'))?.id||'P01',completed={},published=[];
 try{completed=JSON.parse(localStorage.getItem('danan-capture-v1')||'{}')||{};}catch{}
 const count=()=>mode==='phone'?4:1;
 function select(id){selected=id;render();}

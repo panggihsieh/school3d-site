@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-07",
+  "updatedAt": "2026-11-09",
   "sourceConversation": "https://chatgpt.com/share/6aeebf5a-6de0-83e8-a30f-7c02dbff8857",
   "referenceOnly": true,
   "note": "以嘉義低海拔校園作為安排參考；月份隨天候與物候變化。生態關係有資料支持，不等於大南國小已確認的現存名錄。",
-  "mapNote": "不新增生態池或堆落葉區座標。分享圖的第19號光臘樹尚未與本平台編號核對，請以實際登錄清單及現勘為準。",
+  "mapNote": "校方於 2026/11/09 標註生態池位於庭院右側、落葉堆肥區位於圖上方遊戲區後方；僅建立圖片對照位置，不是 GPS 測量座標。第19號光臘樹仍待與平台編號核對。",
   "seasonHighlights": [
     {
       "id": "spring",
@@ -558,7 +558,7 @@
         }
       ],
       "treeSpeciesCodes": [],
-      "campusStatus": "校內堆落葉區、基質成熟度及幼蟲種類待確認",
+      "campusStatus": "校方已標示落葉堆肥區；基質成熟度及幼蟲種類待確認",
       "confirmed": false
     },
     {
@@ -692,7 +692,7 @@
     {
       "id": "pond",
       "title": "生態池的水陸生命",
-      "plant": "生態池、水生植物與池岸（位置待現勘）",
+      "plant": "生態池、水生植物與池岸（依校方圖示定位）",
       "animals": [
         "蜻蜓類若蟲與成蟲（種類待辨識）"
       ],
@@ -716,7 +716,7 @@
         }
       ],
       "treeSpeciesCodes": [],
-      "campusStatus": "生態池是否存在、位置、水質及蜻蜓種類均待確認",
+      "campusStatus": "校方已確認生態池及圖片位置；水質、物種及繁殖紀錄仍待現勘",
       "confirmed": false
     },
     {

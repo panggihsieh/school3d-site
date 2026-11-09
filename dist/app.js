@@ -1,4 +1,4 @@
-import {createEcologySpots} from './ecology-spots.js';
+import {createEcologySpots} from './ecology-spots.js?v=school-map-20261109';
 import {openTreeQuest} from './tree-quest.js';
 import * as THREE from 'three';
 import {showSpeciesReference} from './species-library.js?v=live-follow-20261106';
