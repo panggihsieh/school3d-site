@@ -1,16 +1,18 @@
 import {addCampusBrand} from './campus-map.js?v=school-map-20261109';
 // 百分比依既有俯視示意圖估計；出入口與植物群需現場確認。
-import {stations} from './space-domain.js?v=school-map-20261109';
+import {stations,resolveStationId,stationChangeNotice} from './space-domain.js?v=station-review-20261109';
 const $=s=>document.querySelector(s);
-let mode='phone',selected=stations.find(s=>s.id===new URLSearchParams(location.search).get('station'))?.id||'P01',completed={},published=[];
+const requested=new URLSearchParams(location.search).get('station');
+let mode='phone',selected=resolveStationId(requested)||'P01',completed={},published=[];
+const changeNotice=stationChangeNotice(requested);if(changeNotice){const p=document.createElement('p');p.className='notice';p.setAttribute('role','status');p.textContent=changeNotice;document.querySelector('.controls').after(p);}
 try{completed=JSON.parse(localStorage.getItem('danan-capture-v1')||'{}')||{};}catch{}
 const count=()=>mode==='phone'?4:1;
 function select(id){selected=id;render();}
 function render(){
  $('#pins').replaceChildren();$('#checklist').replaceChildren();
- $('#total').textContent=`18 站 × ${count()} 張＝${18*count()} 張`;
+ $('#total').textContent=`${stations.length} 站 × ${count()} 張＝${stations.length*count()} 張`;
  const done=stations.filter(s=>completed[`${mode}:${s.id}`]).length;
- $('#progress').textContent=`已拍妥 ${done}／18 站；尚需 ${18-done} 站（${(18-done)*count()} 張）。`;
+ $('#progress').textContent=`已拍妥 ${done}／${stations.length} 站；尚需 ${stations.length-done} 站（${(stations.length-done)*count()} 張）。`;
  for(const s of stations){
   const checked=!!completed[`${mode}:${s.id}`];
   const pin=document.createElement('button');pin.className=`pin${checked?' done':''}`;pin.style.left=`${s.x}%`;pin.style.top=`${s.y}%`;pin.textContent=`${s.id} ×${count()}`;pin.title=`${s.name}：${s.note}`;pin.setAttribute('aria-label',`${s.id} ${s.name}，建議 ${count()} 張`);pin.setAttribute('aria-pressed',String(selected===s.id));pin.onclick=()=>select(s.id);$('#pins').append(pin);

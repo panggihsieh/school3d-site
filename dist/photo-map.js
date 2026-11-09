@@ -1,5 +1,5 @@
 import {campusMapImage,addCampusBrand} from './campus-map.js?v=school-map-20261109';
-import {stations} from './space-domain.js?v=school-map-20261109';
+import {stations} from './space-domain.js?v=station-review-20261109';
 // Photo positions are percentages of the supplied image, not survey coordinates.
 const places=[
  {name:'操場',x:43.4,y:43.7,description:'校園中央的草地與環形跑道。'},
@@ -30,15 +30,15 @@ const image=document.createElement('img');image.src=campusMapImage;image.alt='�
 const stage=document.createElement('div');stage.className='photo-stage';stage.append(image);addCampusBrand(stage);
 photo.append(stage);panel.append(photo);
 const stationLayer=document.createElement('div');stationLayer.className='campus-station-layer';stage.append(stationLayer);
-for(const s of stations){const pin=document.createElement('a');pin.className='campus-station-pin';pin.textContent=s.id;pin.title=`${s.id} ${s.name}（待逐站核對）`;pin.setAttribute('aria-label',pin.title);pin.style.left=`${s.x}%`;pin.style.top=`${s.y}%`;pin.href=`./capture.html?station=${s.id}`;stationLayer.append(pin);}
+for(const s of stations){const pin=document.createElement('a');pin.className='campus-station-pin';pin.textContent=s.id;pin.title=`${s.id} ${s.name}（校方檢核版圖片位置）`;pin.setAttribute('aria-label',pin.title);pin.style.left=`${s.x}%`;pin.style.top=`${s.y}%`;pin.href=`./capture.html?station=${s.id}`;stationLayer.append(pin);}
 let showStations=true;
-const stationToggle=document.createElement('button');stationToggle.id='campus-station-toggle';stationToggle.textContent='P01～P18 站點';stationToggle.setAttribute('aria-pressed','true');spaceCaptureLink.after(stationToggle);
+const stationToggle=document.createElement('button');stationToggle.id='campus-station-toggle';stationToggle.textContent='拍攝站點（15 站）';stationToggle.setAttribute('aria-pressed','true');spaceCaptureLink.after(stationToggle);
 stationToggle.onclick=()=>{showStations=!showStations;stationToggle.setAttribute('aria-pressed',String(showStations));show();};
 function fitPhoto(){const ratio=image.naturalWidth&&image.naturalHeight?image.naturalWidth/image.naturalHeight:1.5;const width=Math.min(photo.clientWidth,photo.clientHeight*ratio);stage.style.width=`${width}px`;stage.style.height=`${width/ratio}px`;stage.style.aspectRatio=String(ratio);}
 image.addEventListener('load',fitPhoto);
 new ResizeObserver(fitPhoto).observe(photo);
 const guide=document.createElement('section');guide.id='photo-guide';guide.hidden=true;
-guide.innerHTML='<p class="intro">新版底圖套疊 P01～P18；點選站號查看拍照說明。可切換「P01～P18 站點」查看空間名稱標記。校舍用途依校方於 2026/11/09 提供的標註圖修正。</p><p class="coverage">北 ↙ 指向前門方向；東 ↖、南 ↗、西 ↘。圖中上下左右不等於東西南北；東邊／西邊校舍沿用校方名稱。站點為待逐站核對的圖片示意，非 GPS 或測量座標。</p>';
+guide.innerHTML='<p class="intro">校方檢核版保留 15 個拍攝站點；點選站號查看拍照說明。可切換「拍攝站點（15 站）」查看空間名稱標記。校舍用途依校方於 2026/11/09 提供的標註圖修正。</p><p class="coverage">北 ↙ 指向前門方向；東 ↖、南 ↗、西 ↘。圖中上下左右不等於東西南北；東邊／西邊校舍沿用校方名稱。站點為校方檢核版圖片示意，非 GPS 或測量座標。</p>';
 const list=document.createElement('div');guide.append(list);
 const tourLink=document.createElement('a');tourLink.href='./tour.html';tourLink.textContent='進入 3D／四向實景校園導覽 →';tourLink.style.cssText='display:block;padding:14px;background:#173f32;color:white;border-radius:10px';guide.prepend(tourLink);
 const detail=document.createElement('div');detail.setAttribute('aria-live','polite');guide.append(detail);sidebar.append(guide);

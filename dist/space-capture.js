@@ -1,7 +1,7 @@
-import {createPlantAudio} from './plant-audio.js?v=station-speech-20261106';
+import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106';
 import {addCampusBrand} from './campus-map.js?v=school-map-20261109';
-import {stations,directions,validStationLocation,latestViews,locatedStations,stationDescription,stationReadingContext} from './space-domain.js?v=school-map-20261109';
+import {stations,directions,validStationLocation,latestViews,locatedStations,stationDescription,stationReadingContext,resolveStationId,stationChangeNotice} from './space-domain.js?v=station-review-20261109';
 import {nearbyTrees,chooseNearbyTarget} from './field-domain.js?v=entry-restore-20261106';
 export function mountSpaceCapture({getUser,isAdmin,compress,store,renderDrafts,stopOtherSpeech=()=>{}}){
  const section=document.querySelector('#space-capture');
@@ -40,7 +40,8 @@ export function mountSpaceCapture({getUser,isAdmin,compress,store,renderDrafts,s
  document.querySelector('#tts-voice')?.addEventListener('change',stopStationSpeech);
  window.addEventListener('pagehide',stopStationSpeech);
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopStationSpeech();});
- const requested=new URLSearchParams(location.search).get('station');
+ const originalRequested=new URLSearchParams(location.search).get('station'),requested=resolveStationId(originalRequested);
+ const notice=stationChangeNotice(originalRequested);if(notice){const p=document.createElement('p');p.setAttribute('role','status');p.textContent=notice;section.prepend(p);}
  for(const s of stations){const o=document.createElement('option');o.value=s.id;o.textContent=`${s.id} ${s.name}`;$('#space-station').append(o);const b=document.createElement('button');b.type='button';b.textContent=s.id;b.style.left=`${s.x}%`;b.style.top=`${s.y}%`;b.onclick=()=>select(s.id,true);$('#space-pins').append(b);}
  if(stations.some(s=>s.id===requested))$('#space-station').value=requested;
  for(const [value,label] of directions){const o=document.createElement('option');o.value=value;o.textContent=label;$('#space-kind').append(o);}

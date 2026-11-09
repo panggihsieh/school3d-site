@@ -1,8 +1,9 @@
-import {stations,directions,latestViews,nextDirection} from './space-domain.js?v=school-map-20261109';
+import {stations,directions,latestViews,nextDirection,resolveStationId,stationChangeNotice} from './space-domain.js?v=station-review-20261109';
 export function mountSimpleTour(records,ecologyStations=[]){
  const tourStations=[...stations,...ecologyStations];
  const panel=document.querySelector('#simple-view');panel.innerHTML='<label>實景站點<select id="simple-station"></select></label><p id="simple-progress" role="status"></p><div class="simple-frame" tabindex="0" aria-label="四向照片導覽，可左右滑動或按方向鍵"><img id="simple-photo" alt="" hidden><p id="simple-empty"></p></div><div id="simple-directions" class="simple-directions"></div><p><button id="turn-left">← 向左看</button> <button id="turn-right">向右看 →</button></p><p><button id="simple-previous">上一站</button> <button id="simple-next">下一站</button> <a id="simple-capture" class="button">拍攝本站照片（管理員）</a></p><p>手機橫放，左右滑動或按方向切換實景。四張普通照片分方向展示，不含天空；尚未發布的方向會保留空位，不會自動補畫。</p>';
- const $=s=>panel.querySelector(s);let kind='north',photoVersion=0,startX;const requested=new URLSearchParams(location.search).get('station');
+ const $=s=>panel.querySelector(s);let kind='north',photoVersion=0,startX;const originalRequested=new URLSearchParams(location.search).get('station'),requested=resolveStationId(originalRequested)||originalRequested;
+ const notice=stationChangeNotice(originalRequested);if(notice){const p=document.createElement('p');p.setAttribute('role','status');p.textContent=notice;panel.prepend(p);}
  for(const s of tourStations){const o=document.createElement('option');o.value=s.id;const n=Object.keys(latestViews(records,s.id)).length;o.textContent=`${s.id} ${s.name} · ${n}/4 方向`;$('#simple-station').append(o);}
  $('#simple-station').value=tourStations.some(s=>s.id===requested)?requested:(tourStations.find(s=>Object.keys(latestViews(records,s.id)).length)?.id||'P01');
  for(const [value,label] of directions){const b=document.createElement('button');b.textContent=label;b.dataset.kind=value;b.onclick=()=>{kind=value;render();};$('#simple-directions').append(b);}
