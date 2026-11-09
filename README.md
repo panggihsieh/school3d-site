@@ -1,5 +1,7 @@
 # 大南國小 3D 生態導覽
 
+網站首頁最上方靠左顯示版本編號與最後修改時間，其他頁面顯示於下方。每次更新時執行 `node scripts/stamp-version.mjs` 產生並提交頁面標示；時間採 Asia/Taipei，取自目前提交的修改時間，版本格式為 `v0.3.<提交次數>`。重複執行不會新增重複標示，所有標示直接包含於 HTML，不依賴網路查詢。
+
 `dist/tour.html` 提供獨立 3D 模型、公開 360° 環景切換、站點選擇、全螢幕及支援裝置的 WebXR 沉浸式 VR。iPhone 使用觸控環視。沒有環景時顯示待補，不將普通照片冒充環景。`field.html` 可為 P01–P18 上傳六個方向／細節照片或完整球面環景，補拍清單顯示已發布數量；單株卡片自動顯示 GitHub 已發布照片與公開說明。環景縮至最長邊 4096、最多 2.6 MB，普通照片最多 650 KB；請另留原圖。所有上傳仍須完成 Worker 的 GITHUB_TOKEN Secret 設定才能寫入。
 
 `dist/field.html` 提供管理員樹木現場採集：Firebase Google 登入、GPS 候選樹木、北向上座標示意圖、TTS 接近提醒、確認編號、壓縮拍照、IndexedDB 本機草稿、備份匯出及 Cloudflare Worker 上傳 GitHub。公開照片清單為 `dist/public-photos.json`。Worker 已部署，仍需帳號擁有人設定 GitHub 專用 Secret 才能真正寫入，見 [upload-service/SETUP.md](upload-service/SETUP.md)。Firestore 仍維持預設拒絕存取；此上傳流程不使用 Firestore 或 Storage。
