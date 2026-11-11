@@ -1,7 +1,7 @@
 import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106';
-import {addCampusBrand} from './campus-map.js?v=campus-layers-20261111';
-import {stations,directions,validStationLocation,latestViews,locatedStations,stationDescription,stationReadingContext,resolveStationId,stationChangeNotice} from './space-domain.js?v=campus-corrections-20261111';
+import {addCampusBrand} from './campus-map.js?v=campus-slope-20261111';
+import {stations,directions,validStationLocation,latestViews,locatedStations,stationDescription,stationReadingContext,resolveStationId,stationChangeNotice} from './space-domain.js?v=campus-slope-20261111';
 import {nearbyTrees,chooseNearbyTarget} from './field-domain.js?v=entry-restore-20261106';
 export function mountSpaceCapture({getUser,isAdmin,compress,store,renderDrafts,stopOtherSpeech=()=>{}}){
  const section=document.querySelector('#space-capture');
@@ -11,7 +11,7 @@ export function mountSpaceCapture({getUser,isAdmin,compress,store,renderDrafts,s
  const versions=document.createElement('details');versions.className='map-version-reference';
  versions.innerHTML='<summary>兩版俯視圖參考</summary><p>拍照使用上方新版俯視圖與既有站號；區位依舊校方標註概略對照，待現場核對。下方可比較兩張圖，不變更拍照目標、GPS 或既有照片。</p><label>參考底圖<select class="reference-version"><option value="original">新版：實拍重繪・北朝大門左下</option><option value="north">舊版參考：正北朝上立體圖</option></select></label><div class="reference-map"><img alt="校方校對版大門進入視角校園圖" src="./assets/campus-base-v3-20261111.png"></div>';
  $('.space-map').after(versions);const reference=versions.querySelector('.reference-map');addCampusBrand(reference);
- versions.querySelector('select').onchange=e=>{const north=e.target.value==='north';reference.querySelector('img').src=north?'./assets/campus-overview-3d-north-v4.png':'./assets/campus-base-v3-20261111.png';reference.querySelector('img').alt=north?'新版正北朝上立體校園示意圖':'校方校對版大門進入視角校園示意圖';reference.querySelector('.map-north').hidden=north;reference.querySelector('.campus-region-layer').hidden=north;};
+ versions.querySelector('select').onchange=e=>{const north=e.target.value==='north';reference.querySelector('img').src=north?'./assets/campus-overview-3d-north-v4.png':'./assets/campus-base-v3-20261111.png';reference.querySelector('img').alt=north?'新版正北朝上立體校園示意圖':'校方校對版大門進入視角校園示意圖';reference.querySelector('.map-north').hidden=north;reference.querySelector('.campus-region-layer').hidden=north;reference.querySelector('.campus-slope-layer').hidden=north;};
 
 
  const speechStatus=text=>$('#space-speech-status').textContent=text;

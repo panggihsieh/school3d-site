@@ -1,4 +1,4 @@
-import {mountRegionEditor} from './region-editor.js?v=campus-corrections-20261111';
+import {mountRegionEditor} from './region-editor.js?v=campus-slope-20261111';
 import {mountEcologyCapture} from './ecology-capture.js';
 import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {mountSpeechTest} from './field-stt.js?v=stt-success-20261106';
@@ -6,7 +6,7 @@ import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106'
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=ai-status-20261106';
-import {mountSpaceCapture} from './space-capture.js?v=campus-layers-20261111';
+import {mountSpaceCapture} from './space-capture.js?v=campus-slope-20261111';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 import {refreshPublishedPhotos} from './published-photos.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
