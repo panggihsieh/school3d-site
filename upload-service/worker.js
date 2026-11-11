@@ -60,6 +60,13 @@ export async function publishEcologyPosition(env,body){
  const next=await github(env,'git/commits','POST',{message:`更新生態景點 ${body.id} 圖片位置`,tree:tree.sha,parents:[head.object.sha]});
  await github(env,`git/refs/heads/${branch}`,'PATCH',{sha:next.sha,force:false});return {commit:next.sha};
 }
+export function validateRegions(data){if(data?.version!==1||data.base!=='campus-v3-20261111'||!Array.isArray(data.regions)||data.regions.length!==18)throw Error('區域圖層格式不正確');const ids=new Set();for(const r of data.regions){if(!/^R(0[1-9]|1[0-8])$/.test(r.id)||ids.has(r.id)||typeof r.name!=='string'||!r.name.trim()||r.name.length>60||!Number.isFinite(r.x)||!Number.isFinite(r.y)||r.x<0||r.x>100||r.y<0||r.y>100)throw Error('區域名稱或位置不正確');ids.add(r.id);}return {version:1,base:data.base,regions:data.regions.map(({id,name,x,y})=>({id,name:name.trim(),x,y}))};}
+export async function publishRegions(env,body){const data=validateRegions(body?.data);const branch=env.GITHUB_BRANCH||'main',head=await github(env,`git/ref/heads/${branch}`),file=await github(env,`contents/dist/campus-regions.json?ref=${head.object.sha}`);const old=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(file.content.replace(/\s/g,'')),c=>c.charCodeAt(0))));if(JSON.stringify(old)!==JSON.stringify(body.previous)){const e=Error('圖層已更新，請重新整理後再修改');e.status=409;throw e;}const parent=await github(env,`git/commits/${head.object.sha}`),entries=[];
+const blob=await github(env,'git/blobs','POST',{content:utf8base64(JSON.stringify(data,null,2)+'\n'),encoding:'base64'});entries.push({path:'dist/campus-regions.json',mode:'100644',type:'blob',sha:blob.sha});
+const time=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).replaceAll('-','/');
+for(const path of ['index.html','field.html','capture.html','tour.html','ecology.html','photos.html','speech-diagnostic.html','tree/index.html']){const f=await github(env,`contents/dist/${path}?ref=${head.object.sha}`);let html=new TextDecoder().decode(Uint8Array.from(atob(f.content.replace(/\s/g,'')),c=>c.charCodeAt(0)));html=html.replace(/版本：v0\.3\.(\d+) ｜ 最後修改：[^<]+/,(_,n)=>`版本：v0.3.${Number(n)+1} ｜ 最後修改：${time}（臺灣時間）`);const b=await github(env,'git/blobs','POST',{content:utf8base64(html),encoding:'base64'});entries.push({path:'dist/'+path,mode:'100644',type:'blob',sha:b.sha});}
+const tree=await github(env,'git/trees','POST',{base_tree:parent.tree.sha,tree:entries});const next=await github(env,'git/commits','POST',{message:'更新校園區域名稱、位置與版本時間',tree:tree.sha,parents:[head.object.sha]});await github(env,`git/refs/heads/${branch}`,'PATCH',{sha:next.sha,force:false});return {commit:next.sha};}
+
 export default {async fetch(request,env){
  env={FIREBASE_PROJECT:'school3d-site',ADMIN_EMAIL:'teacher.hsieh@gmail.com',ALLOWED_ORIGIN:'https://panggihsieh.github.io',GITHUB_REPO:'panggihsieh/school3d-site',GITHUB_BRANCH:'main',...env};
  const origin=request.headers.get('Origin');const headers={'Content-Type':'application/json','Access-Control-Allow-Origin':env.ALLOWED_ORIGIN,'Vary':'Origin','Cache-Control':'no-store'};
@@ -69,6 +76,10 @@ export default {async fetch(request,env){
  if(new URL(request.url).pathname==='/ai/chat'&&request.method==='POST'){
   try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'僅限已驗證的管理員登入。'},401);}
   return handleAI(request,env,headers);
+ }
+ if(new URL(request.url).pathname==='/campus/regions'&&request.method==='POST'){
+  try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'僅限已驗證的管理員登入'},401);}
+  try{const text=await request.text();if(text.length>20000)return reply({error:'圖層資料過大'},413);return reply(await publishRegions(env,JSON.parse(text)),201);}catch(e){return reply({error:e.message},e.status===409?409:400);}
  }
  if(new URL(request.url).pathname==='/ecology/position'&&request.method==='POST'){
   try{await verifyTeacher((request.headers.get('Authorization')||'').replace(/^Bearer /,''),env);}catch{return reply({error:'僅限已驗證的管理員登入'},401);}

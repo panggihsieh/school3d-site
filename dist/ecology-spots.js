@@ -1,7 +1,7 @@
 import {showPublishedPhotos} from './public-media.js?v=ecology-capture-20261107';
 import {pointerPosition,validateEcologyPosition,validEcologyId} from './ecology-position-core.js';
 import {uploadServiceURL} from './field-config.js';
-const key='danan-ecology-position-drafts-reviewed-20261109-v1',el=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
+const key='danan-ecology-position-drafts-redraw-20261111-v1',el=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 export async function createEcologySpots(){
  const [data,published]=await Promise.all([fetch('./campus-ecology.json').then(r=>{if(!r.ok)throw Error('生態內容載入失敗');return r.json()}),fetch('./ecology-positions.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('景點位置載入失敗');return r.json()})]);
  let selected=data.rows[0].id,active=false,user=null,placing=false,busy=false,drafts={},query='';

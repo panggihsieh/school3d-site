@@ -1,3 +1,4 @@
+import {mountRegionEditor} from './region-editor.js?v=campus-layers-20261111';
 import {mountEcologyCapture} from './ecology-capture.js';
 import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {mountSpeechTest} from './field-stt.js?v=stt-success-20261106';
@@ -5,7 +6,7 @@ import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106'
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=ai-status-20261106';
-import {mountSpaceCapture} from './space-capture.js?v=station-review-20261109';
+import {mountSpaceCapture} from './space-capture.js?v=campus-layers-20261111';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 import {refreshPublishedPhotos} from './published-photos.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
@@ -65,7 +66,7 @@ function drawMap(){
  const scale=Math.min(550/(maxX-minX),350/(maxY-minY));const project=p=>{const [x,y]=xy(p);return [25+(x-minX)*scale,375-(y-minY)*scale];};
  const node=(tag,attrs,text)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);if(text)el.textContent=text;svg.append(el);return el;};
  // Context image only; no geographic registration is implied.
- node('image',{href:'./assets/campus-overview-reviewed-20261109.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.4,'aria-hidden':'true'});
+ node('image',{href:'./assets/campus-base-v3-20261111.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.4,'aria-hidden':'true'});
  node('rect',{x:540,y:12,width:60,height:65,fill:'#eef4e7'});
  node('text',{x:550,y:30,fill:'#193d30'},'北 ↙');
  node('text',{x:12,y:395,fill:'#506450','font-size':11},'淡化底圖僅供環境參考・未精準對位');
@@ -114,7 +115,7 @@ async function start(){
  $('#refresh-published').onclick=async()=>{try{await refreshPublishedPhotos();$('#public-gallery').replaceChildren();await publicGallery();actualTarget='';renderTarget(true);}catch{$('#public-gallery').textContent='發布清單暫時無法載入，請稍後重試。';}};
  $('#export').onclick=async()=>{if(!drafts.length){$('#queue-status').textContent='尚無照片可匯出。';return;}const payload={version:1,photos:await Promise.all(drafts.map(async d=>({...d,blob:undefined,image:await blobBase64(d.blob)})))};const url=URL.createObjectURL(new Blob([JSON.stringify(payload)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='校園照片備份.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};
  $('#service-status').textContent=uploadServiceURL?'使用免費 GitHub 上傳服務；須先在 Cloudflare 設好 GITHUB_TOKEN Secret。設定完成前照片只會保存本機。':'照片採集可先保存本機；GitHub 上傳服務尚待部署及專用授權。';
- const base='https://www.gstatic.com/firebasejs/13.2.0/';const [app,api,data]=await Promise.all([import(`${base}firebase-app.js`),import(`${base}firebase-auth.js`),fetch('./data.json').then(r=>{if(!r.ok)throw Error('樹木資料載入失敗');return r.json();})]);authAPI=api;auth=api.getAuth(app.initializeApp(firebaseConfig));trees=data.points.filter(t=>t.topic==='carbon'&&Number.isFinite(t.latitude)&&Number.isFinite(t.longitude));options();setTarget(trees.find(t=>t.id===new URLSearchParams(location.search).get("tree"))?.id||trees[0].id);draftDB=await openDrafts();mountSpaceCapture({getUser:()=>user,isAdmin:admin,compress,store,renderDrafts,stopOtherSpeech:()=>{plantAudio.stop();speaker.stop();}});mountEcologyCapture({getUser:()=>user,isAdmin:admin,compress,store,renderDrafts});mountTeacherAI({getUser:()=>user,getPlant:()=>selected,isAdmin:admin,compress});
+ const base='https://www.gstatic.com/firebasejs/13.2.0/';const [app,api,data]=await Promise.all([import(`${base}firebase-app.js`),import(`${base}firebase-auth.js`),fetch('./data.json').then(r=>{if(!r.ok)throw Error('樹木資料載入失敗');return r.json();})]);authAPI=api;auth=api.getAuth(app.initializeApp(firebaseConfig));trees=data.points.filter(t=>t.topic==='carbon'&&Number.isFinite(t.latitude)&&Number.isFinite(t.longitude));options();setTarget(trees.find(t=>t.id===new URLSearchParams(location.search).get("tree"))?.id||trees[0].id);draftDB=await openDrafts();mountSpaceCapture({getUser:()=>user,isAdmin:admin,compress,store,renderDrafts,stopOtherSpeech:()=>{plantAudio.stop();speaker.stop();}});mountRegionEditor({getUser:()=>user,isAdmin:admin});mountEcologyCapture({getUser:()=>user,isAdmin:admin,compress,store,renderDrafts});mountTeacherAI({getUser:()=>user,getPlant:()=>selected,isAdmin:admin,compress});
  const refreshVoices=()=>{const select=$('#tts-voice'),previous=select.value;select.replaceChildren();const system=document.createElement('option');system.value='recorded';system.textContent='標準音訊（iPhone 建議）';select.append(system);const native=document.createElement('option');native.value='system';native.textContent='系統語音（原有模式）';select.append(native);for(const voice of window.speechSynthesis?.getVoices()||[]){if(!/^zh/i.test(voice.lang))continue;const option=document.createElement('option');option.value=voice.voiceURI;option.textContent=`${voice.name}（${voice.lang}）`;select.append(option);}select.value=Array.from(select.options).some(o=>o.value===previous)?previous:'recorded';};
  $('#tts-voice').onchange=()=>{plantAudio.stop();speaker.stop();};refreshVoices();window.speechSynthesis?.addEventListener('voiceschanged',refreshVoices);
  $('#speaker-test').onclick=()=>{plantAudio.stop();document.dispatchEvent(new Event('teacher-read-target'));speaker.stop();const audio=$('#speaker-test-audio');audio.currentTime=0;audio.volume=1;$('#speaker-test-status').textContent='正在啟動提示音…';audio.onended=()=>$('#speaker-test-status').textContent='提示音播放結束。若有聽到，表示媒體音訊可輸出；請再測試系統預設朗讀。';try{audio.play().catch(()=>$('#speaker-test-status').textContent='提示音無法播放，請用 Safari 直接開啟此頁重試。');}catch{$('#speaker-test-status').textContent='此瀏覽器無法啟動提示音。';}};

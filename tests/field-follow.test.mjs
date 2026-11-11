@@ -42,7 +42,7 @@ test('returning to the foreground resumes the active location watch',()=>{
 
 test('faint campus background renders behind GPS points with a registration notice',()=>{
  const p=page();p.fix(120.5547);const nodes=p.element('#field-map').children;
- const image=nodes.findIndex(n=>n.href==='./assets/campus-overview-reviewed-20261109.png');assert.equal(image,0);assert.equal(nodes[image].opacity,.4);
+ const image=nodes.findIndex(n=>n.href==='./assets/campus-base-v3-20261111.png');assert.equal(image,0);assert.equal(nodes[image].opacity,.4);
  assert.ok(nodes.some(n=>String(n.textContent).includes('未精準對位')));
  assert.ok(nodes.slice(image+1).some(n=>n.fill==='#d06c0b'));assert.equal(p.run('selected.id'),'west');
 });

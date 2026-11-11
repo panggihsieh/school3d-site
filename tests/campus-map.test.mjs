@@ -11,6 +11,6 @@ test('all active campus overview surfaces use the same current image and origina
 test('image station relocation preserves photo identity without inventing measured GPS',()=>{
  assert.deepEqual(stations.map(x=>x.id),[...Array.from({length:14},(_,i)=>'P'+String(i+1).padStart(2,'0')),'P16']);
  for(const s of stations){assert.ok(s.x>=0&&s.x<=100&&s.y>=0&&s.y<=100);assert.equal(s.confirmed,false);assert.equal(s.latitude,undefined);}
- assert.deepEqual(stations.find(s=>s.id==='P07').x,43.4);assert.deepEqual(stations.find(s=>s.id==='P09').y,14);
+ assert.deepEqual(stations.find(s=>s.id==='P07').x,40);assert.deepEqual(stations.find(s=>s.id==='P09').y,24.5);
  const record={target:'P09',kind:'north',id:'existing'};assert.equal(latestViews([record],'P09').north,record);
 });

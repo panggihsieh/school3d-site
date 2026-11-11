@@ -880,6 +880,40 @@ async function publishEcologyPosition(env, body) {
   await github(env, `git/refs/heads/${branch}`, "PATCH", { sha: next.sha, force: false });
   return { commit: next.sha };
 }
+function validateRegions(data) {
+  if (data?.version !== 1 || data.base !== "campus-v3-20261111" || !Array.isArray(data.regions) || data.regions.length !== 18) throw Error("\u5340\u57DF\u5716\u5C64\u683C\u5F0F\u4E0D\u6B63\u78BA");
+  const ids = /* @__PURE__ */ new Set();
+  for (const r of data.regions) {
+    if (!/^R(0[1-9]|1[0-8])$/.test(r.id) || ids.has(r.id) || typeof r.name !== "string" || !r.name.trim() || r.name.length > 60 || !Number.isFinite(r.x) || !Number.isFinite(r.y) || r.x < 0 || r.x > 100 || r.y < 0 || r.y > 100) throw Error("\u5340\u57DF\u540D\u7A31\u6216\u4F4D\u7F6E\u4E0D\u6B63\u78BA");
+    ids.add(r.id);
+  }
+  return { version: 1, base: data.base, regions: data.regions.map(({ id, name, x, y }) => ({ id, name: name.trim(), x, y })) };
+}
+async function publishRegions(env, body) {
+  const data = validateRegions(body?.data);
+  const branch = env.GITHUB_BRANCH || "main", head = await github(env, `git/ref/heads/${branch}`), file = await github(env, `contents/dist/campus-regions.json?ref=${head.object.sha}`);
+  const old = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(file.content.replace(/\s/g, "")), (c) => c.charCodeAt(0))));
+  if (JSON.stringify(old) !== JSON.stringify(body.previous)) {
+    const e = Error("\u5716\u5C64\u5DF2\u66F4\u65B0\uFF0C\u8ACB\u91CD\u65B0\u6574\u7406\u5F8C\u518D\u4FEE\u6539");
+    e.status = 409;
+    throw e;
+  }
+  const parent = await github(env, `git/commits/${head.object.sha}`), entries = [];
+  const blob = await github(env, "git/blobs", "POST", { content: utf8base64(JSON.stringify(data, null, 2) + "\n"), encoding: "base64" });
+  entries.push({ path: "dist/campus-regions.json", mode: "100644", type: "blob", sha: blob.sha });
+  const time = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).format(/* @__PURE__ */ new Date()).replaceAll("-", "/");
+  for (const path of ["index.html", "field.html", "capture.html", "tour.html", "ecology.html", "photos.html", "speech-diagnostic.html", "tree/index.html"]) {
+    const f = await github(env, `contents/dist/${path}?ref=${head.object.sha}`);
+    let html = new TextDecoder().decode(Uint8Array.from(atob(f.content.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
+    html = html.replace(/版本：v0\.3\.(\d+) ｜ 最後修改：[^<]+/, (_, n) => `\u7248\u672C\uFF1Av0.3.${Number(n) + 1} \uFF5C \u6700\u5F8C\u4FEE\u6539\uFF1A${time}\uFF08\u81FA\u7063\u6642\u9593\uFF09`);
+    const b = await github(env, "git/blobs", "POST", { content: utf8base64(html), encoding: "base64" });
+    entries.push({ path: "dist/" + path, mode: "100644", type: "blob", sha: b.sha });
+  }
+  const tree = await github(env, "git/trees", "POST", { base_tree: parent.tree.sha, tree: entries });
+  const next = await github(env, "git/commits", "POST", { message: "\u66F4\u65B0\u6821\u5712\u5340\u57DF\u540D\u7A31\u3001\u4F4D\u7F6E\u8207\u7248\u672C\u6642\u9593", tree: tree.sha, parents: [head.object.sha] });
+  await github(env, `git/refs/heads/${branch}`, "PATCH", { sha: next.sha, force: false });
+  return { commit: next.sha };
+}
 var worker_default = { async fetch(request, env) {
   env = { FIREBASE_PROJECT: "school3d-site", ADMIN_EMAIL: "teacher.hsieh@gmail.com", ALLOWED_ORIGIN: "https://panggihsieh.github.io", GITHUB_REPO: "panggihsieh/school3d-site", GITHUB_BRANCH: "main", ...env };
   const origin = request.headers.get("Origin");
@@ -894,6 +928,20 @@ var worker_default = { async fetch(request, env) {
       return reply({ error: "\u50C5\u9650\u5DF2\u9A57\u8B49\u7684\u7BA1\u7406\u54E1\u767B\u5165\u3002" }, 401);
     }
     return handleAI(request, env, headers);
+  }
+  if (new URL(request.url).pathname === "/campus/regions" && request.method === "POST") {
+    try {
+      await verifyTeacher((request.headers.get("Authorization") || "").replace(/^Bearer /, ""), env);
+    } catch {
+      return reply({ error: "\u50C5\u9650\u5DF2\u9A57\u8B49\u7684\u7BA1\u7406\u54E1\u767B\u5165" }, 401);
+    }
+    try {
+      const text = await request.text();
+      if (text.length > 2e4) return reply({ error: "\u5716\u5C64\u8CC7\u6599\u904E\u5927" }, 413);
+      return reply(await publishRegions(env, JSON.parse(text)), 201);
+    } catch (e) {
+      return reply({ error: e.message }, e.status === 409 ? 409 : 400);
+    }
   }
   if (new URL(request.url).pathname === "/ecology/position" && request.method === "POST") {
     try {
@@ -975,6 +1023,8 @@ export {
   worker_default as default,
   publishEcologyPosition,
   publishPhoto,
+  publishRegions,
   validatePhoto,
+  validateRegions,
   verifyTeacher
 };
