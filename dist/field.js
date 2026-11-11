@@ -1,4 +1,4 @@
-import {mountCampusBaseUpload} from './campus-base-upload.js?v=base-upload-20261111';
+import {mountCampusBaseUpload} from './campus-base-upload.js?v=base-only-20261111';
 import {loadCampusBase} from './campus-map.js?v=base-upload-20261111';
 import {mountRegionEditor} from './region-editor.js?v=base-upload-20261111';
 import {mountEcologyCapture} from './ecology-capture.js';
