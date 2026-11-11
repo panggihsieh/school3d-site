@@ -1,4 +1,4 @@
-import {mountRegionEditor} from './region-editor.js?v=campus-layers-20261111';
+import {mountRegionEditor} from './region-editor.js?v=campus-corrections-20261111';
 import {mountEcologyCapture} from './ecology-capture.js';
 import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {mountSpeechTest} from './field-stt.js?v=stt-success-20261106';

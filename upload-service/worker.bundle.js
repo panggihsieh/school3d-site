@@ -881,10 +881,10 @@ async function publishEcologyPosition(env, body) {
   return { commit: next.sha };
 }
 function validateRegions(data) {
-  if (data?.version !== 1 || data.base !== "campus-v3-20261111" || !Array.isArray(data.regions) || data.regions.length !== 18) throw Error("\u5340\u57DF\u5716\u5C64\u683C\u5F0F\u4E0D\u6B63\u78BA");
+  if (data?.version !== 1 || data.base !== "campus-v3-20261111" || !Array.isArray(data.regions) || data.regions.length !== 22) throw Error("\u5340\u57DF\u5716\u5C64\u683C\u5F0F\u4E0D\u6B63\u78BA");
   const ids = /* @__PURE__ */ new Set();
   for (const r of data.regions) {
-    if (!/^R(0[1-9]|1[0-8])$/.test(r.id) || ids.has(r.id) || typeof r.name !== "string" || !r.name.trim() || r.name.length > 60 || !Number.isFinite(r.x) || !Number.isFinite(r.y) || r.x < 0 || r.x > 100 || r.y < 0 || r.y > 100) throw Error("\u5340\u57DF\u540D\u7A31\u6216\u4F4D\u7F6E\u4E0D\u6B63\u78BA");
+    if (!/^R(0[1-689]|1[0-9]|2[0-3])$/.test(r.id) || ids.has(r.id) || typeof r.name !== "string" || !r.name.trim() || r.name.length > 60 || !Number.isFinite(r.x) || !Number.isFinite(r.y) || r.x < 0 || r.x > 100 || r.y < 0 || r.y > 100) throw Error("\u5340\u57DF\u540D\u7A31\u6216\u4F4D\u7F6E\u4E0D\u6B63\u78BA");
     ids.add(r.id);
   }
   return { version: 1, base: data.base, regions: data.regions.map(({ id, name, x, y }) => ({ id, name: name.trim(), x, y })) };

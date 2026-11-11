@@ -1,7 +1,7 @@
 import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106';
 import {addCampusBrand} from './campus-map.js?v=campus-layers-20261111';
-import {stations,directions,validStationLocation,latestViews,locatedStations,stationDescription,stationReadingContext,resolveStationId,stationChangeNotice} from './space-domain.js?v=campus-layers-20261111';
+import {stations,directions,validStationLocation,latestViews,locatedStations,stationDescription,stationReadingContext,resolveStationId,stationChangeNotice} from './space-domain.js?v=campus-corrections-20261111';
 import {nearbyTrees,chooseNearbyTarget} from './field-domain.js?v=entry-restore-20261106';
 export function mountSpaceCapture({getUser,isAdmin,compress,store,renderDrafts,stopOtherSpeech=()=>{}}){
  const section=document.querySelector('#space-capture');

@@ -1,13 +1,13 @@
 import {campusMapImage,addCampusBrand} from './campus-map.js?v=campus-layers-20261111';
-import {stations} from './space-domain.js?v=campus-layers-20261111';
+import {stations} from './space-domain.js?v=campus-corrections-20261111';
 // Photo positions are percentages of the supplied image, not survey coordinates.
 const places=[
  {name:'操場',x:40,y:44,description:'校園中央的草地與環形跑道。'},
  {name:'綜合球場',x:33.5,y:24.5,description:'位於示意圖中操場上方的球場。'},
  {name:'遊戲區',x:45,y:28,description:'位於示意圖中綜合球場右側的遊具區。'},
  {name:'視聽大樓／幼兒園',x:63,y:36,description:'依校方標註，位於圖右側校舍上段，2F 為視聽大樓，1F 為幼兒園。'},
- {name:'圖書館（2F）',x:64,y:48,description:'依校方標註，位於圖右側校舍中段的二樓。'},
- {name:'鼓隊練習室',x:63,y:60,description:'依校方標註，位於圖右側校舍下段。'},
+ {name:'圖書室（2F）',x:66,y:52,description:'依校方標註，位於圖右側校舍中段的二樓。'},
+ {name:'鼓隊練習室（1F）',x:66,y:52,description:'依校方標註，位於圖右側校舍中段一樓，二樓為圖書室。'},
  {name:'前門',x:21.5,y:87,description:'位於圖片左下方，面向台 3 線。'},
  {name:'後門',x:69,y:81,description:'位於圖片右下方，鄰近停車空間。'},
  {name:'東邊校舍',x:30,y:62,description:'依校方標註，位於圖中操場下方橫向校舍的左段；「東邊」為校方提供的校舍名稱。'},
