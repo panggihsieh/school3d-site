@@ -1,4 +1,6 @@
-import {mountRegionEditor} from './region-editor.js?v=campus-slope-20261111';
+import {mountCampusBaseUpload} from './campus-base-upload.js?v=base-upload-20261111';
+import {loadCampusBase} from './campus-map.js?v=base-upload-20261111';
+import {mountRegionEditor} from './region-editor.js?v=base-upload-20261111';
 import {mountEcologyCapture} from './ecology-capture.js';
 import {createPlantAudio} from './plant-audio.js?v=station-review-20261109';
 import {mountSpeechTest} from './field-stt.js?v=stt-success-20261106';
@@ -6,7 +8,7 @@ import {createFieldSpeaker} from './field-speech.js?v=voice-diagnostic-20261106'
 import {createWikiReference} from './wiki-trees.js?v=space-capture-1';
 import {createSpeciesReference} from './species-library.js?v=live-follow-20261106';
 import {mountTeacherAI} from './teacher-ai.js?v=ai-status-20261106';
-import {mountSpaceCapture} from './space-capture.js?v=campus-slope-20261111';
+import {mountSpaceCapture} from './space-capture.js?v=base-upload-20261111';
 import {showPublishedPhotos} from './public-media.js?v=space-capture-1';
 import {refreshPublishedPhotos} from './published-photos.js?v=1';
 import {firebaseConfig,adminEmail} from './firebase-config.js';
@@ -14,6 +16,7 @@ import {isAuthorizedAdmin} from './admin-auth.js';
 import {uploadServiceURL} from './field-config.js';
 import {photoKinds,nearbyTrees,arrivalEligible,chooseNearbyTarget,targetReadingContext} from './field-domain.js?v=entry-restore-20261106';
 const $=s=>document.querySelector(s);let auth,authAPI,user,trees=[],selected,position,watch,resumeLocation=false,arrivalFor='',draftDB,drafts=[],objectURLs=[],followedTarget=false,actualTarget='';
+let activeCampusBase='./assets/campus-base-v3-20261111.png';
 const admin=()=>isAuthorizedAdmin(user);
 const showWikiReference=createWikiReference($('#target'));
 const showLibraryReference=createSpeciesReference($('#target'));
@@ -66,7 +69,7 @@ function drawMap(){
  const scale=Math.min(550/(maxX-minX),350/(maxY-minY));const project=p=>{const [x,y]=xy(p);return [25+(x-minX)*scale,375-(y-minY)*scale];};
  const node=(tag,attrs,text)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);if(text)el.textContent=text;svg.append(el);return el;};
  // Context image only; no geographic registration is implied.
- node('image',{href:'./assets/campus-base-v3-20261111.png',x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.4,'aria-hidden':'true'});
+ node('image',{href:activeCampusBase,x:0,y:12,width:600,height:375,preserveAspectRatio:'xMidYMid meet',opacity:.4,'aria-hidden':'true'});
  node('rect',{x:540,y:12,width:60,height:65,fill:'#eef4e7'});
  node('text',{x:550,y:30,fill:'#193d30'},'北 ↙');
  node('text',{x:12,y:395,fill:'#506450','font-size':11},'淡化底圖僅供環境參考・未精準對位');
@@ -108,6 +111,8 @@ async function renderDrafts(){drafts=(await store('getAll')).filter(d=>d.owner==
 }
 async function publicGallery(){try{const r=await fetch('./public-photos.json',{cache:'no-store'});if(!r.ok)throw Error();const records=await r.json();$('#public-gallery').textContent=records.length?'':'尚無已發布照片。';for(const p of records.slice().reverse()){const card=document.createElement('article');card.className='photo-card';const img=document.createElement('img');img.src=p.url;img.alt=p.title;img.loading='lazy';const title=document.createElement('p');title.textContent=p.title;card.append(img,title);$('#public-gallery').append(card);}}catch{$('#public-gallery').textContent='相簿暫時無法載入。';}}
 async function start(){
+ try{activeCampusBase=(await loadCampusBase()).url;}catch{}
+ mountCampusBaseUpload({getUser:()=>user,isAdmin:admin});
  for(const [value,label] of photoKinds){const o=document.createElement('option');o.value=value;o.textContent=label;$('#kind').append(o);}$('#kind').onchange=()=>$('#instructions').textContent=photoKinds.find(k=>k[0]===$('#kind').value)[2];$('#kind').onchange();
  $('#locate').onclick=locate;$('#stop').onclick=()=>{stopLocation();$('#gps-status').textContent='已停止定位。';};$('#voice').onchange=()=>{if($('#voice').checked)say('語音提醒已啟動。');else{plantAudio.stop();speaker.stop();}};$('#tts-test').onclick=()=>say('語音輸出測試。您好，這是大南國小植物導覽。',true);$('#speak').onclick=readCurrentTarget;$('#target-read-test').onclick=()=>say('朗讀測試成功。',true);$('#speech-stop').onclick=()=>{plantAudio.stop();speaker.stop();$('#speech-status').textContent='已停止朗讀。';};$('#tree-search').oninput=()=>{pauseFollowing('已切換手動搜尋；勾選「依手機位置自動顯示附近植物」可恢復。');options();};$('#tree').onchange=e=>manualTarget(e.target.value);$('#confirmed').onchange=()=>{if($('#confirmed').checked)pauseFollowing('已固定拍照目標，移動時不會換株；拍攝完成後可重新勾選自動跟隨。');$('#camera').disabled=$('#album').disabled=!$('#confirmed').checked;};$('#camera').onchange=()=>capture($('#camera'));$('#album').onchange=()=>capture($('#album'));
  $('#resume-follow').onclick=()=>{$('#follow-location').checked=true;$('#follow-location').onchange();};

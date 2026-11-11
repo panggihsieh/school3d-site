@@ -10,7 +10,7 @@ async function load(){
  try{
   const response=await fetch('./environment-education.json?v=20261107');if(!response.ok)throw Error();const data=await response.json();
   for(const record of data.documents){
-   const article=document.createElement('article');article.style.cssText='border-top:1px solid #cdd6c4;padding:16px 0';
+   const article=document.createElement('article');article.dataset.document=record.id;article.style.cssText='border-top:1px solid #cdd6c4;padding:16px 0';
    article.append(text('h3',record.title),text('p',record.description),text('p',record.category+' · '+record.format+' · '+(record.bytes/1024/1024<1?Math.round(record.bytes/1024)+' KB':(record.bytes/1024/1024).toFixed(1)+' MB')+' · 收錄 '+record.addedAt));
    const url=new URL(record.url,location.href);if(url.origin!==location.origin||!url.pathname.includes('/assets/environment-education/'))throw Error();
    if(record.format==='JPEG'){
@@ -21,6 +21,7 @@ async function load(){
    const details=document.createElement('details');details.append(text('summary','來源與原檔資訊'),text('p',record.originalFilename),text('p',record.source+'。'+record.changes+'。'+record.rights+'。'));
    const hash=text('p','SHA-256：'+record.sha256);hash.style.overflowWrap='anywhere';details.append(hash);article.append(details);list.append(article);
   }
+  document.dispatchEvent(new Event('environment-reference-ready'));
   status.textContent='已收錄 '+data.documents.length+' 份重要參考資料。文件內容作為參考，不自動改寫網站點位或已確認紀錄。';
  }catch{status.textContent='參考資料暫時無法載入。';const retry=text('button','重新載入');retry.type='button';retry.onclick=load;list.replaceChildren(retry);}
 }

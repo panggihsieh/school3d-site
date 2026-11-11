@@ -1,6 +1,6 @@
-import {addCampusBrand} from './campus-map.js?v=campus-slope-20261111';
+import {addCampusBrand} from './campus-map.js?v=base-upload-20261111';
 // 百分比依既有俯視示意圖估計；出入口與植物群需現場確認。
-import {stations,resolveStationId,stationChangeNotice} from './space-domain.js?v=campus-slope-20261111';
+import {stations,resolveStationId,stationChangeNotice} from './space-domain.js?v=base-upload-20261111';
 const $=s=>document.querySelector(s);
 const requested=new URLSearchParams(location.search).get('station');
 let mode='phone',selected=resolveStationId(requested)||'P01',completed={},published=[];

@@ -1,4 +1,4 @@
-import {campusMapImage,loadRegions,drawRegions,addCampusBrand} from './campus-map.js?v=campus-slope-20261111';
+import {campusMapImage,loadRegions,drawRegions,addCampusBrand} from './campus-map.js?v=base-upload-20261111';
 import {uploadServiceURL} from './field-config.js';
 export async function mountRegionEditor({getUser,isAdmin}){
  const section=document.createElement('section');section.innerHTML='<h2>校園地圖區域名稱</h2><p>v3 底圖與名稱為獨立圖層。選取名稱可改字或拖曳；儲存草稿僅限本機，發布後所有裝置更新。區位仍須現場核對。</p><div class="region-map" style="position:relative;max-width:1000px"><img style="width:100%;display:block" alt="v3 校園底圖"></div><label>區域<select></select></label><label>名稱<input maxlength="60"></label><label>左起 %<input type="number" min="0" max="100" step="0.1"></label><label>上起 %<input type="number" min="0" max="100" step="0.1"></label><button type="button" data-save>儲存本機草稿</button> <button type="button" data-publish>發布區域圖層</button> <button type="button" data-reset>還原已發布版本</button><p role="status"></p>';

@@ -1,5 +1,5 @@
-import {campusMapImage,addCampusBrand} from './campus-map.js?v=campus-slope-20261111';
-import {stations} from './space-domain.js?v=campus-slope-20261111';
+import {campusMapImage,addCampusBrand} from './campus-map.js?v=base-upload-20261111';
+import {stations} from './space-domain.js?v=base-upload-20261111';
 // Photo positions are percentages of the supplied image, not survey coordinates.
 const places=[
  {name:'操場',x:40,y:44,description:'校園中央的草地與環形跑道。'},
